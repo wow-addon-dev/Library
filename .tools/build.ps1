@@ -48,14 +48,14 @@ foreach ($line in $IniContent) {
 }
 
 # Kopieren & Ersetzten
-$AddonName = Split-Path $SourceFolder -Leaf
-$TargetFolder = "WoWAddonDevelopmentLibraries"
+$AddonName = "Arcane Wizard: Library"
+$Target = "ArcaneWizardLibrary"
 $FileExtensions = @("*.toc")
 
 Write-Host 'Deployment für' $AddonName 'gestartet.'
 
 foreach ($variant in $TargetVariants) {
-    $TargetFolder = [System.IO.Path]::Combine($WoWRoot, $variant, "Interface", "AddOns", $TargetFolder)
+    $TargetFolder = [System.IO.Path]::Combine($WoWRoot, $variant, "Interface", "AddOns", $Target)
 
 	if (Test-Path $TargetFolder) {
 		Get-ChildItem -Path $TargetFolder -Force -Recurse | Remove-Item -Force -Recurse -ErrorAction SilentlyContinue

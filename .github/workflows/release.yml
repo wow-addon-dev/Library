@@ -1,5 +1,7 @@
-name: Publish 'Libraries (WoW Addon Development)'
-run-name: Publish 'Libraries (WoW Addon Development)' (${{ github.event.inputs.release-type }})
+name: >
+  Publish 'Arcane Wizard: Library'
+run-name: >
+  Publish 'Arcane Wizard: Library' (${{ github.event.inputs.release-type }})
 
 on:
   workflow_dispatch:

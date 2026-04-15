@@ -2,13 +2,13 @@ local addonName, LIB = ...
 
 local L = LIB.Localization
 
-WAD = WAD or {}
-WAD.Dialog = {}
+ArcaneWizardLibrary = ArcaneWizardLibrary or {}
+ArcaneWizardLibrary.Dialog = {}
 
-WAD.Dialog.copyAdressDialog = nil
-WAD.Dialog.deleteDataDialog = nil
+ArcaneWizardLibrary.Dialog.copyAdressDialog = nil
+ArcaneWizardLibrary.Dialog.deleteDataDialog = nil
 
-function WAD.Dialog:ShowCopyAddressDialog(address)
+function ArcaneWizardLibrary.Dialog:ShowCopyAddressDialog(address)
     if not self.copyAdressDialog then
 		local frameName = "WoWAddonDevelopment_SharedDialogs_CopyAdressFrame"
 
@@ -56,7 +56,7 @@ function WAD.Dialog:ShowCopyAddressDialog(address)
     self.copyAdressDialog:Show()
 end
 
-function WAD.Dialog:ShowDeleteDataDialog(onConfirmCallback)
+function ArcaneWizardLibrary.Dialog:ShowDeleteDataDialog(onConfirmCallback)
     if not self.deleteDataDialog then
         local frameName = "WoWAddonDevelopment_SharedDialogs_DeleteDataFrame"
 
