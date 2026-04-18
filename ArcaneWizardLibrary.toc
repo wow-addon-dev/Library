@@ -10,6 +10,7 @@
 ## Notes: This addon is a library that bundles recurring code segments and functionalities.
 ## Notes-deDE: Dieses Addon dient als Bibliothek, in der wiederkehrende Codeteile und Funktionen zusammengefasst sind.
 
+## X-Revision: 1
 ## X-BuildDate: @build-date@
 ## X-E-Mail: feedback@wow-addon.dev
 ## X-Github: https://github.com/wow-addon-dev/Library
