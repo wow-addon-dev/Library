@@ -1,3 +1,7 @@
+**v1.5 (2026-05-10)**
+- Added: TOC version for patch 5.5.4 [mist of pandaria - classic]
+- Removed: TOC version for patch 12.0.1 [retail]
+
 **v1.4 (2026-05-01)**
 - Removed obsolete code for better maintainability
 
