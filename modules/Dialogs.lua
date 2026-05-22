@@ -35,15 +35,20 @@ StaticPopupDialogs["ARCANE_WIZARD_LIB_CONFIRM"] = {
     text = "%s",
     button1 = YES,
     button2 = NO,
-    OnAccept = function(self, data)
-        if type(data) == "function" then
-            data()
+	OnAccept = function(self, data)
+        if data and type(data.onAccept) == "function" then
+            data.onAccept()
+        end
+    end,
+    OnCancel = function(self, data, reason)
+        if data and type(data.onCancel) == "function" then
+            data.onCancel()
         end
     end,
     timeout = 0,
     whileDead = true,
     showAlert = true,
-    hideOnEscape = true,
+    hideOnEscape = false,
     preferredIndex = 3,
     fullScreenCover = true
 }
@@ -60,6 +65,12 @@ end
 ---
 --- @param text string The question or message to display in the dialog.
 --- @param onConfirmCallback function The function to execute if the user clicks "Yes".
-function ArcaneWizardLibrary.Dialogs:ShowConfirmDialog(text, onConfirmCallback)
-    StaticPopup_Show("ARCANE_WIZARD_LIB_CONFIRM", text, nil, onConfirmCallback)
+--- @param onCancelCallback? function (Optional) The function to execute if the user clicks "No".
+function ArcaneWizardLibrary.Dialogs:ShowConfirmDialog(text, onConfirmCallback, onCancelCallback)
+	local callbacks = {
+        onAccept = onConfirmCallback,
+        onCancel = onCancelCallback
+    }
+
+    StaticPopup_Show("ARCANE_WIZARD_LIB_CONFIRM", text, nil, callbacks)
 end
