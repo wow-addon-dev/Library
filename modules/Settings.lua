@@ -1,4 +1,5 @@
 local addonName, LIB = ...
+
 local L = LIB.Localization
 
 --- Adds a clickable button to the settings layout.

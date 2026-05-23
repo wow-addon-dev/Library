@@ -17,6 +17,8 @@ This library provides pre-built solutions for common addon functionalities.
 * **Dialogs:**
     * Link Dialog: Shows a popup with an auto-highlighted text field for easy copying.
     * Confirmation Dialog: A standard Yes/No prompt to safely confirm actions and execute callbacks.
+* **Profiles:**
+    * Helper methods for character keys and localized profile mode/switch texts.
 * **Settings API Wrappers:** Easily add standard UI elements to the Blizzard options menu.
     * Buttons and static Info Text rows.
     * Checkboxes, Sliders, and Dropdown menus.
