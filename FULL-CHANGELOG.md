@@ -1,3 +1,7 @@
+**v1.6 (2026-05-23)**
+- Added: Optional cancel callback support for confirmation dialogs
+- Added: TOC version for patch 12.0.7 [retail]
+
 **v1.5 (2026-05-10)**
 - Added: TOC version for patch 5.5.4 [mist of pandaria - classic]
 - Removed: TOC version for patch 12.0.1 [retail]
