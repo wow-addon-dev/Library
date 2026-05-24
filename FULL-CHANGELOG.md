@@ -1,3 +1,6 @@
+**v1.7 (2026-05-24)**
+- Added: Profile helper API for character keys and localized profile texts
+
 **v1.6 (2026-05-23)**
 - Added: Optional cancel callback support for confirmation dialogs
 - Added: TOC version for patch 12.0.7 [retail]
