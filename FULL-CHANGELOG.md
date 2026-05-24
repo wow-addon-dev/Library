@@ -1,5 +1,4 @@
 **v1.8 (2026-05-24)**
-- Added: Profile helper API for character keys and localized profile texts
 - Added: Height presets for settings info text rows
 - Changed: CreateExpandableHeader was renamed to AddExpandableHeader
 
