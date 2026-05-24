@@ -1,6 +1,18 @@
-local addonName, LIB = ...
+local _, LIB = ...
 
 local L = LIB.Localization
+
+local function GetInfoTextHeight(config)
+    if type(config.height) == "number" then
+        return config.height
+    end
+
+    if type(config.height) == "string" and LIB.INFO_TEXT_HEIGHTS[config.height] then
+        return LIB.INFO_TEXT_HEIGHTS[config.height]
+    end
+
+    return LIB.INFO_TEXT_HEIGHTS["default"]
+end
 
 --- Adds a clickable button to the settings layout.
 ---
@@ -33,7 +45,7 @@ end
 --- Adds a static text row to the settings layout, typically used for key-value pairs (e.g., in an "About" section).
 ---
 --- @param layout table The layout object to append the initializer to.
---- @param config table Configuration table. Expected keys: leftText, rightText. Optional keys: height, parentInit, parentCondition, shownPredicate.
+--- @param config table Configuration table. Expected keys: leftText, rightText. Optional keys: height number|string ("compact" or "default"), parentInit, parentCondition, shownPredicate.
 ---
 --- @return table initializer The layout initializer object for the text panel.
 function ArcaneWizardLibrary.Settings:AddInfoText(layout, config)
@@ -53,7 +65,7 @@ function ArcaneWizardLibrary.Settings:AddInfoText(layout, config)
     local line = layout:AddInitializer(initializer)
 
     function line:GetExtent()
-        return config.height or 13
+        return GetInfoTextHeight(config)
     end
 
     return initializer
@@ -121,13 +133,14 @@ end
 ---
 --- @param category table The settings category object.
 --- @param layout table The layout object to append the initializer to.
---- @param config table Configuration table. Expected keys: checkboxSettingKey, checkboxVarName, checkboxName, checkboxTooltip, checkboxDefault, sliderSettingKey, sliderVariableName, sliderName, sliderTooltip, sliderDefault, sliderMin, sliderMax, sliderStep, sliderFormatter, variableTable. Optional keys: parentInit, parentCondition, shownPredicate.
+--- @param config table Configuration table. Expected keys: checkboxSettingKey, checkboxVariableName, checkboxName, checkboxTooltip, checkboxDefault, sliderSettingKey, sliderVariableName, sliderName, sliderTooltip, sliderDefault, sliderMin, sliderMax, sliderStep, sliderFormatter, variableTable. Optional keys: parentInit, parentCondition, shownPredicate.
 ---
 --- @return table initializer The layout initializer object for the combined element.
 --- @return table settingCheckbox The registered setting object for the checkbox.
 --- @return table settingSlider The registered setting object for the slider.
 function ArcaneWizardLibrary.Settings:AddCheckboxSliderCombo(category, layout, config)
-    local settingCheckbox = Settings.RegisterAddOnSetting(category, config.checkboxSettingKey, config.checkboxVarName, config.variableTable, Settings.VarType.Boolean, config.checkboxName, config.checkboxDefault or false)
+    local checkboxVariableName = config.checkboxVariableName or config.checkboxVarName
+    local settingCheckbox = Settings.RegisterAddOnSetting(category, config.checkboxSettingKey, checkboxVariableName, config.variableTable, Settings.VarType.Boolean, config.checkboxName, config.checkboxDefault or false)
     local settingSlider = Settings.RegisterAddOnSetting(category, config.sliderSettingKey, config.sliderVariableName, config.variableTable, Settings.VarType.Number, config.sliderName, config.sliderDefault or 1)
     local optionsSlider = Settings.CreateSliderOptions(config.sliderMin or 1, config.sliderMax or 10, config.sliderStep or 1)
 
@@ -196,7 +209,7 @@ end
 ---
 --- @return table initializer The layout initializer object for the header.
 --- @return function isExpandedPredicate A function that returns the current expanded state (boolean).
-function ArcaneWizardLibrary.Settings:CreateExpandableHeader(layout, name)
+function ArcaneWizardLibrary.Settings:AddExpandableHeader(layout, name)
     local initializer = CreateFromMixins(SettingsExpandableSectionInitializer)
     local data = { name = name, expanded = false }
 
