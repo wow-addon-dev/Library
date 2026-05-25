@@ -2,6 +2,4 @@
 ### [@project-version@](https://github.com/wow-addon-dev/Library/tree/@project-version@) (@build-date@)
 [Full Changelog](@full-changelog@) - [Previous Releases](https://github.com/wow-addon-dev/Library/releases)
 
-- Added: Profile helper API for character keys and localized profile texts
-- Added: Height presets for settings info text rows
-- Changed: CreateExpandableHeader was renamed to AddExpandableHeader
+- Minor code adjustments

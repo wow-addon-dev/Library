@@ -1,6 +1,6 @@
 local _, LIB = ...
 
-local L = LIB.Localization
+-- local L = LIB.Localization
 
 local function GetInfoTextHeight(config)
     if type(config.height) == "number" then
@@ -213,10 +213,11 @@ function ArcaneWizardLibrary.Settings:AddExpandableHeader(layout, name)
     local initializer = CreateFromMixins(SettingsExpandableSectionInitializer)
     local data = { name = name, expanded = false }
 
-    initializer:Init("ArcaneWizardLibrary_SettingsExpandTemplate", data)
+    initializer:Init("ArcaneWizardLibrary_SettingsExpandTemplate")
+    initializer.data = data
     initializer.GetExtent = ScrollBoxFactoryInitializerMixin.GetExtent
 
     layout:AddInitializer(initializer)
 
-    return initializer, function() return initializer.data.expanded end
+    return initializer, function() return data.expanded end
 end
