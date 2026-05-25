@@ -9,6 +9,7 @@
 
 ## Notes: This addon is a library that bundles recurring code segments and functionalities.
 ## Notes-deDE: Dieses Addon dient als Bibliothek, in der wiederkehrende Codeteile und Funktionen zusammengefasst sind.
+## Notes-ruRU: Этот аддон служит библиотекой, объединяющей повторяющиеся фрагменты кода и функции.
 
 ## X-Revision: 7
 ## X-BuildDate: @build-date@

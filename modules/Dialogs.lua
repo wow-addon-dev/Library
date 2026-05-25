@@ -2,6 +2,10 @@ local _, LIB = ...
 
 local L = LIB.Localization
 
+----------------------------
+--- Static Popup Dialogs ---
+----------------------------
+
 StaticPopupDialogs["ARCANE_WIZARD_LIB_LINK"] = {
     text = L["dialog.link.text"],
     button1 = CLOSE,
@@ -52,6 +56,10 @@ StaticPopupDialogs["ARCANE_WIZARD_LIB_CONFIRM"] = {
     preferredIndex = 3,
     fullScreenCover = true
 }
+
+------------------------
+--- Public Functions ---
+------------------------
 
 --- Shows a popup dialog with a copyable text/link field.
 --- The text inside the edit box is automatically highlighted for easy copying (Ctrl+C).

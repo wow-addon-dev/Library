@@ -1,6 +1,10 @@
 local _, LIB = ...
 
--- local L = LIB.Localization
+local L = LIB.Localization
+
+-----------------------
+--- Local Functions ---
+-----------------------
 
 local function GetInfoTextHeight(config)
     if type(config.height) == "number" then
@@ -13,6 +17,22 @@ local function GetInfoTextHeight(config)
 
     return LIB.INFO_TEXT_HEIGHTS["default"]
 end
+
+local function FormatAboutValue(value, detail)
+    if not value then
+        return ""
+    end
+
+    if detail and detail ~= "" then
+        return tostring(value) .. " (" .. tostring(detail) .. ")"
+    end
+
+    return tostring(value)
+end
+
+------------------------
+--- Public Functions ---
+------------------------
 
 --- Adds a clickable button to the settings layout.
 ---
@@ -220,4 +240,101 @@ function ArcaneWizardLibrary.Settings:AddExpandableHeader(layout, name)
     layout:AddInitializer(initializer)
 
     return initializer, function() return data.expanded end
+end
+
+--- Adds a standard Profiles section to the settings layout.
+---
+--- @param layout table The layout object to append the initializers to.
+--- @param config table Configuration table. Expected keys: useAccountProfile, onSwitchProfile, onDeleteCharacterProfiles.
+function ArcaneWizardLibrary.Settings:AddProfilesSection(layout, config)
+    local profileModeText = L["settings.profiles.mode.character"]
+    local switchButtonText = L["settings.profiles.switch.button.character-to-account"]
+
+    if config.useAccountProfile then
+        profileModeText = L["settings.profiles.mode.account"]
+        switchButtonText = L["settings.profiles.switch.button.account-to-character"]
+    end
+
+    layout:AddInitializer(CreateSettingsListSectionHeaderInitializer(L["settings.profiles.section-header"]))
+
+    self:AddInfoText(layout, {
+        leftText  = L["settings.profiles.profile-mode"],
+        rightText = profileModeText
+    })
+
+    self:AddButton(layout, {
+        name       = L["settings.profiles.switch.name"],
+        buttonText = switchButtonText,
+        tooltip    = L["settings.profiles.switch.tooltip"],
+        onClick    = function()
+            local currentUseAccountProfile = config.useAccountProfile
+            local confirmText = L["settings.profiles.switch.confirm.character-to-account"]
+
+            if type(currentUseAccountProfile) == "function" then
+                currentUseAccountProfile = currentUseAccountProfile()
+            end
+
+            if currentUseAccountProfile then
+                confirmText = L["settings.profiles.switch.confirm.account-to-character"]
+            end
+
+            ArcaneWizardLibrary.Dialogs:ShowConfirmDialog(confirmText, config.onSwitchProfile)
+        end
+    })
+
+    self:AddButton(layout, {
+        name       = L["settings.profiles.delete-character-profiles.name"],
+        buttonText = L["settings.profiles.delete-character-profiles.button"],
+        tooltip    = L["settings.profiles.delete-character-profiles.tooltip"],
+        onClick    = function()
+            ArcaneWizardLibrary.Dialogs:ShowConfirmDialog(
+                L["settings.profiles.delete-character-profiles.confirm"],
+                config.onDeleteCharacterProfiles
+            )
+        end
+    })
+end
+
+--- Adds a standard About section to the settings layout.
+---
+--- @param layout table The layout object to append the initializers to.
+--- @param config table Configuration table. Expected keys: addonVersion, addonBuildDate, addonAuthor. Optional keys: gameVersion, gameFlavor, githubLink.
+function ArcaneWizardLibrary.Settings:AddAboutSection(layout, config)
+    config = config or {}
+
+    layout:AddInitializer(CreateSettingsListSectionHeaderInitializer(L["settings.about"]))
+
+    self:AddInfoText(layout, {
+        leftText  = L["settings.about.game-version"],
+        rightText = FormatAboutValue(config.gameVersion or GetBuildInfo(), config.gameFlavor),
+        height    = "compact"
+    })
+
+    self:AddInfoText(layout, {
+        leftText  = L["settings.about.addon-version"],
+        rightText = FormatAboutValue(config.addonVersion, config.addonBuildDate),
+        height    = "compact"
+    })
+
+    self:AddInfoText(layout, {
+        leftText  = L["settings.about.lib-version"],
+        rightText = FormatAboutValue(ArcaneWizardLibrary.ADDON_VERSION, ArcaneWizardLibrary.ADDON_BUILD_DATE),
+        height    = "compact"
+    })
+
+    self:AddInfoText(layout, {
+        leftText  = L["settings.about.author"],
+        rightText = config.addonAuthor or ""
+    })
+
+    if config.githubLink and config.githubLink ~= "" then
+        self:AddButton(layout, {
+            name       = L["settings.about.button-github.name"],
+            buttonText = L["settings.about.button-github.button"],
+            tooltip    = L["settings.about.button-github.tooltip"],
+            onClick    = function()
+                ArcaneWizardLibrary.Dialogs:ShowLinkDialog(config.githubLink)
+            end
+        })
+    end
 end
