@@ -10,7 +10,14 @@ local L = LIB.Localization
 ---
 --- @return string charKey The character key in the format "CharacterName#RealmName".
 function ArcaneWizardLibrary.Utils:GetCharKey()
-    local characterName = UnitName("player")
+    local characterName, realmName
 
-    return characterName .. "#" .. GetRealmName()
+    if UnitFullName then
+        characterName, realmName = UnitFullName("player")
+    end
+
+    characterName = characterName or UnitName("player") or "Unknown"
+    realmName = realmName or GetRealmName() or "UnknownRealm"
+
+    return characterName .. "#" .. realmName
 end

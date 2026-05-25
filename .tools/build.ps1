@@ -54,11 +54,40 @@ $FileExtensions = @("*.toc")
 
 Write-Host 'Deployment für' $AddonName 'gestartet.'
 
+function Assert-SafeTargetFolder {
+    param(
+        [string]$TargetFolder,
+        [string]$AddOnsFolder,
+        [string]$ExpectedFolderName
+    )
+
+    $resolvedTargetFolder = [System.IO.Path]::GetFullPath($TargetFolder)
+    $resolvedAddOnsFolder = [System.IO.Path]::GetFullPath($AddOnsFolder)
+    $addOnsPrefix = $resolvedAddOnsFolder.TrimEnd(
+        [System.IO.Path]::DirectorySeparatorChar,
+        [System.IO.Path]::AltDirectorySeparatorChar
+    ) + [System.IO.Path]::DirectorySeparatorChar
+
+    if (-not $resolvedTargetFolder.StartsWith($addOnsPrefix, [System.StringComparison]::OrdinalIgnoreCase)) {
+        throw "Unsicherer Zielpfad: $resolvedTargetFolder liegt nicht im AddOns-Verzeichnis $resolvedAddOnsFolder."
+    }
+
+    if ([System.IO.Path]::GetFileName($resolvedTargetFolder) -ne $ExpectedFolderName) {
+        throw "Unsicherer Zielpfad: Erwartet wurde der Addon-Ordner '$ExpectedFolderName', erhalten wurde '$([System.IO.Path]::GetFileName($resolvedTargetFolder))'."
+    }
+
+    return $resolvedTargetFolder
+}
+
 foreach ($variant in $TargetVariants) {
     $TargetFolder = [System.IO.Path]::Combine($WoWRoot, $variant, "Interface", "AddOns", $Target)
+    $AddOnsFolder = [System.IO.Path]::Combine($WoWRoot, $variant, "Interface", "AddOns")
+    $TargetFolder = Assert-SafeTargetFolder -TargetFolder $TargetFolder -AddOnsFolder $AddOnsFolder -ExpectedFolderName $Target
 
 	if (Test-Path $TargetFolder) {
-		Get-ChildItem -Path $TargetFolder -Force -Recurse | Remove-Item -Force -Recurse -ErrorAction SilentlyContinue
+		Get-ChildItem -LiteralPath $TargetFolder -Force | ForEach-Object {
+            Remove-Item -LiteralPath $_.FullName -Force -Recurse -ErrorAction SilentlyContinue
+        }
 	} else {
 		New-Item -ItemType Directory -Path $TargetFolder -Force | Out-Null
 	}

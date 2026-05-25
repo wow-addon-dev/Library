@@ -1,7 +1,7 @@
 local _, LIB = ...
 
 LIB.Localization = setmetatable({},{__index=function(self,key)
-        geterrorhandler()("Libraries (WoW Addon Development) (Debug): Missing entry for '" .. tostring(key) .. "'")
+        geterrorhandler()("Arcane Wizard: Library (Debug): Missing entry for '" .. tostring(key) .. "'")
         return key
     end})
 
