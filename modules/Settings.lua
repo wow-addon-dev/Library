@@ -267,14 +267,9 @@ function ArcaneWizardLibrary.Settings:AddProfilesSection(layout, config)
         buttonText = switchButtonText,
         tooltip    = L["settings.profiles.switch.tooltip"],
         onClick    = function()
-            local currentUseAccountProfile = config.useAccountProfile
             local confirmText = L["settings.profiles.switch.confirm.character-to-account"]
 
-            if type(currentUseAccountProfile) == "function" then
-                currentUseAccountProfile = currentUseAccountProfile()
-            end
-
-            if currentUseAccountProfile then
+            if config.useAccountProfile then
                 confirmText = L["settings.profiles.switch.confirm.account-to-character"]
             end
 

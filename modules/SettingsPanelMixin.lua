@@ -18,6 +18,10 @@ function ArcaneWizardLibrary_SettingsExpandMixin:CalculateHeight()
 end
 
 function ArcaneWizardLibrary_SettingsExpandMixin:OnExpandedChanged(expanded)
+    if self.data then
+        self.data.expanded = expanded
+    end
+
     self:EvaluateVisibility(expanded)
     SettingsInbound.RepairDisplay()
 end
