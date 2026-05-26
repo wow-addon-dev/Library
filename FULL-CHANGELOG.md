@@ -1,3 +1,8 @@
+**v1.9 (2026-05-26)**
+- Added: Utility API for common addon helper functions
+- Changed: Profile settings helpers were moved into the Settings API
+- Removed: Standalone Profiles module
+
 **v1.8 (2026-05-24)**
 - Added: Height presets for settings info text rows
 - Changed: CreateExpandableHeader was renamed to AddExpandableHeader
