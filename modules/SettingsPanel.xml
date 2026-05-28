@@ -21,6 +21,6 @@
 	</Frame>
 
 	<Frame name="ArcaneWizardLibrary_SettingsExpandTemplate" inherits="SettingsExpandableSectionTemplate" mixin="ArcaneWizardLibrary_SettingsExpandMixin" virtual="true">
-        <Size y="30" />
-    </Frame>
+		<Size y="30" />
+	</Frame>
 </Ui>

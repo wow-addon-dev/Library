@@ -8,8 +8,8 @@ local _, LIB = ...
 ---
 --- @return string characterRealmKey The character-realm key in the format "CharacterName#RealmName".
 function ArcaneWizardLibrary.Utils:GetCharacterRealmKey()
-    local characterName = UnitName("player")
-    local realmName = GetRealmName()
+	local characterName = UnitName("player")
+	local realmName = GetRealmName()
 
-    return characterName .. "#" .. realmName
+	return characterName .. "#" .. realmName
 end
