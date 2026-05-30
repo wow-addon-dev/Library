@@ -1,3 +1,6 @@
+**v1.10 (2026-05-30)**
+- Minor code adjustments
+
 **v1.9 (2026-05-26)**
 - Added: Utility API for common addon helper functions
 - Changed: Profile settings helpers were moved into the Settings API
