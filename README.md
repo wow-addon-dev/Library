@@ -19,6 +19,7 @@ This library provides pre-built solutions for common addon functionalities.
 	* Confirmation Dialog: A standard Yes/No prompt to safely confirm actions and execute callbacks.
 * **Utilities:**
 	* Helper methods for common addon values such as character keys.
+	* Deep table copy helper.
 * **Settings API Wrappers:** Easily add standard UI elements to the Blizzard options menu.
 	* Standard Profiles and About sections.
 	* Buttons and static Info Text rows with configurable height presets.

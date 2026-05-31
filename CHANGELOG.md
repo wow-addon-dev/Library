@@ -2,4 +2,4 @@
 ### [@project-version@](https://github.com/wow-addon-dev/Library/tree/@project-version@) (@build-date@)
 [Full Changelog](@full-changelog@) - [Previous Releases](https://github.com/wow-addon-dev/Library/releases)
 
-- Minor code adjustments
+- Added: Deep table copy utility
