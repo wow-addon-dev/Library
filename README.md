@@ -14,18 +14,19 @@ This library provides pre-built solutions for common addon functionalities.
 
 ### Included Functionalities
 
-* **Dialogs:**
-	* Link Dialog: Shows a popup with an auto-highlighted text field for easy copying.
-	* Confirmation Dialog: A standard Yes/No prompt to safely confirm actions and execute callbacks.
-* **Utilities:**
-	* Helper methods for common addon values such as character keys and separate character/realm values.
-	* Deep table copy helper.
-* **Settings API Wrappers:** Easily add standard UI elements to the Blizzard options menu.
-	* Standard Profiles and About sections.
-	* Buttons and static Info Text rows with configurable height presets.
-	* Checkboxes, Sliders, and Dropdown menus.
-	* Combined Checkbox & Slider elements.
-	* Expandable Headers to cleanly organize settings sections.
+* **Dialogs**
+	* **Link Dialog:** Shows a popup with an auto-highlighted text field for easy copying.
+	* **Confirmation Dialog:** Displays a standard Yes/No prompt to confirm actions and execute callbacks.
+* **Utilities**
+	* Provides helper methods for common addon values, such as character keys and split character/realm values.
+	* Includes a deep table copy helper.
+* **Settings API Wrappers**
+	* Adds standard UI elements to the Blizzard options menu.
+	* Includes standard Profiles and About sections.
+	* Supports buttons and static info text rows with configurable height presets.
+	* Supports checkboxes, sliders, and dropdown menus.
+	* Supports combined checkbox and slider elements.
+	* Supports expandable headers to organize settings sections.
 
 ### How to Integrate
 
