@@ -1,3 +1,6 @@
+**v1.11 (2026-06-01)**
+- Added: Deep table copy utility
+
 **v1.10 (2026-05-30)**
 - Minor code adjustments
 
