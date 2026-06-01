@@ -18,7 +18,7 @@ This library provides pre-built solutions for common addon functionalities.
 	* Link Dialog: Shows a popup with an auto-highlighted text field for easy copying.
 	* Confirmation Dialog: A standard Yes/No prompt to safely confirm actions and execute callbacks.
 * **Utilities:**
-	* Helper methods for common addon values such as character keys.
+	* Helper methods for common addon values such as character keys and separate character/realm values.
 	* Deep table copy helper.
 * **Settings API Wrappers:** Easily add standard UI elements to the Blizzard options menu.
 	* Standard Profiles and About sections.

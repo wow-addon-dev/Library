@@ -6,39 +6,41 @@ local _, LIB = ...
 
 --- Creates a deep copy of a table.
 ---
---- Handles cyclic references and preserves metatables.
+--- Copies nested table values recursively.
 ---
---- @param source any The value to copy. Non-table values are returned unchanged.
---- @param seen table|nil Internal cache used for cyclic table references.
+--- @param source table The table to copy.
 ---
---- @return any copy The copied value.
-function ArcaneWizardLibrary.Utils:CopyTable(source, seen)
-	if type(source) ~= "table" then
-		return source
-	end
-
-	seen = seen or {}
-
-	if seen[source] then
-		return seen[source]
-	end
-
+--- @return table copy The copied table.
+function ArcaneWizardLibrary.Utils:CopyTable(source)
 	local target = {}
-	seen[source] = target
 
 	for key, value in pairs(source) do
-		target[self:CopyTable(key, seen)] = self:CopyTable(value, seen)
+		if type(value) == "table" then
+			target[key] = self:CopyTable(value)
+		else
+			target[key] = value
+		end
 	end
 
-	return setmetatable(target, getmetatable(source))
+	return target
+end
+
+--- Returns the character and realm name of the current player as separate values.
+---
+--- @return string characterName The character name.
+--- @return string realmName The realm name.
+function ArcaneWizardLibrary.Utils:GetCharacterAndRealm()
+	local characterName = UnitName("player")
+	local realmName = GetRealmName()
+
+	return characterName, realmName
 end
 
 --- Returns the unique character-realm key for the current player.
 ---
 --- @return string characterRealmKey The character-realm key in the format "CharacterName#RealmName".
 function ArcaneWizardLibrary.Utils:GetCharacterRealmKey()
-	local characterName = UnitName("player")
-	local realmName = GetRealmName()
+	local characterName, realmName = self:GetCharacterAndRealm()
 
 	return characterName .. "#" .. realmName
 end
