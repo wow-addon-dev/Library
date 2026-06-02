@@ -1,3 +1,6 @@
+**v1.12 (2026-06-02)**
+- Added: Character and realm utility function with separate return values
+
 **v1.11 (2026-06-01)**
 - Added: Deep table copy utility
 
