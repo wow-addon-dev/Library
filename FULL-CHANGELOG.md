@@ -1,3 +1,7 @@
+**v1.13 (2026-06-07)**
+- Added: Optional CurseForge link button for the About section
+- Changed: About section now determines game version and game flavor from the library
+
 **v1.12 (2026-06-02)**
 - Added: Character and realm utility function with separate return values
 
