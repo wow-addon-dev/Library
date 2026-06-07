@@ -293,7 +293,7 @@ end
 --- Adds a standard About section to the settings layout.
 ---
 --- @param layout table The layout object to append the initializers to.
---- @param config table Configuration table. Expected keys: addonVersion, addonBuildDate, addonAuthor. Optional keys: gameVersion, gameFlavor, githubLink.
+--- @param config table Configuration table. Expected keys: addonVersion, addonBuildDate, addonAuthor. Optional keys: curseforgeLink, githubLink.
 function ArcaneWizardLibrary.Settings:AddAboutSection(layout, config)
 	config = config or {}
 
@@ -301,7 +301,7 @@ function ArcaneWizardLibrary.Settings:AddAboutSection(layout, config)
 
 	self:AddInfoText(layout, {
 		leftText  = L["settings.about.game-version"],
-		rightText = FormatAboutValue(config.gameVersion or GetBuildInfo(), config.gameFlavor),
+		rightText = FormatAboutValue(ArcaneWizardLibrary.GAME_VERSION, ArcaneWizardLibrary.GAME_FLAVOR),
 		height    = "compact"
 	})
 
@@ -321,6 +321,17 @@ function ArcaneWizardLibrary.Settings:AddAboutSection(layout, config)
 		leftText  = L["settings.about.author"],
 		rightText = config.addonAuthor or ""
 	})
+
+	if config.curseforgeLink and config.curseforgeLink ~= "" then
+		self:AddButton(layout, {
+			name       = L["settings.about.button-curseforge.name"],
+			buttonText = L["settings.about.button-curseforge.button"],
+			tooltip    = L["settings.about.button-curseforge.tooltip"],
+			onClick    = function()
+				ArcaneWizardLibrary.Dialogs:ShowLinkDialog(config.curseforgeLink)
+			end
+		})
+	end
 
 	if config.githubLink and config.githubLink ~= "" then
 		self:AddButton(layout, {
