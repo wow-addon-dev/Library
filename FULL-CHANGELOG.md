@@ -1,3 +1,6 @@
+**v1.14 (2026-06-13)**
+- Added: Addon context API for registration, debug handling, settings category access, chat output, minimap buttons, and AddonCompartment integration
+
 **v1.13 (2026-06-07)**
 - Added: Optional CurseForge link button for the About section
 - Changed: About section now determines game version and game flavor from the library
