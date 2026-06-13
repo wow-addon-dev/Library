@@ -14,6 +14,9 @@ This library provides pre-built solutions for common addon functionalities.
 
 ### Included Functionalities
 
+* **Addon Context**
+	* Registers addon contexts.
+	* Provides addon-dependent helpers for chat/debug output, settings category opening, minimap buttons, and AddonCompartment handlers.
 * **Dialogs**
 	* Link Dialog: Shows a popup with an auto-highlighted text field for easy copying.
 	* Confirmation Dialog: Displays a standard Yes/No prompt to confirm actions and execute callbacks.
