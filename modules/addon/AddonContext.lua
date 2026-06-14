@@ -8,6 +8,9 @@ local _, LIB = ...
 ---@field mainCategoryId number|nil
 ---@field debugEnabled boolean|fun(): boolean
 
+---@class ArcaneWizardLibraryAddonConfig
+---@field debugEnabled boolean|fun(): boolean|nil
+
 local AddonContextMixin = {}
 
 local AddonChat = LIB.Internal.AddonChat
@@ -27,6 +30,9 @@ local function ResolveDebugEnabled(debugEnabled)
 	return debugEnabled == true
 end
 
+---@param addonName string
+---@param config ArcaneWizardLibraryAddonConfig|nil
+---@return ArcaneWizardLibraryAddon context
 local function CreateAddonContext(addonName, config)
 	if addonContexts[addonName] then
 		return addonContexts[addonName]
@@ -132,7 +138,7 @@ end
 --- Creates an addon context.
 ---
 --- @param addonName string The addon name.
---- @param config table|nil Optional context configuration.
+--- @param config ArcaneWizardLibraryAddonConfig|nil Optional context configuration.
 ---
 --- @return ArcaneWizardLibraryAddon context The addon context.
 function ArcaneWizardLibrary:NewAddon(addonName, config)

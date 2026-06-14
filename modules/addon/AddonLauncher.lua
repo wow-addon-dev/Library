@@ -2,6 +2,10 @@ local _, LIB = ...
 
 local AddonLauncher = LIB.Internal.AddonLauncher
 
+-----------------------
+--- Local Functions ---
+-----------------------
+
 local function AddTooltipLines(tooltip, tooltipConfig)
 	if type(tooltipConfig) == "table" then
 		for _, line in ipairs(tooltipConfig) do
@@ -16,7 +20,7 @@ local function ShowTooltip(addon, config, tooltip)
 	GameTooltip_SetTitle(tooltip, addon.name)
 	GameTooltip_AddNormalLine(tooltip, tostring(addon.version or "") .. " (" .. tostring(addon.buildDate or "") .. ")")
 	GameTooltip_AddBlankLineToTooltip(tooltip)
-	AddTooltipLines(tooltip, config.tooltip or config.tooltipText)
+	AddTooltipLines(tooltip, config.tooltip)
 end
 
 local function HandleClick(addon, config, button)
