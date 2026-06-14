@@ -1,3 +1,6 @@
+**v1.15 (2026-06-14)**
+- Minor code adjustments
+
 **v1.14 (2026-06-13)**
 - Added: Addon context API for registration, debug handling, settings category access, chat output, minimap buttons, and AddonCompartment integration
 
