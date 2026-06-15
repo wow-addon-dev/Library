@@ -1,0 +1,16 @@
+:root {
+  --vp-c-brand-1: #6f4fd8;
+  --vp-c-brand-2: #5b43bb;
+  --vp-c-brand-3: #8067df;
+  --vp-c-sponsor: #0f766e;
+}
+
+.VPHomeHero .image-src {
+  max-width: 220px;
+  max-height: 220px;
+}
+
+.vp-doc table {
+  display: table;
+  width: 100%;
+}

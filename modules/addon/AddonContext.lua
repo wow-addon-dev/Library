@@ -1,5 +1,8 @@
 local _, LIB = ...
 
+---@class ArcaneWizardLibraryAddonConfig
+---@field debugEnabled boolean|fun(): boolean|nil
+
 ---@class ArcaneWizardLibraryAddon
 ---@field name string
 ---@field version string|nil
@@ -7,9 +10,13 @@ local _, LIB = ...
 ---@field mediaPath string
 ---@field mainCategoryId number|nil
 ---@field debugEnabled boolean|fun(): boolean
-
----@class ArcaneWizardLibraryAddonConfig
----@field debugEnabled boolean|fun(): boolean|nil
+---@field GetMediaPath fun(self: ArcaneWizardLibraryAddon, fileName: string|nil): string Returns the addon media path or a media file path below it.
+---@field SetMainCategoryId fun(self: ArcaneWizardLibraryAddon, categoryId: number) Stores the Blizzard settings category ID for this addon.
+---@field OpenCategory fun(self: ArcaneWizardLibraryAddon): boolean Opens the stored Blizzard settings category when not blocked by combat lockdown.
+---@field PrintMessage fun(self: ArcaneWizardLibraryAddon, msg: string) Prints a normal addon chat message.
+---@field PrintDebug fun(self: ArcaneWizardLibraryAddon, msg: string) Prints an addon debug message when debug output is enabled.
+---@field RegisterMinimapButton fun(self: ArcaneWizardLibraryAddon, config: table): table Registers a LibDataBroker minimap button for this addon.
+---@field CreateCompartmentHandlers fun(self: ArcaneWizardLibraryAddon, config: table): table Creates AddonCompartment handler functions for this addon.
 
 local AddonContextMixin = {}
 
@@ -52,19 +59,10 @@ local function CreateAddonContext(addonName, config)
 	return context
 end
 
-local function GetAddonContext(addonName)
-	return addonContexts[addonName]
-end
-
 --------------------------
 --- Addon Context API ---
 --------------------------
 
---- Returns the addon media path or a media file path below it.
----
---- @param fileName string|nil Optional media file name below the addon media path.
----
---- @return string mediaPath The addon media path.
 function AddonContextMixin:GetMediaPath(fileName)
 	if fileName and fileName ~= "" then
 		return self.mediaPath .. fileName
@@ -73,16 +71,10 @@ function AddonContextMixin:GetMediaPath(fileName)
 	return self.mediaPath
 end
 
---- Stores the Blizzard settings category ID for this addon.
----
---- @param categoryId number
 function AddonContextMixin:SetMainCategoryId(categoryId)
 	self.mainCategoryId = categoryId
 end
 
---- Opens the stored Blizzard settings category when not blocked by combat lockdown.
----
---- @return boolean opened True when the settings category was opened.
 function AddonContextMixin:OpenCategory()
 	local categoryId = self.mainCategoryId
 
@@ -99,34 +91,18 @@ function AddonContextMixin:OpenCategory()
 	return false
 end
 
---- Prints a normal addon chat message.
----
---- @param msg string Message to print.
 function AddonContextMixin:PrintMessage(msg)
 	AddonChat:PrintMessage(self, msg)
 end
 
---- Prints an addon debug message when debug output is enabled.
----
---- @param msg string Debug message to print.
 function AddonContextMixin:PrintDebug(msg)
 	AddonChat:PrintDebug(self, msg, ResolveDebugEnabled(self.debugEnabled))
 end
 
---- Registers a LibDataBroker minimap button for this addon.
----
---- @param config table Minimap button configuration.
----
---- @return table minimapButton The LibDBIcon instance.
 function AddonContextMixin:RegisterMinimapButton(config)
 	return AddonLauncher:RegisterMinimapButton(self, config)
 end
 
---- Creates AddonCompartment handler functions for this addon.
----
---- @param config table Compartment configuration.
----
---- @return table handlers Handler table with OnEnter, OnLeave, and OnClick functions.
 function AddonContextMixin:CreateCompartmentHandlers(config)
 	return AddonLauncher:CreateCompartmentHandlers(self, config)
 end
@@ -149,7 +125,11 @@ end
 ---
 --- @param addonName string The addon name.
 ---
---- @return ArcaneWizardLibraryAddon|nil context The registered addon context.
+--- @return ArcaneWizardLibraryAddon context The registered addon context.
 function ArcaneWizardLibrary:GetAddon(addonName)
-	return GetAddonContext(addonName)
+	local context = addonContexts[addonName]
+
+	assert(context, "Arcane Wizard: Library (Debug): addon context is not initialized for " .. tostring(addonName))
+
+	return context
 end

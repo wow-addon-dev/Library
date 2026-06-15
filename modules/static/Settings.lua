@@ -38,6 +38,22 @@ local function GetAddonMetadata(addonName, key)
 	return C_AddOns.GetAddOnMetadata(addonName, key)
 end
 
+local function ApplyInitializerConfig(initializer, config)
+	if config.parentInit and config.parentCondition then
+		initializer:SetParentInitializer(config.parentInit, config.parentCondition)
+	end
+
+	if config.shownPredicate then
+		initializer:AddShownPredicate(config.shownPredicate)
+	end
+end
+
+local function ApplySettingConfig(setting, config)
+	if config.onClick then
+		setting:SetValueChangedCallback(config.onClick)
+	end
+end
+
 local function NormalizeAboutConfig(config)
 	if type(config) == "string" then
 		config = {
@@ -47,19 +63,7 @@ local function NormalizeAboutConfig(config)
 		config = config or {}
 	end
 
-	local addonName = config.addonName or config.name
-
-	if config.version and not config.addonVersion then
-		config.addonVersion = config.version
-	end
-
-	if config.buildDate and not config.addonBuildDate then
-		config.addonBuildDate = config.buildDate
-	end
-
-	if config.author and not config.addonAuthor then
-		config.addonAuthor = config.author
-	end
+	local addonName = config.addonName
 
 	if addonName then
 		config.addonVersion = config.addonVersion or GetAddonMetadata(addonName, "Version")
@@ -91,13 +95,7 @@ function ArcaneWizardLibrary.Settings:AddButton(layout, config)
 		true
 	)
 
-	if config.parentInit and config.parentCondition then
-		initializer:SetParentInitializer(config.parentInit, config.parentCondition)
-	end
-
-	if config.shownPredicate then
-		initializer:AddShownPredicate(config.shownPredicate)
-	end
+	ApplyInitializerConfig(initializer, config)
 
 	layout:AddInitializer(initializer)
 
@@ -116,13 +114,7 @@ function ArcaneWizardLibrary.Settings:AddInfoText(layout, config)
 		rightText = config.rightText or "",
 	})
 
-	if config.parentInit and config.parentCondition then
-		initializer:SetParentInitializer(config.parentInit, config.parentCondition)
-	end
-
-	if config.shownPredicate then
-		initializer:AddShownPredicate(config.shownPredicate)
-	end
+	ApplyInitializerConfig(initializer, config)
 
 	local line = layout:AddInitializer(initializer)
 
@@ -144,17 +136,8 @@ function ArcaneWizardLibrary.Settings:AddCheckbox(category, config)
 	local setting = Settings.RegisterAddOnSetting(category, config.settingKey, config.variableName, config.variableTable, Settings.VarType.Boolean, config.name, config.default or false)
 	local initializer = Settings.CreateCheckbox(category, setting, config.tooltip)
 
-	if config.parentInit and config.parentCondition then
-		initializer:SetParentInitializer(config.parentInit, config.parentCondition)
-	end
-
-	if config.shownPredicate then
-		initializer:AddShownPredicate(config.shownPredicate)
-	end
-
-	if config.onClick then
-		setting:SetValueChangedCallback(config.onClick)
-	end
+	ApplyInitializerConfig(initializer, config)
+	ApplySettingConfig(setting, config)
 
 	return initializer, setting
 end
@@ -176,17 +159,8 @@ function ArcaneWizardLibrary.Settings:AddSlider(category, config)
 
 	local initializer = Settings.CreateSlider(category, setting, options, config.tooltip)
 
-	if config.parentInit and config.parentCondition then
-		initializer:SetParentInitializer(config.parentInit, config.parentCondition)
-	end
-
-	if config.shownPredicate then
-		initializer:AddShownPredicate(config.shownPredicate)
-	end
-
-	if config.onClick then
-		setting:SetValueChangedCallback(config.onClick)
-	end
+	ApplyInitializerConfig(initializer, config)
+	ApplySettingConfig(setting, config)
 
 	return initializer, setting
 end
@@ -201,8 +175,7 @@ end
 --- @return table settingCheckbox The registered setting object for the checkbox.
 --- @return table settingSlider The registered setting object for the slider.
 function ArcaneWizardLibrary.Settings:AddCheckboxSliderCombo(category, layout, config)
-	local checkboxVariableName = config.checkboxVariableName or config.checkboxVarName
-	local settingCheckbox = Settings.RegisterAddOnSetting(category, config.checkboxSettingKey, checkboxVariableName, config.variableTable, Settings.VarType.Boolean, config.checkboxName, config.checkboxDefault or false)
+	local settingCheckbox = Settings.RegisterAddOnSetting(category, config.checkboxSettingKey, config.checkboxVariableName, config.variableTable, Settings.VarType.Boolean, config.checkboxName, config.checkboxDefault or false)
 	local settingSlider = Settings.RegisterAddOnSetting(category, config.sliderSettingKey, config.sliderVariableName, config.variableTable, Settings.VarType.Number, config.sliderName, config.sliderDefault or 1)
 	local optionsSlider = Settings.CreateSliderOptions(config.sliderMin or 1, config.sliderMax or 10, config.sliderStep or 1)
 
@@ -213,13 +186,7 @@ function ArcaneWizardLibrary.Settings:AddCheckboxSliderCombo(category, layout, c
 	local initializer = CreateSettingsCheckboxSliderInitializer(settingCheckbox, config.checkboxName, config.checkboxTooltip, settingSlider, optionsSlider, config.sliderName, config.sliderTooltip)
 	initializer.GetSetting = function() return settingCheckbox end
 
-	if config.parentInit and config.parentCondition then
-		initializer:SetParentInitializer(config.parentInit, config.parentCondition)
-	end
-
-	if config.shownPredicate then
-		initializer:AddShownPredicate(config.shownPredicate)
-	end
+	ApplyInitializerConfig(initializer, config)
 
 	layout:AddInitializer(initializer)
 
@@ -249,17 +216,8 @@ function ArcaneWizardLibrary.Settings:AddDropdown(category, config)
 
 	local initializer = Settings.CreateDropdown(category, setting, GetOptions, config.tooltip)
 
-	if config.parentInit and config.parentCondition then
-		initializer:SetParentInitializer(config.parentInit, config.parentCondition)
-	end
-
-	if config.shownPredicate then
-		initializer:AddShownPredicate(config.shownPredicate)
-	end
-
-	if config.onClick then
-		setting:SetValueChangedCallback(config.onClick)
-	end
+	ApplyInitializerConfig(initializer, config)
+	ApplySettingConfig(setting, config)
 
 	return initializer, setting
 end

@@ -12,6 +12,10 @@ This library does not have a standalone interface. Please install this addon onl
 
 This library provides pre-built solutions for common addon functionalities.
 
+### Documentation
+
+Developer documentation is available in the [`docs`](docs/) directory and can be published as a GitHub Pages site.
+
 ### Included Functionalities
 
 * **Addon Context**
