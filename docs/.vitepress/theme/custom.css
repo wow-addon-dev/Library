@@ -14,3 +14,8 @@
   display: table;
   width: 100%;
 }
+
+.dark .vp-doc td code,
+.dark .vp-doc th code {
+  color: #c4b5fd;
+}

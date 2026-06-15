@@ -71,6 +71,19 @@ local addon = ArcaneWizardLibrary:NewAddon(addonName, {
 
 For complete function details, use the API reference. For copy-pasteable addon snippets, use the examples.
 
-## Supported clients
+## Supported clients and languages
 
-The library currently targets Retail, Classic, Burning Crusade Classic Anniversary Edition, and Mists of Pandaria Classic. Supported languages are English, German, and Russian.
+The library currently supports the following clients and languages.
+
+Supported clients:
+
+- Retail
+- Classic
+- Burning Crusade Classic Anniversary Edition
+- Mists of Pandaria Classic
+
+Supported languages:
+
+- English (`enUS`)
+- German (`deDE`)
+- Russian (`ruRU`)

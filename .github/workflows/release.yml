@@ -1,7 +1,7 @@
 name: >
   Publish 'Arcane Wizard: Library'
 run-name: >
-  Publish 'Arcane Wizard: Library' (${{ inputs.release-type || 'Release' }})
+  Publish 'Arcane Wizard: Library' (${{ github.event.inputs.release-type }})
 
 on:
   workflow_dispatch:
