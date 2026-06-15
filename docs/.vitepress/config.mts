@@ -2,12 +2,12 @@ import { defineConfig } from 'vitepress'
 
 export default defineConfig({
   title: 'Arcane Wizard: Library',
-  description: 'Developer documentation for Arcane Wizard: Library.',
+  description: 'Integration documentation for addon developers using Arcane Wizard: Library.',
   base: '/Library/',
   cleanUrls: true,
   lastUpdated: true,
   themeConfig: {
-    logo: '/logo.svg',
+    logo: '/logo.png',
     siteTitle: 'Arcane Wizard: Library',
     search: {
       provider: 'local'
@@ -16,7 +16,7 @@ export default defineConfig({
       { text: 'Guide', link: '/getting-started' },
       { text: 'API', link: '/api/arcane-wizard-library' },
       { text: 'Examples', link: '/examples/basic-addon' },
-      { text: 'Changelog', link: '/changelog' }
+      { text: 'Releases', link: '/releases' }
     ],
     sidebar: [
       {
@@ -24,7 +24,8 @@ export default defineConfig({
         items: [
           { text: 'Overview', link: '/' },
           { text: 'Getting Started', link: '/getting-started' },
-          { text: 'Integration', link: '/integration' }
+          { text: 'Integration', link: '/integration' },
+          { text: 'Releases and Compatibility', link: '/releases' }
         ]
       },
       {
@@ -59,8 +60,8 @@ export default defineConfig({
       { icon: 'github', link: 'https://github.com/wow-addon-dev/Library' }
     ],
     footer: {
-      message: 'Released under the MIT License.',
-      copyright: 'Copyright (c) Arcane Wizard'
+      message: 'All rights reserved.',
+      copyright: 'Copyright (c) 2026 Arcane Wizard'
     }
   }
 })

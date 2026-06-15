@@ -1,6 +1,6 @@
 # Addon Context
 
-The addon context is the central integration object for addons using Arcane Wizard: Library.
+The addon context is the central object your addon receives from Arcane Wizard: Library. Create it once and pass or retrieve it wherever your addon needs shared helpers.
 
 ## Create a context
 
@@ -20,7 +20,7 @@ local addon = ArcaneWizardLibrary:NewAddon("MyAddon", {
 local addon = ArcaneWizardLibrary:GetAddon("MyAddon")
 ```
 
-`GetAddon` asserts if no context exists. Create the context before other modules request it.
+`GetAddon` asserts if no context exists. Create the context in your addon's startup path before other modules request it.
 
 ## Media paths
 
@@ -29,7 +29,7 @@ local assetsPath = addon:GetMediaPath()
 local iconPath = addon:GetMediaPath("icon-round.blp")
 ```
 
-The returned path is based on `Interface\AddOns\<AddonName>\assets\`.
+The returned path is based on your addon's `Interface\AddOns\<AddonName>\assets\` folder.
 
 ## Chat output
 

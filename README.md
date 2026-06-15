@@ -14,7 +14,7 @@ This library provides pre-built solutions for common addon functionalities.
 
 ### Documentation
 
-Developer documentation is available in the [`docs`](docs/) directory and can be published as a GitHub Pages site.
+Developer documentation is available on the documentation website: [wow-addon-dev.github.io/Library](https://wow-addon-dev.github.io/Library/).
 
 ### Included Functionalities
 

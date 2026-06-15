@@ -3,10 +3,10 @@ layout: home
 
 hero:
   name: 'Arcane Wizard: Library'
-  text: Shared WoW addon helpers for addon context, settings, dialogs, and launcher integration.
-  tagline: Developer documentation for building addons on top of ArcaneWizardLibrary.
+  text: Shared WoW addon helpers for your addon.
+  tagline: Integrate addon context, settings, dialogs, minimap buttons, and utility helpers without copying the same boilerplate into every project.
   image:
-    src: /logo.svg
+    src: /logo.png
     alt: Arcane Wizard Library logo
   actions:
     - theme: brand
@@ -18,20 +18,30 @@ hero:
 
 features:
   - title: Addon Context
-    details: Create one reusable context per addon and centralize metadata, media paths, debug output, and settings navigation.
+    details: Create one reusable context for your addon and centralize metadata, media paths, debug output, and settings navigation.
   - title: Settings Wrappers
-    details: Add Blizzard settings rows for checkboxes, sliders, dropdowns, info text, profile controls, and about sections.
+    details: Build Blizzard settings pages with checkboxes, sliders, dropdowns, info rows, profile controls, and about sections.
   - title: Dialog Helpers
-    details: Show copyable link dialogs and confirmation prompts without duplicating StaticPopup setup in every addon.
+    details: Show copyable link dialogs and confirmation prompts from your addon without duplicating StaticPopup setup.
   - title: Launcher Integration
     details: Register LibDataBroker minimap buttons and reuse AddonCompartment handlers with shared tooltip behavior.
 ---
 
-## What this library provides
+## Who this documentation is for
 
-Arcane Wizard: Library is a World of Warcraft addon library for shared developer-facing helpers. It is installed as a normal addon and consumed by other addons through the global `ArcaneWizardLibrary` table.
+This documentation is for World of Warcraft addon developers who want to use Arcane Wizard: Library as a dependency in their own addon.
 
-Use this documentation when you want to integrate the library into another addon, wire a settings page, add standard profile/about sections, show shared dialogs, or register launcher entry points.
+The library is installed as a normal addon and consumed through the global `ArcaneWizardLibrary` table. Your addon declares the dependency, creates an addon context, and then uses the public helper namespaces where they fit.
+
+## What you can build with it
+
+Use the guides and API reference when you want to:
+
+- create an addon context for metadata, asset paths, chat output, and debug output,
+- build Blizzard settings pages with less repeated UI code,
+- add standard profile and about sections,
+- show confirmation or copy-link dialogs,
+- register minimap and AddonCompartment entry points.
 
 ## Supported clients
 

@@ -1,20 +1,22 @@
 # Getting Started
 
-Arcane Wizard: Library is loaded as a required addon dependency. Your addon can then access the global `ArcaneWizardLibrary` table during normal addon initialization.
+This guide assumes you are developing another World of Warcraft addon and want to use Arcane Wizard: Library as a dependency.
+
+After the dependency is loaded, your addon can access the global `ArcaneWizardLibrary` table during normal addon initialization.
 
 ## Add the addon dependency
 
-Add the library to your addon's `.toc` file:
+Add the library to your addon's `.toc` file so WoW loads it before your addon code:
 
 ```text
 ## Dependencies: ArcaneWizardLibrary
 ```
 
-If you publish on CurseForge, also configure the project dependency there so users receive the library automatically.
+If you publish on CurseForge, configure the project dependency there as well so users receive the library automatically.
 
 ## Create an addon context
 
-Create a context once during startup and reuse it from your addon modules:
+Create a context once during startup and reuse it from your addon modules. The context is the object most addon code should depend on:
 
 ```lua
 local addonName = ...
@@ -27,11 +29,11 @@ local addon = AWL:NewAddon(addonName, {
 })
 ```
 
-The context stores addon metadata and provides helpers for asset paths, chat output, settings navigation, minimap buttons, and AddonCompartment handlers.
+The context reads your addon's metadata and provides helpers for asset paths, chat output, settings navigation, minimap buttons, and AddonCompartment handlers.
 
 ## Access public namespaces
 
-The main public namespaces are:
+Use these public namespaces from your addon code:
 
 | Namespace | Purpose |
 | --- | --- |
@@ -42,7 +44,7 @@ The main public namespaces are:
 
 ## Recommended first integration
 
-Start with a context and a small settings category:
+Start with a context and debug-aware output. Add settings, dialogs, and launcher integration once the base context is in place:
 
 ```lua
 local addon = ArcaneWizardLibrary:NewAddon("MyAddon", {

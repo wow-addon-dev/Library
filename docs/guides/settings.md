@@ -1,6 +1,6 @@
 # Settings
 
-`ArcaneWizardLibrary.Settings` contains wrappers around Blizzard's settings API. The helpers register settings, create initializers, and apply common visibility or parent-child behavior.
+`ArcaneWizardLibrary.Settings` contains wrappers around Blizzard's settings API. Use them when your addon needs common settings rows without repeating the same registration and initializer code.
 
 ## Basic category
 
@@ -12,7 +12,7 @@ Settings.RegisterAddOnCategory(category)
 addon:SetMainCategoryId(category:GetID())
 ```
 
-Use the returned `category` for registered controls and the `layout` for custom rows.
+Use the returned `category` for registered controls and the `layout` for custom rows. Store the category ID on your addon context so launcher buttons can open the settings page later.
 
 ## Checkbox
 

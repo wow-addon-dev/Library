@@ -1,10 +1,10 @@
 # Integration
 
-This page documents the expected integration points for addons that depend on Arcane Wizard: Library.
+Use this page when you wire Arcane Wizard: Library into your own addon package.
 
 ## Load order
 
-The library is loaded by World of Warcraft through `ArcaneWizardLibrary.toc`. Public API tables are created in `ArcaneWizardLibrary.lua` and module files are included through `ArcaneWizardLibrary.xml`.
+The library is loaded by World of Warcraft through `ArcaneWizardLibrary.toc`. Your addon should let WoW load the library first and then use the public global during your own startup.
 
 Your addon should declare:
 
@@ -12,17 +12,17 @@ Your addon should declare:
 ## Dependencies: ArcaneWizardLibrary
 ```
 
-Use `## OptionalDeps` only when your addon can run without the library and checks for `ArcaneWizardLibrary` before using it.
+Use `## OptionalDeps` only when your addon can run without the library and checks for `ArcaneWizardLibrary` before calling it. For normal usage, prefer `## Dependencies`.
 
 ## Public global
 
-The public entry point is:
+The public entry point for your addon is:
 
 ```lua
 ArcaneWizardLibrary
 ```
 
-The library currently exposes:
+The library currently exposes these helper namespaces:
 
 ```lua
 ArcaneWizardLibrary.Utils
@@ -32,7 +32,7 @@ ArcaneWizardLibrary.Settings
 
 ## Addon metadata
 
-The library reads standard addon metadata with `C_AddOns.GetAddOnMetadata`. For best results, set these fields in your addon's `.toc`:
+Several helpers read your addon's metadata with `C_AddOns.GetAddOnMetadata`. For best results, set these fields in your addon's `.toc`:
 
 ```text
 ## Version: 1.0.0
@@ -41,14 +41,14 @@ The library reads standard addon metadata with `C_AddOns.GetAddOnMetadata`. For 
 ## X-Curseforge: https://www.curseforge.com/wow/addons/my-addon
 ```
 
-`AddAboutSection` can use this metadata automatically when you pass your addon name.
+`AddAboutSection` can use this metadata automatically when your addon passes its own addon name.
 
 ## Asset convention
 
-Addon contexts assume that addon assets live under:
+Addon contexts assume your addon assets live under:
 
 ```text
 Interface\AddOns\<AddonName>\assets\
 ```
 
-Use `addon:GetMediaPath("file.blp")` to build asset paths consistently.
+Use `addon:GetMediaPath("file.blp")` instead of hardcoding asset paths in multiple addon modules.

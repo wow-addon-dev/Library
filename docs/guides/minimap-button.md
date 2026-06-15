@@ -1,6 +1,6 @@
 # Minimap Button
 
-Addon contexts provide a small wrapper around LibDataBroker and LibDBIcon.
+Addon contexts provide a small wrapper around LibDataBroker and LibDBIcon for addons that need a minimap launcher.
 
 ## Register a minimap button
 
@@ -22,7 +22,7 @@ addon:RegisterMinimapButton({
 })
 ```
 
-Right-click opens the stored settings category through `addon:OpenCategory()`.
+Right-click opens your stored settings category through `addon:OpenCategory()`.
 
 ## Tooltip behavior
 
@@ -47,4 +47,4 @@ local handlers = addon:CreateCompartmentHandlers({
 })
 ```
 
-Assign the returned `OnEnter`, `OnLeave`, and `OnClick` functions to the compartment registration code used by your addon flavor.
+Assign the returned `OnEnter`, `OnLeave`, and `OnClick` functions to the AddonCompartment registration code used by your addon flavor.
