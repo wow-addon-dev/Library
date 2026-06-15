@@ -79,8 +79,8 @@ Supported clients:
 
 - Retail
 - Classic
-- Burning Crusade Classic Anniversary Edition
-- Mists of Pandaria Classic
+- Burning Crusade - Classic Anniversary Edition
+- Mists of Pandaria - Classic
 
 Supported languages:
 
