@@ -5,6 +5,12 @@
   --vp-c-sponsor: #0f766e;
 }
 
+.dark {
+  --vp-c-brand-1: #c4b5fd;
+  --vp-c-brand-2: #a78bfa;
+  --vp-c-brand-3: #8b5cf6;
+}
+
 .VPHomeHero .image-src {
   max-width: 220px;
   max-height: 220px;
@@ -15,7 +21,6 @@
   width: 100%;
 }
 
-.dark .vp-doc td code,
-.dark .vp-doc th code {
-  color: #c4b5fd;
+.dark .vp-doc :not(pre) > code {
+  color: var(--vp-c-brand-1);
 }
