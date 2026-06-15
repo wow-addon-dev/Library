@@ -24,3 +24,18 @@
 .dark .vp-doc :not(pre) > code {
   color: var(--vp-c-brand-1);
 }
+
+.vp-doc h1 code,
+.vp-doc h2 code,
+.vp-doc h3 code,
+.vp-doc h4 code,
+.vp-doc h5 code,
+.vp-doc h6 code,
+.dark .vp-doc h1 code,
+.dark .vp-doc h2 code,
+.dark .vp-doc h3 code,
+.dark .vp-doc h4 code,
+.dark .vp-doc h5 code,
+.dark .vp-doc h6 code {
+  color: inherit;
+}
