@@ -6,7 +6,7 @@ Arcane Wizard: Library is loaded as a required addon dependency. Your addon can 
 
 Add the library to your addon's `.toc` file:
 
-```toc
+```text
 ## Dependencies: ArcaneWizardLibrary
 ```
 

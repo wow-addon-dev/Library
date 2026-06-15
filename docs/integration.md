@@ -8,7 +8,7 @@ The library is loaded by World of Warcraft through `ArcaneWizardLibrary.toc`. Pu
 
 Your addon should declare:
 
-```toc
+```text
 ## Dependencies: ArcaneWizardLibrary
 ```
 
@@ -34,7 +34,7 @@ ArcaneWizardLibrary.Settings
 
 The library reads standard addon metadata with `C_AddOns.GetAddOnMetadata`. For best results, set these fields in your addon's `.toc`:
 
-```toc
+```text
 ## Version: 1.0.0
 ## X-BuildDate: 2026-06-15
 ## X-Github: https://github.com/example/MyAddon

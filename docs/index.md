@@ -2,7 +2,7 @@
 layout: home
 
 hero:
-  name: Arcane Wizard: Library
+  name: 'Arcane Wizard: Library'
   text: Shared WoW addon helpers for addon context, settings, dialogs, and launcher integration.
   tagline: Developer documentation for building addons on top of ArcaneWizardLibrary.
   image:
