@@ -27,9 +27,6 @@ on:
         required: false
         default: true
         type: boolean
-  # schedule:
-  #   # 16. Juni, 18:00 Europe/Berlin (16:00 UTC)
-  #   - cron: "0 16 16 6 *"
 
 permissions: {}
 
@@ -37,9 +34,9 @@ jobs:
   call-blueprint:
     uses: wow-addon-dev/.github/.github/workflows/release_blueprint.yml@main
     with:
-      release-type: ${{ inputs.release-type || 'Release' }}
-      release-tag: ${{ inputs.release-tag || '' }}
-      build: ${{ github.event_name != 'workflow_dispatch' || inputs.build }}
-      full-changelog: ${{ github.event_name != 'workflow_dispatch' || inputs.full-changelog }}
+      release-type: ${{ inputs.release-type }}
+      release-tag: ${{ inputs.release-tag }}
+      build: ${{ inputs.build }}
+      full-changelog: ${{ inputs.full-changelog }}
       cf-project-id: ${{ vars.CF_PROJECT_ID }}
     secrets: inherit
