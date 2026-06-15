@@ -35,4 +35,4 @@ addon:PrintMessage("Loaded.")
 addon:PrintDebug("Debug output is enabled.")
 ```
 
-Use this as a base before adding settings or launcher integration.
+Use this as a base before adding settings or launcher support.

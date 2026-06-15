@@ -2,7 +2,7 @@ import { defineConfig } from 'vitepress'
 
 export default defineConfig({
   title: 'Arcane Wizard: Library',
-  description: 'Integration documentation for addon developers using Arcane Wizard: Library.',
+  description: 'Documentation for addon developers using Arcane Wizard: Library.',
   base: '/Library/',
   cleanUrls: true,
   lastUpdated: true,
@@ -13,35 +13,23 @@ export default defineConfig({
       provider: 'local'
     },
     nav: [
-      { text: 'Guide', link: '/getting-started' },
+      { text: 'Overview', link: '/' },
       { text: 'API', link: '/api/arcane-wizard-library' },
       { text: 'Examples', link: '/examples/basic-addon' },
-      { text: 'Releases', link: '/releases' }
+      { text: 'Changelogs', link: '/changelogs' }
     ],
     sidebar: [
       {
         text: 'Start',
         items: [
           { text: 'Overview', link: '/' },
-          { text: 'Getting Started', link: '/getting-started' },
-          { text: 'Integration', link: '/integration' },
-          { text: 'Releases and Compatibility', link: '/releases' }
-        ]
-      },
-      {
-        text: 'Guides',
-        items: [
-          { text: 'Addon Context', link: '/guides/addon-context' },
-          { text: 'Dialogs', link: '/guides/dialogs' },
-          { text: 'Settings', link: '/guides/settings' },
-          { text: 'Minimap Button', link: '/guides/minimap-button' }
+          { text: 'Changelogs', link: '/changelogs' }
         ]
       },
       {
         text: 'API Reference',
         items: [
           { text: 'ArcaneWizardLibrary', link: '/api/arcane-wizard-library' },
-          { text: 'Addon Context', link: '/api/addon-context' },
           { text: 'Settings', link: '/api/settings' },
           { text: 'Dialogs', link: '/api/dialogs' },
           { text: 'Utils', link: '/api/utils' }

@@ -10,11 +10,11 @@ hero:
     alt: Arcane Wizard Library logo
   actions:
     - theme: brand
-      text: Get Started
-      link: /getting-started
-    - theme: alt
       text: API Reference
       link: /api/arcane-wizard-library
+    - theme: alt
+      text: Examples
+      link: /examples/basic-addon
 
 features:
   - title: Addon Context
@@ -23,7 +23,7 @@ features:
     details: Build Blizzard settings pages with checkboxes, sliders, dropdowns, info rows, profile controls, and about sections.
   - title: Dialog Helpers
     details: Show copyable link dialogs and confirmation prompts from your addon without duplicating StaticPopup setup.
-  - title: Launcher Integration
+  - title: Launcher Support
     details: Register LibDataBroker minimap buttons and reuse AddonCompartment handlers with shared tooltip behavior.
 ---
 
@@ -35,13 +35,33 @@ The library is installed as a normal addon and consumed through the global `Arca
 
 ## What you can build with it
 
-Use the guides and API reference when you want to:
+Use the API reference and examples when you want to:
 
 - create an addon context for metadata, asset paths, chat output, and debug output,
 - build Blizzard settings pages with less repeated UI code,
 - add standard profile and about sections,
 - show confirmation or copy-link dialogs,
 - register minimap and AddonCompartment entry points.
+
+## Using the library
+
+Add Arcane Wizard: Library as a dependency in your addon's `.toc` file:
+
+```text
+## Dependencies: ArcaneWizardLibrary
+```
+
+Your addon can then use the global `ArcaneWizardLibrary` table during startup:
+
+```lua
+local addonName = ...
+
+local addon = ArcaneWizardLibrary:NewAddon(addonName, {
+  debugEnabled = false
+})
+```
+
+For complete function details, use the API reference. For copy-pasteable addon snippets, use the examples.
 
 ## Supported clients
 
