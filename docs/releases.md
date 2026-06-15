@@ -12,14 +12,18 @@ For most addons, declare Arcane Wizard: Library as a required dependency:
 
 This keeps load order predictable and lets your addon call `ArcaneWizardLibrary` during startup without additional nil checks.
 
-## Before updating your addon
+## Compatibility expectations
 
-When you update the library version used by your addon, check:
+Addons should use the documented public API only. Internal files, internal namespaces, and bundled third-party libraries are implementation details and can change between releases.
 
-- whether the public API you call still exists,
-- whether new helper behavior changes your settings or launcher flow,
-- whether the supported WoW flavors match your addon targets,
-- whether the release notes mention migration work for addon developers.
+For addon developers, the relevant compatibility surface is:
+
+- the global `ArcaneWizardLibrary` table,
+- the documented `Utils`, `Dialogs`, and `Settings` namespaces,
+- addon contexts created with `ArcaneWizardLibrary:NewAddon`,
+- the supported WoW flavors listed on the overview page.
+
+Breaking changes and required migration steps are documented in the release notes when they affect addon developers.
 
 ## Where release notes live
 

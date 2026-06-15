@@ -1,4 +1,5 @@
-name: Deploy documentation
+name: >
+  Deploy 'Documentation - Arcane Wizard: Library'
 
 on:
   push:
