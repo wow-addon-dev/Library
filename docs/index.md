@@ -17,21 +17,29 @@ hero:
       link: /examples/basic-addon
 
 features:
-  - title: Addon Context
-    details: Create one reusable context for your addon and centralize metadata, media paths, debug output, and settings navigation.
-  - title: Settings Wrappers
-    details: Build Blizzard settings pages with checkboxes, sliders, dropdowns, info rows, profile controls, and about sections.
-  - title: Dialog Helpers
-    details: Show copyable link dialogs and confirmation prompts from your addon without duplicating StaticPopup setup.
-  - title: Launcher Support
-    details: Register LibDataBroker minimap buttons and reuse AddonCompartment handlers with shared tooltip behavior.
+  - title: Addon API
+    details: Create an addon context with ArcaneWizardLibrary:NewAddon and use context methods for metadata, media paths, chat output, and launcher helpers.
+    link: /api/arcane-wizard-library
+    linkText: Open API
+  - title: Settings Static API
+    details: Call ArcaneWizardLibrary.Settings directly to build Blizzard settings pages with buttons, info rows, controls, sections, and about rows.
+    link: /api/settings
+    linkText: Open API
+  - title: Dialogs Static API
+    details: Call ArcaneWizardLibrary.Dialogs directly to show reusable link-copy and confirmation dialogs.
+    link: /api/dialogs
+    linkText: Open API
+  - title: Utils Static API
+    details: Call ArcaneWizardLibrary.Utils directly for deep table copies and current character or realm keys.
+    link: /api/utils
+    linkText: Open API
 ---
 
 ## Who this documentation is for
 
 This documentation is for World of Warcraft addon developers who want to use Arcane Wizard: Library as a dependency in their own addon.
 
-The library is installed as a normal addon and consumed through the global `ArcaneWizardLibrary` table. Your addon declares the dependency, creates an addon context, and then uses the public helper namespaces where they fit.
+The library is installed as a normal addon and consumed through the global `ArcaneWizardLibrary` table. Your addon declares the dependency and creates an addon context for addon-specific behavior. `Settings`, `Dialogs`, and `Utils` are static namespaces that are called directly.
 
 ## What you can build with it
 
@@ -41,7 +49,7 @@ Use the API reference and examples when you want to:
 - build Blizzard settings pages with less repeated UI code,
 - add standard profile and about sections,
 - show confirmation or copy-link dialogs,
-- register minimap and AddonCompartment entry points.
+- use utility helpers for tables and character keys.
 
 ## Using the library
 

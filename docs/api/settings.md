@@ -1,6 +1,8 @@
-# Settings API
+# Settings Static API
 
-`ArcaneWizardLibrary.Settings` wraps common Blizzard settings UI patterns.
+`ArcaneWizardLibrary.Settings` is a static namespace. Call these helpers directly through `ArcaneWizardLibrary.Settings`; they are not methods on an addon context.
+
+The namespace wraps common Blizzard settings UI patterns.
 
 ## Shared config keys
 

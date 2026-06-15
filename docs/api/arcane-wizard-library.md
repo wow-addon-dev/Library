@@ -1,6 +1,8 @@
-# ArcaneWizardLibrary API
+# Addon API
 
-`ArcaneWizardLibrary` is the public global exposed by the library.
+`ArcaneWizardLibrary` is the public global exposed by the library. This page covers the addon-specific API: create an addon context, then call methods on the returned `addon` object.
+
+`ArcaneWizardLibrary.Settings`, `ArcaneWizardLibrary.Dialogs`, and `ArcaneWizardLibrary.Utils` are static namespaces and are documented on their own API pages.
 
 ## Metadata
 

@@ -1,6 +1,8 @@
-# Dialogs API
+# Dialogs Static API
 
-`ArcaneWizardLibrary.Dialogs` exposes reusable popup helpers.
+`ArcaneWizardLibrary.Dialogs` is a static namespace. Call these helpers directly through `ArcaneWizardLibrary.Dialogs`; they are not methods on an addon context.
+
+The namespace exposes reusable popup helpers.
 
 ## `ShowLinkDialog(address)`
 

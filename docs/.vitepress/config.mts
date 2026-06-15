@@ -16,23 +16,23 @@ export default defineConfig({
       { text: 'Overview', link: '/' },
       { text: 'API', link: '/api/arcane-wizard-library' },
       { text: 'Examples', link: '/examples/basic-addon' },
-      { text: 'Changelogs', link: '/changelogs' }
+      { text: 'Changelog', link: '/changelog' }
     ],
     sidebar: [
       {
         text: 'Start',
         items: [
           { text: 'Overview', link: '/' },
-          { text: 'Changelogs', link: '/changelogs' }
+          { text: 'Changelog', link: '/changelog' }
         ]
       },
       {
         text: 'API Reference',
         items: [
-          { text: 'ArcaneWizardLibrary', link: '/api/arcane-wizard-library' },
-          { text: 'Settings', link: '/api/settings' },
-          { text: 'Dialogs', link: '/api/dialogs' },
-          { text: 'Utils', link: '/api/utils' }
+          { text: 'Addon API', link: '/api/arcane-wizard-library' },
+          { text: 'Settings Static API', link: '/api/settings' },
+          { text: 'Dialogs Static API', link: '/api/dialogs' },
+          { text: 'Utils Static API', link: '/api/utils' }
         ]
       },
       {

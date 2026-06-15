@@ -1,6 +1,8 @@
-# Utils API
+# Utils Static API
 
-`ArcaneWizardLibrary.Utils` contains general helper functions.
+`ArcaneWizardLibrary.Utils` is a static namespace. Call these helpers directly through `ArcaneWizardLibrary.Utils`; they are not methods on an addon context.
+
+The namespace contains general helper functions.
 
 ## `CopyTable(source)`
 

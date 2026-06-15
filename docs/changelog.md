@@ -1,4 +1,4 @@
-# Changelogs
+# Changelog
 
 Release notes and full changelog history are maintained in the repository:
 
