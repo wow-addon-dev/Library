@@ -9,12 +9,6 @@ export default defineConfig({
   themeConfig: {
     logo: '/logo.png',
     siteTitle: 'Arcane Wizard: Library',
-    lastUpdated: {
-      text: 'Last updated',
-      formatOptions: {
-        dateStyle: 'medium'
-      }
-    },
     search: {
       provider: 'local'
     },
@@ -54,7 +48,7 @@ export default defineConfig({
       { icon: 'github', link: 'https://github.com/wow-addon-dev/Library' }
     ],
     footer: {
-      message: 'All rights reserved.',
+      message: 'Released under the MIT License.',
       copyright: 'Copyright (c) 2026 Arcane Wizard'
     }
   }

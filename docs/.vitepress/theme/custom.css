@@ -21,11 +21,6 @@
   width: 100%;
 }
 
-.home-last-updated {
-  color: var(--vp-c-text-2);
-  font-size: 14px;
-}
-
 .dark .vp-doc :not(pre) > code {
   color: var(--vp-c-brand-1);
 }
