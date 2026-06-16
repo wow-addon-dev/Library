@@ -35,6 +35,27 @@ features:
     linkText: Open API
 ---
 
+<script setup lang="ts">
+import { computed } from 'vue'
+import { useData } from 'vitepress'
+
+const { page } = useData()
+
+const formattedLastUpdated = computed(() => {
+  const timestamp = page.value.lastUpdated
+
+  return timestamp
+    ? new Intl.DateTimeFormat('en-US', { dateStyle: 'medium' }).format(new Date(timestamp))
+    : ''
+})
+
+const machineLastUpdated = computed(() => {
+  const timestamp = page.value.lastUpdated
+
+  return timestamp ? new Date(timestamp).toISOString() : ''
+})
+</script>
+
 ## Who this documentation is for
 
 This documentation is for World of Warcraft addon developers who want to use Arcane Wizard: Library as a dependency in their own addon.
@@ -87,3 +108,7 @@ Supported languages:
 - English (`enUS`)
 - German (`deDE`)
 - Russian (`ruRU`)
+
+<p v-if="formattedLastUpdated" class="home-last-updated">
+  Last updated: <time :datetime="machineLastUpdated">{{ formattedLastUpdated }}</time>
+</p>

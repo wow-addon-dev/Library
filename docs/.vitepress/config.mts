@@ -9,6 +9,12 @@ export default defineConfig({
   themeConfig: {
     logo: '/logo.png',
     siteTitle: 'Arcane Wizard: Library',
+    lastUpdated: {
+      text: 'Last updated',
+      formatOptions: {
+        dateStyle: 'medium'
+      }
+    },
     search: {
       provider: 'local'
     },
