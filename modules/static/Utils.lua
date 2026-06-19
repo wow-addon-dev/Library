@@ -7,6 +7,8 @@ local _, LIB = ...
 --- Creates a deep copy of a table.
 ---
 --- Copies nested table values recursively.
+--- Intended for plain, acyclic SavedVariables-style tables.
+--- Metatables are not preserved and cyclic references are not supported.
 ---
 --- @param source table The table to copy.
 ---

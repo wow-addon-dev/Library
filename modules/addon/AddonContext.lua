@@ -79,6 +79,7 @@ function AddonContextMixin:OpenCategory()
 	local categoryId = self.mainCategoryId
 
 	if not categoryId then
+		self:PrintDebug("No Options Category ID defined. The options menu cannot be opened.")
 		return false
 	end
 

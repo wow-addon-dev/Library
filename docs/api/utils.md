@@ -12,6 +12,8 @@ Creates a deep copy of a table by recursively copying nested tables.
 local copy = ArcaneWizardLibrary.Utils:CopyTable(original)
 ```
 
+This helper is intended for plain, acyclic SavedVariables-style tables. It does not preserve metatables and does not detect reference cycles.
+
 ## `GetCharacterAndRealm()`
 
 Returns the current character name and realm name.
@@ -20,6 +22,8 @@ Returns the current character name and realm name.
 local characterName, realmName = ArcaneWizardLibrary.Utils:GetCharacterAndRealm()
 ```
 
+Use this helper when the character and realm are needed as separate values.
+
 ## `GetCharacterRealmKey()`
 
 Returns a stable character-realm key in the format `CharacterName#RealmName`.
@@ -27,3 +31,5 @@ Returns a stable character-realm key in the format `CharacterName#RealmName`.
 ```lua
 local key = ArcaneWizardLibrary.Utils:GetCharacterRealmKey()
 ```
+
+This helper intentionally returns only the combined key. Use `GetCharacterAndRealm()` when you need separate `characterName` and `realmName` values.
