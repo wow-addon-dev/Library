@@ -5,7 +5,7 @@ This example shows the minimum setup for an addon that depends on Arcane Wizard:
 ## `MyAddon.toc`
 
 ```text
-## Interface: 120007
+## Interface: 120100
 ## Title: My Addon
 ## Author: Your Name
 ## Version: 1.0.0
