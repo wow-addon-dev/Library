@@ -27,14 +27,12 @@
 | `ArcaneWizardLibrary.Dialogs` | Static popup helpers. |
 | `ArcaneWizardLibrary.Settings` | Blizzard settings helpers. |
 
-## `ArcaneWizardLibrary:NewAddon(addonName, config)`
+## `ArcaneWizardLibrary:NewAddon(addonName)`
 
 Creates or returns the addon context for `addonName`. This context is the main object a consuming addon uses for addon-specific helpers.
 
 ```lua
-local addon = ArcaneWizardLibrary:NewAddon("MyAddon", {
-  debugEnabled = false
-})
+local addon = ArcaneWizardLibrary:NewAddon("MyAddon")
 ```
 
 ### Parameters
@@ -42,8 +40,6 @@ local addon = ArcaneWizardLibrary:NewAddon("MyAddon", {
 | Name | Type | Required | Description |
 | --- | --- | --- | --- |
 | `addonName` | `string` | Yes | The addon's folder name. |
-| `config` | `table` | No | Optional context configuration. |
-| `config.debugEnabled` | `boolean \| function` | No | Enables debug output or resolves it dynamically. |
 
 ### Returns
 
@@ -61,7 +57,7 @@ This function asserts if no context has been created for the given addon name.
 
 ## Addon context
 
-Addon contexts are created with `ArcaneWizardLibrary:NewAddon(addonName, config)` and returned by `ArcaneWizardLibrary:GetAddon(addonName)`.
+Addon contexts are created with `ArcaneWizardLibrary:NewAddon(addonName)` and returned by `ArcaneWizardLibrary:GetAddon(addonName)`.
 
 ### Fields
 
@@ -72,7 +68,6 @@ Addon contexts are created with `ArcaneWizardLibrary:NewAddon(addonName, config)
 | `buildDate` | `string \| nil` | Addon build date from `X-BuildDate`. |
 | `mediaPath` | `string` | Base path to the addon's `assets` folder. |
 | `mainCategoryId` | `number \| nil` | Stored Blizzard settings category ID. |
-| `debugEnabled` | `boolean \| function` | Debug output state or resolver function. |
 
 ### `addon:GetMediaPath(fileName)`
 
@@ -94,15 +89,9 @@ addon:SetMainCategoryId(category:GetID())
 
 Opens the stored settings category when combat lockdown does not block it.
 
-Returns `true` when the category was opened and `false` otherwise.
+Returns `true` when the category was opened and `false` when combat lockdown blocks opening the options menu.
 
-### `addon:PrintMessage(msg)`
-
-Prints a normal addon chat message.
-
-### `addon:PrintDebug(msg)`
-
-Prints a debug message only when debug output is enabled.
+This function asserts when no category ID has been stored with `SetMainCategoryId`, because that indicates an addon integration error.
 
 ### `addon:RegisterMinimapButton(config)`
 

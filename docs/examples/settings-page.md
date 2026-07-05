@@ -11,11 +11,7 @@ MyAddonDB = MyAddonDB or {
   mode = "compact"
 }
 
-local addon = ArcaneWizardLibrary:NewAddon(addonName, {
-  debugEnabled = function()
-    return MyAddonDB.debug
-  end
-})
+local addon = ArcaneWizardLibrary:NewAddon(addonName)
 
 local category, layout = Settings.RegisterVerticalLayoutCategory("My Addon")
 Settings.RegisterAddOnCategory(category)

@@ -18,7 +18,7 @@ hero:
 
 features:
   - title: Addon API
-    details: Create an addon context with ArcaneWizardLibrary:NewAddon and use context methods for metadata, media paths, chat output, and launcher helpers.
+    details: Create an addon context with ArcaneWizardLibrary:NewAddon and use context methods for metadata, media paths, settings category opening, and launcher helpers.
     link: /api/arcane-wizard-library
     linkText: Open API
   - title: Settings Static API
@@ -45,7 +45,7 @@ The library is installed as a normal addon and consumed through the global `Arca
 
 Use the API reference and examples when you want to:
 
-- create an addon context for metadata, asset paths, chat output, and debug output,
+- create an addon context for metadata, asset paths, settings category opening, and launcher helpers,
 - build Blizzard settings pages with less repeated UI code,
 - add standard profile and about sections,
 - show confirmation or copy-link dialogs,
@@ -64,9 +64,7 @@ Your addon can then use the global `ArcaneWizardLibrary` table during startup:
 ```lua
 local addonName = ...
 
-local addon = ArcaneWizardLibrary:NewAddon(addonName, {
-  debugEnabled = false
-})
+local addon = ArcaneWizardLibrary:NewAddon(addonName)
 ```
 
 For complete function details, use the API reference. For copy-pasteable addon snippets, use the examples.
