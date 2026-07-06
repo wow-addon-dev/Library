@@ -1,3 +1,6 @@
+**v1.19 (2026-07-06)**
+- Removed: Addon context chat and debug output helpers
+
 **v1.18 (2026-07-04)**
 - Added: TOC version for patch 12.1.0 [retail]
 - Added: TOC version for patch 2.5.6 [burning crusade - classic anniversary edition]
