@@ -39,21 +39,41 @@ function AddonLauncher:RegisterMinimapButton(addon, config)
 	config = config or {}
 
 	local iconFileName = config.iconFileName or "icon-round.blp"
+	local dataBroker = LibStub("LibDataBroker-1.1")
+	local dataObject = dataBroker:GetDataObjectByName(addon.name)
 
-	local LDB = LibStub("LibDataBroker-1.1"):NewDataObject(addon.name, {
-		type = "launcher",
-		text = addon.name,
-		icon = addon:GetMediaPath(iconFileName),
-		OnClick = function(_, button)
-			HandleClick(addon, config, button)
-		end,
-		OnTooltipShow = function(tooltip)
-			ShowTooltip(addon, config, tooltip)
-		end,
-	})
+	local text = addon.name
+	local icon = addon:GetMediaPath(iconFileName)
+	local onClick = function(_, button)
+		HandleClick(addon, config, button)
+	end
+	local onTooltipShow = function(tooltip)
+		ShowTooltip(addon, config, tooltip)
+	end
+
+	if dataObject then
+		dataObject.text = text
+		dataObject.icon = icon
+		dataObject.OnClick = onClick
+		dataObject.OnTooltipShow = onTooltipShow
+	else
+		dataObject = dataBroker:NewDataObject(addon.name, {
+			type = "launcher",
+			text = text,
+			icon = icon,
+			OnClick = onClick,
+			OnTooltipShow = onTooltipShow,
+		})
+	end
 
 	local minimapButton = LibStub("LibDBIcon-1.0")
-	minimapButton:Register(addon.name, LDB, config.db)
+
+	if minimapButton:IsRegistered(addon.name) then
+		minimapButton:Refresh(addon.name, config.db)
+		return minimapButton
+	end
+
+	minimapButton:Register(addon.name, dataObject, config.db)
 
 	return minimapButton
 end
