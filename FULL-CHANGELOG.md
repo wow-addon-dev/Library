@@ -1,3 +1,6 @@
+**v1.20 (2026-07-09)**
+- Minor code adjustments
+
 **v1.19 (2026-07-06)**
 - Removed: Addon context chat and debug output helpers
 
