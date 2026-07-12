@@ -70,6 +70,7 @@ local function NormalizeAboutConfig(config)
 		config.addonBuildDate = config.addonBuildDate or GetAddonMetadata(addonName, "X-BuildDate")
 		config.addonAuthor = config.addonAuthor or GetAddonMetadata(addonName, "Author")
 		config.curseforgeLink = config.curseforgeLink or GetAddonMetadata(addonName, "X-Curseforge")
+		config.wagoLink = config.wagoLink or GetAddonMetadata(addonName, "X-Wago")
 		config.githubLink = config.githubLink or GetAddonMetadata(addonName, "X-Github")
 	end
 
@@ -293,7 +294,7 @@ end
 --- Adds a standard About section to the settings layout.
 ---
 --- @param layout table The layout object to append the initializers to.
---- @param addonNameOrConfig string|table Addon name or configuration table. Optional table keys: addonName, addonVersion, addonBuildDate, addonAuthor, curseforgeLink, githubLink.
+--- @param addonNameOrConfig string|table Addon name or configuration table. Optional table keys: addonName, addonVersion, addonBuildDate, addonAuthor, curseforgeLink, wagoLink, githubLink.
 function ArcaneWizardLibrary.Settings:AddAboutSection(layout, addonNameOrConfig)
 	local config = NormalizeAboutConfig(addonNameOrConfig)
 
@@ -329,6 +330,17 @@ function ArcaneWizardLibrary.Settings:AddAboutSection(layout, addonNameOrConfig)
 			tooltip    = L["settings.about.button-curseforge.tooltip"],
 			onClick    = function()
 				ArcaneWizardLibrary.Dialogs:ShowLinkDialog(config.curseforgeLink)
+			end
+		})
+	end
+
+	if config.wagoLink and config.wagoLink ~= "" then
+		self:AddButton(layout, {
+			name       = L["settings.about.button-wago.name"],
+			buttonText = L["settings.about.button-wago.button"],
+			tooltip    = L["settings.about.button-wago.tooltip"],
+			onClick    = function()
+				ArcaneWizardLibrary.Dialogs:ShowLinkDialog(config.wagoLink)
 			end
 		})
 	end

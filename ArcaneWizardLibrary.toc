@@ -1,4 +1,4 @@
-## Interface: 120100, 120007, 50504, 50503, 20506, 20505, 11508
+## Interface: 120100, 120007, 50504, 20506, 20505, 11508
 ## Title: Arcane Wizard: Library
 ## Author: Arcane Wizard | created by diomsg
 
@@ -16,6 +16,7 @@
 ## X-E-Mail: feedback@wow-addon.dev
 ## X-Github: https://github.com/wow-addon-dev/Library
 ## X-Curseforge: https://www.curseforge.com/wow/addons/arcane-wizard-library
+## X-Wago: https://addons.wago.io/addons/arcane-wizard-library
 
 ArcaneWizardLibrary.lua
 ArcaneWizardLibrary.xml

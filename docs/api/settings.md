@@ -116,6 +116,7 @@ ArcaneWizardLibrary.Settings:AddAboutSection(layout, {
   addonBuildDate = "2026-06-15",
   addonAuthor = "Arcane Wizard",
   curseforgeLink = "https://www.curseforge.com/wow/addons/my-addon",
+  wagoLink = "https://addons.wago.io/addons/my-addon",
   githubLink = "https://github.com/example/MyAddon"
 })
 ```
