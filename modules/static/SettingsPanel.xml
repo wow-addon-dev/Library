@@ -6,6 +6,7 @@
 		<Layers>
 			<Layer level="OVERLAY">
 				<FontString parentKey="LeftText" inherits="GameFontNormal" justifyH="LEFT" justifyV="TOP">
+					<Size x="230" />
 					<Anchors>
 						<Anchor point="TOPLEFT" x="37" y="-8" />
 					</Anchors>

@@ -18,7 +18,25 @@ end
 
 local function ShowTooltip(addon, config, tooltip)
 	GameTooltip_SetTitle(tooltip, addon.name)
-	GameTooltip_AddNormalLine(tooltip, tostring(addon.version or "") .. " (" .. tostring(addon.buildDate or "") .. ")")
+
+	local version = addon.version
+	local buildDate = addon.buildDate
+	local metadata
+
+	if version and version ~= "" then
+		metadata = tostring(version)
+
+		if buildDate and buildDate ~= "" then
+			metadata = metadata .. " (" .. tostring(buildDate) .. ")"
+		end
+	elseif buildDate and buildDate ~= "" then
+		metadata = tostring(buildDate)
+	end
+
+	if metadata then
+		GameTooltip_AddNormalLine(tooltip, metadata)
+	end
+
 	GameTooltip_AddBlankLineToTooltip(tooltip)
 	AddTooltipLines(tooltip, config.tooltip)
 end
@@ -52,6 +70,7 @@ function AddonLauncher:RegisterMinimapButton(addon, config)
 	end
 
 	if dataObject then
+		dataObject.type = "launcher"
 		dataObject.text = text
 		dataObject.icon = icon
 		dataObject.OnClick = onClick
