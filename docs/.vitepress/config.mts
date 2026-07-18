@@ -49,8 +49,8 @@ export default defineConfig({
       { icon: 'github', link: 'https://github.com/wow-addon-dev/Library' }
     ],
     footer: {
-      message: 'Released under the MIT License.',
-      copyright: 'Copyright (c) 2026 Arcane Wizard'
+      message: 'Built with <a href="https://vitepress.dev/">VitePress</a> (MIT License).',
+      copyright: 'Copyright (c) 2026 Arcane Wizard. All rights reserved.'
     }
   }
 })
