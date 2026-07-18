@@ -1,3 +1,6 @@
+**v1.22 (2026-07-18)**
+- Minor code adjustments
+
 **v1.21 (2026-07-12)**
 - Added: Wago project page support
 - Removed: TOC version for patch 5.5.3 [mists of pandaria - classic]
