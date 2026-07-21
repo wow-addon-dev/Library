@@ -5,7 +5,7 @@
 - Minor code adjustments
 
 **v1.21 (2026-07-12)**
-- Added: Wago project page support
+- Added: Optional Wago link button for the About section
 - Removed: TOC version for patch 5.5.3 [mists of pandaria - classic]
 - Removed: TOC version for patch 2.5.5 [burning crusade - classic anniversary edition]
 
