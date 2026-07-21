@@ -97,6 +97,22 @@ This function asserts when no category ID has been stored with `SetMainCategoryI
 
 Registers a LibDataBroker minimap button and returns the LibDBIcon instance.
 
+The launcher tooltip shows the addon name and includes `version` and `buildDate` when the corresponding optional addon metadata is available. Missing metadata is omitted.
+
+| Config field | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `db` | `table` | No | None | LibDBIcon configuration table used to store visibility and minimap position. |
+| `tooltip` | `string \| string[]` | No | None | One tooltip line or a list of tooltip lines displayed below the addon metadata. |
+| `iconFileName` | `string` | No | `icon-round.blp` | File name below the addon's `assets` folder used as the launcher icon. |
+| `onLeftClick` | `function` | No | None | Callback invoked when the launcher is left-clicked. A right-click opens the addon's settings category. |
+
 ### `addon:CreateCompartmentHandlers(config)`
 
 Creates a table with `OnEnter`, `OnLeave`, and `OnClick` handlers for AddonCompartment integration.
+
+The AddonCompartment tooltip uses the same optional `version` and `buildDate` metadata as the minimap launcher.
+
+| Config field | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `tooltip` | `string \| string[]` | No | None | One tooltip line or a list of tooltip lines displayed below the addon metadata. |
+| `onLeftClick` | `function` | No | None | Callback invoked when the compartment entry is left-clicked. A right-click opens the addon's settings category. |
