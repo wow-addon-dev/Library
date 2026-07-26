@@ -15,8 +15,8 @@
 | `GAME_VERSION` | `string` | Current WoW build string from `GetBuildInfo()`. |
 | `GAME_FLAVOR` | `string` | Human-readable flavor name. |
 | `GAME_TYPE_VANILLA` | `boolean` | `true` on Classic Era. |
-| `GAME_TYPE_TBC` | `boolean` | `true` on Burning Crusade Classic Anniversary Edition. |
-| `GAME_TYPE_MISTS` | `boolean` | `true` on Mists of Pandaria Classic. |
+| `GAME_TYPE_TBC` | `boolean` | `true` on Burning Crusade - Classic Anniversary Edition. |
+| `GAME_TYPE_MISTS` | `boolean` | `true` on Mists of Pandaria - Classic. |
 | `GAME_TYPE_MAINLINE` | `boolean` | `true` on Retail. |
 
 ## Namespaces

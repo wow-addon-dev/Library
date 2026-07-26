@@ -20,7 +20,7 @@ Developer documentation is available on the documentation website: [wow-addon-de
 
 * **Addon Context**
 	* Registers addon contexts.
-	* Provides addon-dependent helpers for settings category opening, minimap buttons, and AddonCompartment handlers.
+	* Provides addon-dependent helpers for settings category opening, minimap buttons, AddonCompartment handlers, and update notices.
 * **Dialogs**
 	* Link Dialog: Shows a popup with an auto-highlighted text field for easy copying.
 	* Confirmation Dialog: Displays a standard Yes/No prompt to confirm actions and execute callbacks.
@@ -43,10 +43,10 @@ Developer documentation is available on the documentation website: [wow-addon-de
 
 2.  Set the dependency on the CurseForge project page to ensure users download it automatically.
 
-## Supported Languages & Flavors
+## Supported Clients & Languages
 
-* Languages: English, German, Russian
-* Flavors: Classic, Burning Crusade - Classic Anniversary Edition, Mists of Pandaria - Classic, Retail
+* Clients: Retail, Classic, Burning Crusade - Classic Anniversary Edition, Mists of Pandaria - Classic
+* Languages: English (`enUS`), German (`deDE`), Russian (`ruRU`)
 
 ## Bugs & Feedback
 
