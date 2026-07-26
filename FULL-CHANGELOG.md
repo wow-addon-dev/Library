@@ -1,3 +1,8 @@
+**v1.24 (2026-07-26)**
+- Added: TOC version for patch 1.15.9 [classic]
+- Added: Boolean-controlled update notice chat messages for new addon versions
+- Removed: TOC version for patch 1.15.8 [classic]
+
 **v1.23 (2026-07-21)**
 - Minor code adjustments
 
