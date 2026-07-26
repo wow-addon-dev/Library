@@ -8,6 +8,10 @@ local L = LIB.Localization
 
 L["dialog.link.text"] = "Um den Link zu kopieren, drücke STRG + C."
 
+-- Chat
+
+L["chat.update-notice"] = "Eine neue Version wurde installiert: %s. Sie enthält neue Funktionen oder wichtige Änderungen. Bitte lies das Changelog für weitere Informationen."
+
 -- Profiles
 
 L["settings.profiles.section-header"] = "Profile"

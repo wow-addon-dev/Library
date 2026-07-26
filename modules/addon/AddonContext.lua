@@ -11,10 +11,12 @@ local _, LIB = ...
 ---@field OpenCategory fun(self: ArcaneWizardLibraryAddon): boolean Opens the stored Blizzard settings category when not blocked by combat lockdown.
 ---@field RegisterMinimapButton fun(self: ArcaneWizardLibraryAddon, config: table): table Registers a LibDataBroker minimap button for this addon.
 ---@field CreateCompartmentHandlers fun(self: ArcaneWizardLibraryAddon, config: table): table Creates AddonCompartment handler functions for this addon.
+---@field ShowUpdateNotice fun(self: ArcaneWizardLibraryAddon, show: boolean): boolean Shows an update notice in chat for the addon's current version when enabled.
 
 local AddonContextMixin = {}
 
 local AddonLauncher = LIB.Internal.AddonLauncher
+local AddonUpdateNotice = LIB.Internal.AddonUpdateNotice
 
 local addonContexts = {}
 
@@ -73,6 +75,10 @@ end
 
 function AddonContextMixin:CreateCompartmentHandlers(config)
 	return AddonLauncher:CreateCompartmentHandlers(self, config)
+end
+
+function AddonContextMixin:ShowUpdateNotice(show)
+	return AddonUpdateNotice:Show(self, show)
 end
 
 ------------------------

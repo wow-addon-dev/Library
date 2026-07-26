@@ -93,6 +93,18 @@ Returns `true` when the category was opened and `false` when combat lockdown blo
 
 This function asserts when no category ID has been stored with `SetMainCategoryId`, because that indicates an addon integration error.
 
+### `addon:ShowUpdateNotice(show)`
+
+Writes a localized update notice to the chat for the addon's current `.toc` version when `show` is `true`.
+
+```lua
+if addon:ShowUpdateNotice(MyAddonDB.showUpdateNotice) then
+  MyAddonDB.showUpdateNotice = false
+end
+```
+
+The function returns `true` when the chat message was written and `false` when `show` is `false`. The consuming addon is responsible for deciding when the Boolean becomes `true` and for storing its state in account-wide SavedVariables.
+
 ### `addon:RegisterMinimapButton(config)`
 
 Registers a LibDataBroker minimap button and returns the LibDBIcon instance.

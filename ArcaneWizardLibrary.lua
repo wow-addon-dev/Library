@@ -2,6 +2,7 @@ local addonName, LIB = ...
 
 LIB.Internal = LIB.Internal or {}
 LIB.Internal.AddonLauncher = {}
+LIB.Internal.AddonUpdateNotice = {}
 
 ArcaneWizardLibrary = ArcaneWizardLibrary or {}
 
