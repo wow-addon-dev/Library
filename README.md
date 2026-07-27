@@ -46,7 +46,7 @@ Developer documentation is available on the documentation website: [wow-addon-de
 
 ## Supported Languages & Flavors
 
-* Languages: English (`enUS`), German (`deDE`), Russian (`ruRU`)
+* Languages: English, German, Russian
 * Flavors: Classic, Burning Crusade - Classic Anniversary Edition, Mists of Pandaria - Classic, Retail
 
 ## Bugs & Feedback
