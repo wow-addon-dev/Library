@@ -20,7 +20,8 @@ Developer documentation is available on the documentation website: [wow-addon-de
 
 * **Addon Context**
 	* Registers addon contexts.
-	* Provides addon-dependent helpers for settings category opening, minimap buttons, AddonCompartment handlers, and update notices.
+	* Provides addon-dependent helpers for settings category opening, minimap buttons, and AddonCompartment handlers.
+	* ![New](https://raw.githubusercontent.com/wow-addon-dev/.github/main/assets/badges/new.png) Provides boolean-controlled update notice chat messages for new addon versions.
 * **Dialogs**
 	* Link Dialog: Shows a popup with an auto-highlighted text field for easy copying.
 	* Confirmation Dialog: Displays a standard Yes/No prompt to confirm actions and execute callbacks.
