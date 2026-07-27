@@ -44,10 +44,10 @@ Developer documentation is available on the documentation website: [wow-addon-de
 
 2.  Set the dependency on the CurseForge project page to ensure users download it automatically.
 
-## Supported Clients & Languages
+## Supported Languages & Flavors
 
-* Clients: Retail, Classic, Burning Crusade - Classic Anniversary Edition, Mists of Pandaria - Classic
 * Languages: English (`enUS`), German (`deDE`), Russian (`ruRU`)
+* Flavors: Classic, Burning Crusade - Classic Anniversary Edition, Mists of Pandaria - Classic, Retail
 
 ## Bugs & Feedback
 
