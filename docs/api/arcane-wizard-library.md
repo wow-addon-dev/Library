@@ -41,6 +41,8 @@ local addon = ArcaneWizardLibrary:NewAddon("MyAddon")
 | --- | --- | --- | --- |
 | `addonName` | `string` | Yes | The addon's folder name. |
 
+This function asserts if `addonName` is not a non-empty string.
+
 ### Returns
 
 `ArcaneWizardLibraryAddon`

@@ -91,6 +91,8 @@ end
 ---
 --- @return ArcaneWizardLibraryAddon context The addon context.
 function ArcaneWizardLibrary:NewAddon(addonName)
+	assert(type(addonName) == "string" and addonName ~= "", "Arcane Wizard: Library (Debug): No addon name defined.")
+
 	return CreateAddonContext(addonName)
 end
 
