@@ -12,10 +12,6 @@ This library does not have a standalone interface. Please install this addon onl
 
 This library provides pre-built solutions for common addon functionalities.
 
-### Documentation
-
-Developer documentation is available on the documentation website: [wow-addon-dev.github.io/Library](https://wow-addon-dev.github.io/Library/).
-
 ### Included Functionalities
 
 * **Addon Context**
