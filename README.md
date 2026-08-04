@@ -12,15 +12,23 @@ This library does not have a standalone interface. Please install this addon onl
 
 This library provides pre-built solutions for common addon functionalities.
 
+### Documentation
+
+Developer documentation is available on the documentation website: [wow-addon-dev.github.io/Library](https://wow-addon-dev.github.io/Library/).
+
 ### Included Functionalities
 
 * **Addon Context**
 	* Registers addon contexts.
 	* Provides addon-dependent helpers for settings category opening, minimap buttons, and AddonCompartment handlers.
-	* <sup>✨ NEW</sup> Provides boolean-controlled update notice chat messages for new addon versions.
+	* Provides boolean-controlled update notice chat messages for new addon versions.
 * **Dialogs**
 	* Link Dialog: Shows a popup with an auto-highlighted text field for easy copying.
 	* Confirmation Dialog: Displays a standard Yes/No prompt to confirm actions and execute callbacks.
+* **Controls**
+	* <sup>✨ NEW</sup> Provides consistently styled action buttons, checkboxes, and option groups across supported game versions.
+* **Windows**
+	* <sup>✨ NEW</sup> Provides consistently styled, movable windows and compact popups with configurable backgrounds, borders, portraits, and close buttons.
 * **Utilities**
 	* Provides helper methods for common addon values, such as character keys and split character/realm values.
 	* Includes a deep table copy helper.

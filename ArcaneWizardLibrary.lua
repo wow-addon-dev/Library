@@ -10,7 +10,9 @@ local AWL = ArcaneWizardLibrary
 
 AWL.Utils = {}
 AWL.Dialogs = {}
+AWL.Controls = {}
 AWL.Settings = {}
+AWL.Windows = {}
 
 AWL.ADDON_AUTHOR = C_AddOns.GetAddOnMetadata(addonName, "Author")
 AWL.ADDON_VERSION = C_AddOns.GetAddOnMetadata(addonName, "Version")

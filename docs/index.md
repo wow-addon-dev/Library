@@ -4,7 +4,7 @@ layout: home
 hero:
   name: 'Arcane Wizard: Library'
   text: Shared WoW addon helpers for your addon.
-  tagline: Integrate addon context, settings, dialogs, minimap buttons, and utility helpers without copying the same boilerplate into every project.
+  tagline: Integrate addon context, settings, dialogs, buttons, controls, windows, minimap buttons, and utility helpers without copying the same boilerplate into every project.
   image:
     src: /logo.png
     alt: Arcane Wizard Library logo
@@ -29,6 +29,18 @@ features:
     details: Call ArcaneWizardLibrary.Dialogs directly to show reusable link-copy and confirmation dialogs.
     link: /api/dialogs
     linkText: Open API
+  - title: Button Templates
+    details: Create consistent close buttons and scalable action buttons with Library-owned artwork on every supported client.
+    link: /api/buttons
+    linkText: Open API
+  - title: Controls Static API
+    details: Create consistently styled checkboxes and mutually exclusive option groups with Library-owned artwork.
+    link: /api/controls
+    linkText: Open API
+  - title: Windows Static API
+    details: Create consistently styled scalable windows and compact popups with optional close buttons.
+    link: /api/windows
+    linkText: Open API
   - title: Utils Static API
     details: Call ArcaneWizardLibrary.Utils directly for deep table copies and current character or realm keys.
     link: /api/utils
@@ -39,7 +51,7 @@ features:
 
 This documentation is for World of Warcraft addon developers who want to use Arcane Wizard: Library as a dependency in their own addon.
 
-The library is installed as a normal addon and consumed through the global `ArcaneWizardLibrary` table. Your addon declares the dependency and creates an addon context for addon-specific behavior. `Settings`, `Dialogs`, and `Utils` are static namespaces that are called directly.
+The library is installed as a normal addon and consumed through the global `ArcaneWizardLibrary` table. Your addon declares the dependency and creates an addon context for addon-specific behavior. `Settings`, `Dialogs`, `Controls`, `Windows`, and `Utils` are static namespaces that are called directly.
 
 ## What you can build with it
 
@@ -49,6 +61,8 @@ Use the API reference and examples when you want to:
 - build Blizzard settings pages with less repeated UI code,
 - add standard profile and about sections,
 - show confirmation or copy-link dialogs,
+- create consistent close buttons, scalable action buttons, checkboxes, and option groups,
+- create reusable large windows and compact popups,
 - use utility helpers for tables and character keys.
 
 ## Using the library

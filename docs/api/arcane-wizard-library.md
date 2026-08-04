@@ -2,7 +2,11 @@
 
 `ArcaneWizardLibrary` is the public global exposed by the library. This page covers the addon-specific API: create an addon context, then call methods on the returned `addon` object.
 
-`ArcaneWizardLibrary.Settings`, `ArcaneWizardLibrary.Dialogs`, and `ArcaneWizardLibrary.Utils` are static namespaces and are documented on their own API pages.
+`ArcaneWizardLibrary.Settings`, `ArcaneWizardLibrary.Dialogs`, `ArcaneWizardLibrary.Controls`, `ArcaneWizardLibrary.Windows`, and `ArcaneWizardLibrary.Utils` are static namespaces and are documented on their own API pages.
+
+Reusable close-button and action-button XML templates are documented under [Button Templates](./buttons).
+
+Reusable checkboxes and option groups are documented under [Controls Static API](./controls).
 
 ## Metadata
 
@@ -25,7 +29,9 @@
 | --- | --- |
 | `ArcaneWizardLibrary.Utils` | General utility helpers. |
 | `ArcaneWizardLibrary.Dialogs` | Static popup helpers. |
+| `ArcaneWizardLibrary.Controls` | Consistently styled selection controls. |
 | `ArcaneWizardLibrary.Settings` | Blizzard settings helpers. |
+| `ArcaneWizardLibrary.Windows` | Scalable window and popup helpers. |
 
 ## `ArcaneWizardLibrary:NewAddon(addonName)`
 

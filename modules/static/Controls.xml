@@ -1,0 +1,26 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+	<CheckButton name="ArcaneWizardLibrary_CheckboxTemplate" mixin="ArcaneWizardLibrary_SelectionControlMixin" virtual="true">
+		<Size x="180" y="22" />
+		<Scripts>
+			<OnLoad>self:OnLoad("checkbox")</OnLoad>
+			<OnSizeChanged>self:OnSizeChanged()</OnSizeChanged>
+			<OnEnter>self:OnEnter()</OnEnter>
+			<OnLeave>self:OnLeave()</OnLeave>
+			<OnEnable>self:OnEnable()</OnEnable>
+			<OnDisable>self:OnDisable()</OnDisable>
+		</Scripts>
+	</CheckButton>
+
+	<CheckButton name="ArcaneWizardLibrary_OptionButtonTemplate" mixin="ArcaneWizardLibrary_SelectionControlMixin" virtual="true">
+		<Size x="180" y="22" />
+		<Scripts>
+			<OnLoad>self:OnLoad("option")</OnLoad>
+			<OnSizeChanged>self:OnSizeChanged()</OnSizeChanged>
+			<OnEnter>self:OnEnter()</OnEnter>
+			<OnLeave>self:OnLeave()</OnLeave>
+			<OnEnable>self:OnEnable()</OnEnable>
+			<OnDisable>self:OnDisable()</OnDisable>
+		</Scripts>
+	</CheckButton>
+</Ui>
