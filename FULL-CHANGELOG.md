@@ -1,3 +1,6 @@
+**v1.26 (2026-08-04)**
+- Added: Reusable UI elements - Windows, popups, buttons, checkboxes, and option groups with consistent styling across supported game versions
+
 **v1.25 (2026-07-27)**
 - Minor code adjustments
 
