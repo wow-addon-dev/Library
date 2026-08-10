@@ -3,32 +3,104 @@ local _, LIB = ...
 local texturePath = "Interface\\AddOns\\ArcaneWizardLibrary\\assets\\controls\\"
 
 LIB.ControlData = {
-	height = 22,
-	minimumWidth = 44,
-	iconSize = 18,
-	textOffset = 24,
-	optionSpacing = 4,
-	textColors = {
-		normal = { 1, 0.82, 0.15 },
-		highlight = { 1, 0.92, 0.35 },
-		disabled = { 0.45, 0.44, 0.42 }
+	button = {
+		height = 22,
+		minimumWidth = 44,
+		defaultWidth = 100,
+		capWidth = 11,
+		states = {
+			normal = {
+				texture = texturePath .. "button-normal.tga",
+				text = { 1, 0.82, 0.15 }
+			},
+			highlight = {
+				texture = texturePath .. "button-highlight.tga",
+				text = { 1, 0.92, 0.35 }
+			},
+			pushed = {
+				texture = texturePath .. "button-pushed.tga",
+				text = { 0.95, 0.72, 0.12 }
+			},
+			disabled = {
+				texture = texturePath .. "button-disabled.tga",
+				text = { 0.45, 0.44, 0.42 }
+			}
+		}
 	},
-	textures = {
-		checkbox = {
-			normal = texturePath .. "checkbox-normal.tga",
-			pushed = texturePath .. "checkbox-pushed.tga",
-			disabled = texturePath .. "checkbox-disabled.tga",
-			highlight = texturePath .. "checkbox-highlight.tga",
-			checked = texturePath .. "checkbox-checked.tga",
-			disabledChecked = texturePath .. "checkbox-disabled-checked.tga"
+	selection = {
+		height = 22,
+		minimumWidth = 44,
+		iconSize = 18,
+		textOffset = 24,
+		optionSpacing = 4,
+		textColors = {
+			normal = { 1, 0.82, 0.15 },
+			highlight = { 1, 0.92, 0.35 },
+			disabled = { 0.45, 0.44, 0.42 }
 		},
-		option = {
-			normal = texturePath .. "option-normal.tga",
-			pushed = texturePath .. "option-pushed.tga",
-			disabled = texturePath .. "option-disabled.tga",
-			highlight = texturePath .. "option-highlight.tga",
-			checked = texturePath .. "option-checked.tga",
-			disabledChecked = texturePath .. "option-disabled-checked.tga"
+		textures = {
+			checkbox = {
+				normal = texturePath .. "checkbox-normal.tga",
+				pushed = texturePath .. "checkbox-pushed.tga",
+				disabled = texturePath .. "checkbox-disabled.tga",
+				highlight = texturePath .. "checkbox-highlight.tga",
+				checked = texturePath .. "checkbox-checked.tga",
+				disabledChecked = texturePath .. "checkbox-disabled-checked.tga"
+			},
+			option = {
+				normal = texturePath .. "option-normal.tga",
+				pushed = texturePath .. "option-pushed.tga",
+				disabled = texturePath .. "option-disabled.tga",
+				highlight = texturePath .. "option-highlight.tga",
+				checked = texturePath .. "option-checked.tga",
+				disabledChecked = texturePath .. "option-disabled-checked.tga"
+			}
+		}
+	},
+	dropdown = {
+		height = 25,
+		minimumWidth = 80,
+		capWidth = 8,
+		arrowSize = 19,
+		textLeftInset = 10,
+		textRightInset = 30,
+		menuPadding = 4,
+		menuRowHeight = 22,
+		menuDividerHeight = 8,
+		menuMaximumHeight = 286,
+		menuMaximumWidth = 320,
+		menuScrollStep = 22,
+		submenuSpacing = 2,
+		menuIconSize = 16,
+		menuIndicatorSize = 14,
+		menuTextColors = {
+			normal = { 0.92, 0.90, 0.84 },
+			highlight = { 1, 0.86, 0.25 },
+			disabled = { 0.45, 0.44, 0.42 }
+		},
+		menuColors = {
+			background = { 0.035, 0.035, 0.032, 0.98 },
+			border = { 0.48, 0.46, 0.42, 1 },
+			highlight = { 0.34, 0.27, 0.10, 0.75 },
+			divider = { 0.34, 0.33, 0.30, 1 },
+			scrollTrack = { 0.18, 0.18, 0.17, 1 },
+			scrollThumb = { 0.58, 0.55, 0.49, 1 }
+		},
+		textColors = {
+			normal = { 1, 0.82, 0.15 },
+			highlight = { 1, 0.92, 0.35 },
+			disabled = { 0.45, 0.44, 0.42 }
+		},
+		textures = {
+			normal = texturePath .. "dropdown-normal.tga",
+			highlight = texturePath .. "dropdown-highlight.tga",
+			pushed = texturePath .. "dropdown-pushed.tga",
+			disabled = texturePath .. "dropdown-disabled.tga",
+			arrowNormal = texturePath .. "dropdown-arrow-normal.tga",
+			arrowHighlight = texturePath .. "dropdown-arrow-highlight.tga",
+			arrowPushed = texturePath .. "dropdown-arrow-pushed.tga",
+			arrowDisabled = texturePath .. "dropdown-arrow-disabled.tga",
+			submenuArrow = texturePath .. "submenu-arrow.tga"
 		}
 	}
 }

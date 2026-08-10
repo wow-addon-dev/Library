@@ -1,0 +1,36 @@
+local AWL = ArcaneWizardLibrary
+
+local frame = AWL.Frames:CreateWindow("Scroll Frame Backgrounds (Strong Shadow)", 620, 420, true, 1, true, "solid-dark", false, "strong-shadow")
+frame.background:SetColorTexture(0.14, 0.14, 0.13, 1)
+frame:ClearAllPoints()
+frame:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 672, -252)
+
+local examples = {
+	{ label = "Transparent / Borderless", style = "transparent", showBorder = false, left = 8, top = 10 },
+	{ label = "Solid / Black / Framed", style = "solid-black", showBorder = true, left = 308, top = 10 },
+	{ label = "Solid / Title Color / Borderless", style = "solid-title", showBorder = false, left = 8, top = 194 },
+	{ label = "Pattern / Framed", style = "pattern", showBorder = true, left = 308, top = 194 }
+}
+
+local rowHeight = 22
+local rowCount = 10
+for _, example in ipairs(examples) do
+	local scrollArea = AWL.ScrollFrames:CreateScrollFrame(frame.content, 284, 166, example.showBorder, 1, example.style)
+	scrollArea:SetPoint("TOPLEFT", example.left, -example.top)
+
+	for index = 1, rowCount do
+		local label = scrollArea.content:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
+		label:SetPoint("TOPLEFT", 8, -((index - 1) * rowHeight + 4))
+		label:SetText(index == 1 and example.label or "Scrollable row " .. index)
+
+		local divider = scrollArea.content:CreateTexture(nil, "ARTWORK")
+		divider:SetColorTexture(0.35, 0.33, 0.29, 0.55)
+		divider:SetHeight(1)
+		divider:SetPoint("TOPLEFT", 8, -(index * rowHeight))
+		divider:SetPoint("TOPRIGHT", -8, -(index * rowHeight))
+	end
+
+	scrollArea:SetContentHeight(rowCount * rowHeight + 1)
+end
+
+frame:Show()

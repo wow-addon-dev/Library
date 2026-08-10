@@ -2,11 +2,9 @@
 
 `ArcaneWizardLibrary` is the public global exposed by the library. This page covers the addon-specific API: create an addon context, then call methods on the returned `addon` object.
 
-`ArcaneWizardLibrary.Settings`, `ArcaneWizardLibrary.Dialogs`, `ArcaneWizardLibrary.Controls`, `ArcaneWizardLibrary.Windows`, and `ArcaneWizardLibrary.Utils` are static namespaces and are documented on their own API pages.
+`ArcaneWizardLibrary.Settings`, `ArcaneWizardLibrary.Dialogs`, `ArcaneWizardLibrary.Controls`, `ArcaneWizardLibrary.Frames`, `ArcaneWizardLibrary.ScrollFrames`, and `ArcaneWizardLibrary.Utils` are static namespaces and are documented on their own API pages.
 
-Reusable close-button and action-button XML templates are documented under [Button Templates](./buttons).
-
-Reusable checkboxes and option groups are documented under [Controls Static API](./controls).
+Reusable buttons, checkboxes, option groups, and dropdown menus are documented under [Controls Static API](./controls).
 
 ## Metadata
 
@@ -29,9 +27,10 @@ Reusable checkboxes and option groups are documented under [Controls Static API]
 | --- | --- |
 | `ArcaneWizardLibrary.Utils` | General utility helpers. |
 | `ArcaneWizardLibrary.Dialogs` | Static popup helpers. |
-| `ArcaneWizardLibrary.Controls` | Consistently styled selection controls. |
+| `ArcaneWizardLibrary.Controls` | Consistently styled buttons and selection controls. |
+| `ArcaneWizardLibrary.ScrollFrames` | Scroll areas with window backgrounds and custom vertical scrollbars. |
 | `ArcaneWizardLibrary.Settings` | Blizzard settings helpers. |
-| `ArcaneWizardLibrary.Windows` | Scalable window and popup helpers. |
+| `ArcaneWizardLibrary.Frames` | Scalable window, popup, and window-tab helpers. |
 
 ## `ArcaneWizardLibrary:NewAddon(addonName)`
 

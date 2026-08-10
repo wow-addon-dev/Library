@@ -1,7 +1,14 @@
 local _, LIB = ...
 
 local ControlData = LIB.ControlData
+local ButtonData = ControlData.button
+local SelectionData = ControlData.selection
 local DEBUG_PREFIX = "Arcane Wizard: Library (Debug): "
+
+---@class ArcaneWizardLibraryActionButton: Button
+---@field Left Texture
+---@field Center Texture
+---@field Right Texture
 
 ---@class ArcaneWizardLibrarySelectionControl: CheckButton
 ---@field Text FontString Control label.
@@ -17,6 +24,7 @@ local DEBUG_PREFIX = "Arcane Wizard: Library (Debug): "
 ---@field value string|number|boolean Currently selected value.
 ---@field enabled boolean Whether the option group is enabled.
 
+ArcaneWizardLibrary_ActionButtonMixin = {}
 ArcaneWizardLibrary_SelectionControlMixin = {}
 
 -----------------------
@@ -28,7 +36,7 @@ local function ConfigureTexture(control, setterName, getterName, texturePath, bl
 
 	local texture = control[getterName](control)
 	texture:ClearAllPoints()
-	texture:SetSize(ControlData.iconSize, ControlData.iconSize)
+	texture:SetSize(SelectionData.iconSize, SelectionData.iconSize)
 	texture:SetPoint("LEFT")
 	texture:SetTexelSnappingBias(0)
 	texture:SetSnapToPixelGrid(false)
@@ -39,7 +47,7 @@ local function ConfigureTexture(control, setterName, getterName, texturePath, bl
 end
 
 local function ConfigureTextures(control, controlStyle)
-	local textures = ControlData.textures[controlStyle]
+	local textures = SelectionData.textures[controlStyle]
 	ConfigureTexture(control, "SetNormalTexture", "GetNormalTexture", textures.normal)
 	ConfigureTexture(control, "SetPushedTexture", "GetPushedTexture", textures.pushed)
 	ConfigureTexture(control, "SetDisabledTexture", "GetDisabledTexture", textures.disabled)
@@ -50,7 +58,7 @@ end
 
 local function AssertControlParameters(parent, width, label, onValueChanged, methodName)
 	assert(parent ~= nil, DEBUG_PREFIX .. methodName .. " parent is required.")
-	assert(type(width) == "number" and width >= ControlData.minimumWidth, DEBUG_PREFIX .. methodName .. " width must be at least " .. ControlData.minimumWidth .. ".")
+	assert(type(width) == "number" and width >= SelectionData.minimumWidth, DEBUG_PREFIX .. methodName .. " width must be at least " .. SelectionData.minimumWidth .. ".")
 	assert(type(label) == "string" and label ~= "", DEBUG_PREFIX .. methodName .. " label must be a non-empty string.")
 	assert(onValueChanged == nil or type(onValueChanged) == "function", DEBUG_PREFIX .. methodName .. " onValueChanged must be a function or nil.")
 end
@@ -79,6 +87,94 @@ local function ValidateOptions(options, selectedValue)
 	assert(selectedValueExists, DEBUG_PREFIX .. "CreateOptionGroup selectedValue must match an option value.")
 end
 
+local function GetButtonState(button)
+	if not button:IsEnabled() then
+		return ButtonData.states.disabled
+	elseif button.isPushed then
+		return ButtonData.states.pushed
+	elseif button.isHighlighted then
+		return ButtonData.states.highlight
+	end
+
+	return ButtonData.states.normal
+end
+
+local function UpdateButtonAfterClick(button)
+	button.isPushed = false
+	button.isHighlighted = true
+	button:UpdateVisualState()
+end
+
+--------------------
+--- Button Mixin ---
+--------------------
+
+function ArcaneWizardLibrary_ActionButtonMixin:UpdateVisualState()
+	local state = GetButtonState(self)
+	self.Left:SetTexture(state.texture)
+	self.Center:SetTexture(state.texture)
+	self.Right:SetTexture(state.texture)
+
+	local text = self:GetFontString()
+	text:SetTextColor(unpack(state.text))
+end
+
+function ArcaneWizardLibrary_ActionButtonMixin:OnLoad()
+	self:SetHeight(ButtonData.height)
+	self:SetPushedTextOffset(0, -1)
+	self:RegisterForClicks("LeftButtonUp")
+	self:HookScript("OnClick", UpdateButtonAfterClick)
+	self:UpdateVisualState()
+end
+
+function ArcaneWizardLibrary_ActionButtonMixin:OnSizeChanged()
+	local width = self:GetWidth()
+	local height = self:GetHeight()
+
+	if width and width < ButtonData.minimumWidth then
+		self:SetWidth(ButtonData.minimumWidth)
+	end
+
+	if height and height ~= ButtonData.height then
+		self:SetHeight(ButtonData.height)
+	end
+end
+
+function ArcaneWizardLibrary_ActionButtonMixin:OnEnter()
+	self.isHighlighted = true
+	self:UpdateVisualState()
+end
+
+function ArcaneWizardLibrary_ActionButtonMixin:OnLeave()
+	self.isHighlighted = false
+	self.isPushed = false
+	self:UpdateVisualState()
+end
+
+function ArcaneWizardLibrary_ActionButtonMixin:OnMouseDown(button)
+	if button == "LeftButton" and self:IsEnabled() then
+		self.isPushed = true
+		self:UpdateVisualState()
+	end
+end
+
+function ArcaneWizardLibrary_ActionButtonMixin:OnMouseUp(button)
+	if button == "LeftButton" then
+		self.isPushed = false
+		self.isHighlighted = self:IsMouseOver()
+		self:UpdateVisualState()
+	end
+end
+
+function ArcaneWizardLibrary_ActionButtonMixin:OnEnable()
+	self:UpdateVisualState()
+end
+
+function ArcaneWizardLibrary_ActionButtonMixin:OnDisable()
+	self.isPushed = false
+	self:UpdateVisualState()
+end
+
 ---------------------
 --- Control Mixin ---
 ---------------------
@@ -91,11 +187,11 @@ function ArcaneWizardLibrary_SelectionControlMixin:UpdateTextColor()
 
 	local textColor
 	if not self:IsEnabled() then
-		textColor = ControlData.textColors.disabled
+		textColor = SelectionData.textColors.disabled
 	elseif self.isHighlighted then
-		textColor = ControlData.textColors.highlight
+		textColor = SelectionData.textColors.highlight
 	else
-		textColor = ControlData.textColors.normal
+		textColor = SelectionData.textColors.normal
 	end
 
 	text:SetTextColor(unpack(textColor))
@@ -103,11 +199,11 @@ end
 
 function ArcaneWizardLibrary_SelectionControlMixin:OnLoad(controlStyle)
 	self.controlStyle = controlStyle
-	self:SetHeight(ControlData.height)
+	self:SetHeight(SelectionData.height)
 	self:RegisterForClicks("LeftButtonUp")
 
 	local text = self:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-	text:SetPoint("LEFT", ControlData.textOffset, 0)
+	text:SetPoint("LEFT", SelectionData.textOffset, 0)
 	text:SetPoint("RIGHT")
 	text:SetJustifyH("LEFT")
 	self.Text = text
@@ -121,12 +217,12 @@ function ArcaneWizardLibrary_SelectionControlMixin:OnSizeChanged()
 	local width = self:GetWidth()
 	local height = self:GetHeight()
 
-	if width and width < ControlData.minimumWidth then
-		self:SetWidth(ControlData.minimumWidth)
+	if width and width < SelectionData.minimumWidth then
+		self:SetWidth(SelectionData.minimumWidth)
 	end
 
-	if height and height ~= ControlData.height then
-		self:SetHeight(ControlData.height)
+	if height and height ~= SelectionData.height then
+		self:SetHeight(SelectionData.height)
 	end
 end
 
@@ -152,6 +248,31 @@ end
 ------------------------
 --- Public Functions ---
 ------------------------
+
+--- Creates a consistently styled action button.
+---
+--- @param parent Frame Parent frame for the button.
+--- @param width number Button width in pixels.
+--- @param label string Displayed button label.
+--- @param onClick? fun(button: ArcaneWizardLibraryActionButton, mouseButton: string, down: boolean) Called when the button is clicked.
+---
+--- @return ArcaneWizardLibraryActionButton button The created button.
+function ArcaneWizardLibrary.Controls:CreateButton(parent, width, label, onClick)
+	assert(parent ~= nil, DEBUG_PREFIX .. "CreateButton parent is required.")
+	assert(type(width) == "number" and width >= ButtonData.minimumWidth, DEBUG_PREFIX .. "CreateButton width must be at least " .. ButtonData.minimumWidth .. ".")
+	assert(type(label) == "string" and label ~= "", DEBUG_PREFIX .. "CreateButton label must be a non-empty string.")
+	assert(onClick == nil or type(onClick) == "function", DEBUG_PREFIX .. "CreateButton onClick must be a function or nil.")
+
+	local button = CreateFrame("Button", nil, parent, "ArcaneWizardLibrary_ActionButtonTemplate")
+	button:SetWidth(width)
+	button:SetText(label)
+
+	if onClick then
+		button:SetScript("OnClick", onClick)
+	end
+
+	return button
+end
 
 --- Creates a consistently styled checkbox.
 ---
@@ -191,12 +312,12 @@ end
 --- @return ArcaneWizardLibraryOptionGroup group The created option group.
 function ArcaneWizardLibrary.Controls:CreateOptionGroup(parent, width, options, selectedValue, onValueChanged)
 	assert(parent ~= nil, DEBUG_PREFIX .. "CreateOptionGroup parent is required.")
-	assert(type(width) == "number" and width >= ControlData.minimumWidth, DEBUG_PREFIX .. "CreateOptionGroup width must be at least " .. ControlData.minimumWidth .. ".")
+	assert(type(width) == "number" and width >= SelectionData.minimumWidth, DEBUG_PREFIX .. "CreateOptionGroup width must be at least " .. SelectionData.minimumWidth .. ".")
 	assert(onValueChanged == nil or type(onValueChanged) == "function", DEBUG_PREFIX .. "CreateOptionGroup onValueChanged must be a function or nil.")
 	ValidateOptions(options, selectedValue)
 
 	local optionCount = #options
-	local groupHeight = optionCount * ControlData.height + (optionCount - 1) * ControlData.optionSpacing
+	local groupHeight = optionCount * SelectionData.height + (optionCount - 1) * SelectionData.optionSpacing
 	local group = CreateFrame("Frame", nil, parent)
 	group:SetSize(width, groupHeight)
 	group.buttons = {}
@@ -233,7 +354,7 @@ function ArcaneWizardLibrary.Controls:CreateOptionGroup(parent, width, options, 
 	for index, option in ipairs(options) do
 		local button = CreateFrame("CheckButton", nil, group, "ArcaneWizardLibrary_OptionButtonTemplate")
 		button:SetWidth(width)
-		button:SetPoint("TOPLEFT", 0, -(index - 1) * (ControlData.height + ControlData.optionSpacing))
+		button:SetPoint("TOPLEFT", 0, -(index - 1) * (SelectionData.height + SelectionData.optionSpacing))
 		button:SetText(option.label)
 		button.value = option.value
 		button:SetScript("OnClick", function(clickedButton)

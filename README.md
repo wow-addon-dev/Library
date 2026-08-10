@@ -25,10 +25,14 @@ Developer documentation is available on the documentation website: [wow-addon-de
 * **Dialogs**
 	* Link Dialog: Shows a popup with an auto-highlighted text field for easy copying.
 	* Confirmation Dialog: Displays a standard Yes/No prompt to confirm actions and execute callbacks.
+* **Frames**
+	* <sup>✨ NEW</sup> Windows: Provides consistently styled, movable windows with configurable backgrounds, borders, portraits, and close buttons.
+	* <sup>✨ NEW</sup> Window Tabs: Provides bottom text tabs with automatically managed content pages.
+	* <sup>✨ NEW</sup> Popups: Provides compact popups with configurable backgrounds, borders, and close buttons.
+* **Scroll Frames**
+	* <sup>✨ NEW</sup> Provides scroll areas with transparent, solid, or patterned backgrounds, optional borders, custom vertical scrollbars, and mouse-wheel support across supported game versions.
 * **Controls**
-	* <sup>✨ NEW</sup> Provides consistently styled action buttons, checkboxes, and option groups across supported game versions.
-* **Windows**
-	* <sup>✨ NEW</sup> Provides consistently styled, movable windows and compact popups with configurable backgrounds, borders, portraits, and close buttons.
+	* <sup>✨ NEW</sup> Provides consistently styled action buttons, checkboxes, option groups, and dropdown menus across supported game versions.
 * **Utilities**
 	* Provides helper methods for common addon values, such as character keys and split character/realm values.
 	* Includes a deep table copy helper.

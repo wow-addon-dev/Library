@@ -33,9 +33,9 @@ export default defineConfig({
           { text: 'Addon API', link: '/api/arcane-wizard-library' },
           { text: 'Settings Static API', link: '/api/settings' },
           { text: 'Dialogs Static API', link: '/api/dialogs' },
-          { text: 'Button Templates', link: '/api/buttons' },
           { text: 'Controls Static API', link: '/api/controls' },
-          { text: 'Windows Static API', link: '/api/windows' },
+          { text: 'Scroll Frames Static API', link: '/api/scroll-frames' },
+          { text: 'Frames Static API', link: '/api/frames' },
           { text: 'Utils Static API', link: '/api/utils' }
         ]
       },

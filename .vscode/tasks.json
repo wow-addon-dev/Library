@@ -25,6 +25,97 @@
         "focus": false,
         "panel": "shared"
       }
+    },
+    {
+      "label": "Build WoW Addon - Arcane Wizard: Library (Select)",
+      "type": "shell",
+      "command": "pwsh",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "${workspaceFolder}\\..\\release-script\\local-build\\build-addon.ps1",
+        "-ProjectRoot",
+        "${workspaceFolder}",
+        "-SelectLibraryTestData"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Build WoW Addon - Arcane Wizard: Library (Frame Examples)",
+      "type": "shell",
+      "command": "pwsh",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "${workspaceFolder}\\..\\release-script\\local-build\\build-addon.ps1",
+        "-ProjectRoot",
+        "${workspaceFolder}",
+        "-LibraryTestDataFile",
+        "FrameExamples.lua"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Build WoW Addon - Arcane Wizard: Library (Control Examples)",
+      "type": "shell",
+      "command": "pwsh",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "${workspaceFolder}\\..\\release-script\\local-build\\build-addon.ps1",
+        "-ProjectRoot",
+        "${workspaceFolder}",
+        "-LibraryTestDataFile",
+        "ControlExamples.lua"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Build WoW Addon - Arcane Wizard: Library (Scroll Frame Examples)",
+      "type": "shell",
+      "command": "pwsh",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "${workspaceFolder}\\..\\release-script\\local-build\\build-addon.ps1",
+        "-ProjectRoot",
+        "${workspaceFolder}",
+        "-LibraryTestDataFile",
+        "ScrollFrameExamples.lua"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      }
     }
   ]
 }

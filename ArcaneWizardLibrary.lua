@@ -11,8 +11,9 @@ local AWL = ArcaneWizardLibrary
 AWL.Utils = {}
 AWL.Dialogs = {}
 AWL.Controls = {}
+AWL.ScrollFrames = {}
 AWL.Settings = {}
-AWL.Windows = {}
+AWL.Frames = {}
 
 AWL.ADDON_AUTHOR = C_AddOns.GetAddOnMetadata(addonName, "Author")
 AWL.ADDON_VERSION = C_AddOns.GetAddOnMetadata(addonName, "Version")

@@ -1,8 +1,8 @@
-# Windows Static API
+# Frames Static API
 
-`ArcaneWizardLibrary.Windows` creates consistently styled addon windows from the library's scalable textures.
+`ArcaneWizardLibrary.Frames` creates consistently styled addon frames. It provides large windows, compact popups, and window tab groups from the library's scalable textures.
 
-Both methods return standard WoW frames. The frames are centered and hidden after creation, allowing the consuming addon to add controls before calling `Show()`.
+Window and popup methods return standard WoW frames. The frames are centered and hidden after creation, allowing the consuming addon to add controls before calling `Show()`.
 
 Close buttons use Library's own artwork and therefore look identical across supported game versions. Large windows use the `18 x 18` window variant, while popups use the `14 x 14` popup variant.
 
@@ -11,7 +11,7 @@ Close buttons use Library's own artwork and therefore look identical across supp
 Creates a large window with a thin Retail-style frame and an integrated title bar.
 
 ```lua
-local window = ArcaneWizardLibrary.Windows:CreateWindow("My Addon", 700, 480, true, 0.9, true, "solid", true, "line")
+local window = ArcaneWizardLibrary.Frames:CreateWindow("My Addon", 700, 480, true, 0.9, true, "solid-dark", true, "line")
 
 window.portrait:SetTexture("Interface\\AddOns\\MyAddon\\assets\\icon.blp")
 window.portraitBackground:SetColorTexture(0.035, 0.035, 0.035, 1)
@@ -37,15 +37,15 @@ The title remains centered when the window is resized. Change its text after cre
 | `movable` | `boolean` | Allows the window and its title bar to be dragged when `true`. |
 | `backgroundStyle` | `string` | Background style provided by the library. See the available styles below. |
 | `showPortrait` | `boolean` | Creates a thin gold portrait frame in the upper-left corner when `true`. |
-| `titleTransitionStyle` | `string` | Title transition style: `shadow`, `groove`, or `line`. |
+| `titleTransitionStyle` | `string` | Title transition style: `shadow`, `strong-shadow`, or `line`. |
 
 ### Title transition styles
 
 | Style | Description |
 | --- | --- |
-| `shadow` | One-pixel separator with a soft twelve-pixel shadow. |
-| `groove` | Inset light and dark separator with a twelve-pixel shadow. |
-| `line` | Inset light and dark separator without a shadow. |
+| `shadow` | One-pixel separator with a soft fourteen-pixel shadow. |
+| `strong-shadow` | One-pixel separator with a stronger fourteen-pixel shadow. |
+| `line` | One-pixel separator without a shadow. |
 
 ### Returned fields
 
@@ -54,21 +54,58 @@ The title remains centered when the window is resized. Change its text after cre
 | `background` | `Texture` | Background layer whose color, texture, and opacity can be changed. |
 | `content` | `Frame` | Content area inside the frame and below the title bar. |
 | `titleBar` | `Frame` | Integrated title bar and drag handle. |
-| `titleBackground` | `Texture` | Separate title bar background. |
-| `titleTransitionLines` | `Texture[]` | Lines separating the title bar and window background. |
+| `titleBackground` | `Texture` | Title bar background with its integrated separator. |
 | `titleShadowLayers` | `Texture[]` | Fading shadow below the title transition. |
 | `titleText` | `FontString` | Title font string. |
 | `portraitFrame` | `Frame \| nil` | Optional portrait frame. |
 | `portraitBackground` | `Texture \| nil` | Opaque background behind transparent portrait images. |
 | `portrait` | `Texture \| nil` | Optional masked portrait image. Set its image with `SetTexture()`. |
 | `closeButton` | `Button \| nil` | Optional close button. |
+| `tabGroup` | `Frame \| nil` | Optional tab group attached with `CreateTabGroup()`. |
+
+## `CreateTabGroup(window)`
+
+Attaches a text-tab group to the bottom of a Library window. Popups are not supported. Only one tab group can be attached to a window.
+
+```lua
+local tabs = ArcaneWizardLibrary.Frames:CreateTabGroup(window)
+
+local characterPage = tabs:AddTab("character", "Character")
+local accountPage = tabs:AddTab("account", "Account")
+
+local text = characterPage:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+text:SetPoint("TOPLEFT")
+text:SetText("Character content")
+
+tabs:SelectTab("account")
+```
+
+Each call to `AddTab()` returns a page that fills the existing `window.content` area. No additional content inset is added. The first added tab is selected automatically.
+
+### Parameters
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `window` | `ArcaneWizardLibraryWindowFrame` | Window that owns the tab group. |
+
+Tabs start `12` pixels from the left window edge. They are `24` pixels high, use `3` pixels of spacing, and the selected tab grows downward to `26` pixels. Their upper edge begins exactly at the lower window edge, which forms the shared connection.
+
+### Tab group methods
+
+| Method | Description |
+| --- | --- |
+| `AddTab(id, text)` | Adds a text tab and returns its content page. IDs must be unique. |
+| `SelectTab(id)` | Shows the selected page and hides the previously selected page. |
+| `GetSelectedTab()` | Returns the selected ID and page. |
+| `SetTabEnabled(id, enabled)` | Enables or disables a tab. Disabling the selected tab selects the first available tab. |
+| `SetOnTabChanged(callback)` | Sets or clears a callback receiving the selected ID and page. |
 
 ## `CreatePopup(width, height, showCloseButton, showBorder, backgroundAlpha, movable, backgroundStyle)`
 
 Creates a compact popup with a thinner frame from the same design family.
 
 ```lua
-local popup = ArcaneWizardLibrary.Windows:CreatePopup(360, 160, true, true, 0.9, true, "solid")
+local popup = ArcaneWizardLibrary.Frames:CreatePopup(360, 160, true, true, 0.9, true, "solid-dark")
 
 popup:Show()
 ```
@@ -94,10 +131,10 @@ Available background styles:
 
 | Style | Appearance |
 | --- | --- |
-| `"solid"` | Single dark background color. |
-| `"panel-dark"` | Warm dark panel with soft medium-scale variations. |
-| `"slate-dark"` / `"slate-light"` | Layered slate texture. |
-| `"leather-dark"` / `"leather-light"` | Fine aged leather texture. |
+| `"solid-black"` | Solid black background. |
+| `"solid-dark"` | Standard dark Library background. |
+| `"solid-title"` | Solid background matching the Library title-bar color. |
+| `"panel"` | Warm panel texture with soft medium-scale variations. |
 
 ```lua
 window.background:SetColorTexture(0.02, 0.025, 0.03, 1)
