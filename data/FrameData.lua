@@ -58,7 +58,7 @@ LIB.FrameData = {
 		closeButton = {
 			template = "ArcaneWizardLibrary_WindowCloseButtonTemplate",
 			horizontalOffset = 3,
-			verticalOffset = 3
+			verticalOffset = 4
 		}
 	},
 	titleTransitionStyles = {
@@ -163,7 +163,7 @@ LIB.FrameData = {
 				textOffset = -1
 			},
 			selected = {
-				text = { 1, 0.95, 0.78 },
+				text = { 1, 1, 1 },
 				textOffset = 0
 			},
 			disabled = {
@@ -173,7 +173,7 @@ LIB.FrameData = {
 		},
 		placement = {
 			height = 24,
-			selectedHeight = 26,
+			selectedHeight = 28,
 			minimumWidth = 72,
 			horizontalPadding = 10,
 			spacing = 3,
@@ -181,7 +181,7 @@ LIB.FrameData = {
 			anchorPoint = "TOPLEFT",
 			relativePoint = "BOTTOMLEFT",
 			offsetX = 12,
-			offsetY = 0,
+			offsetY = -1,
 			textures = {
 				normal = tabTexturePath .. "bottom-normal.tga",
 				highlight = tabTexturePath .. "bottom-highlight.tga",

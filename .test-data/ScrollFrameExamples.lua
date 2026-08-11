@@ -1,14 +1,13 @@
 local AWL = ArcaneWizardLibrary
 
-local frame = AWL.Frames:CreateWindow("Scroll Frame Backgrounds (Strong Shadow)", 620, 420, true, 1, true, "solid-dark", false, "strong-shadow")
-frame.background:SetColorTexture(0.14, 0.14, 0.13, 1)
+local frame = AWL.Frames:CreateWindow("Scroll Frame Examples", 620, 420, true, 1, true, "panel", false, "shadow")
 frame:ClearAllPoints()
 frame:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 672, -252)
 
 local examples = {
 	{ label = "Transparent / Borderless", style = "transparent", showBorder = false, left = 8, top = 10 },
 	{ label = "Solid / Black / Framed", style = "solid-black", showBorder = true, left = 308, top = 10 },
-	{ label = "Solid / Title Color / Borderless", style = "solid-title", showBorder = false, left = 8, top = 194 },
+	{ label = "Solid Dark / Borderless", style = "solid-dark", showBorder = false, left = 8, top = 194 },
 	{ label = "Pattern / Framed", style = "pattern", showBorder = true, left = 308, top = 194 }
 }
 

@@ -1,6 +1,7 @@
 local _, LIB = ...
 
 local texturePath = "Interface\\AddOns\\ArcaneWizardLibrary\\assets\\controls\\"
+local colors = LIB.UIStyleData.colors
 
 LIB.ControlData = {
 	button = {
@@ -57,6 +58,26 @@ LIB.ControlData = {
 			}
 		}
 	},
+	input = {
+		height = 25,
+		minimumWidth = 80,
+		capWidth = 8,
+		textLeftInset = 10,
+		textRightInset = 10,
+		textColors = {
+			normal = { 0.92, 0.9, 0.84 },
+			highlight = { 1, 0.96, 0.84 },
+			focused = { 1, 1, 1 },
+			placeholder = { 0.5, 0.48, 0.44 },
+			disabled = { 0.45, 0.44, 0.42 }
+		},
+		textures = {
+			normal = texturePath .. "input-normal.tga",
+			highlight = texturePath .. "input-highlight.tga",
+			focused = texturePath .. "input-focused.tga",
+			disabled = texturePath .. "input-disabled.tga"
+		}
+	},
 	dropdown = {
 		height = 25,
 		minimumWidth = 80,
@@ -75,20 +96,21 @@ LIB.ControlData = {
 		menuIndicatorSize = 14,
 		menuTextColors = {
 			normal = { 0.92, 0.90, 0.84 },
-			highlight = { 1, 0.86, 0.25 },
+			highlight = { 1, 1, 1 },
 			disabled = { 0.45, 0.44, 0.42 }
 		},
 		menuColors = {
 			background = { 0.035, 0.035, 0.032, 0.98 },
-			border = { 0.48, 0.46, 0.42, 1 },
+			border = colors.edge,
 			highlight = { 0.34, 0.27, 0.10, 0.75 },
-			divider = { 0.34, 0.33, 0.30, 1 },
-			scrollTrack = { 0.18, 0.18, 0.17, 1 },
-			scrollThumb = { 0.58, 0.55, 0.49, 1 }
+			divider = colors.base,
+			scrollTrack = colors.dark,
+			scrollThumb = colors.edge
 		},
 		textColors = {
 			normal = { 1, 0.82, 0.15 },
 			highlight = { 1, 0.92, 0.35 },
+			selected = { 1, 1, 1 },
 			disabled = { 0.45, 0.44, 0.42 }
 		},
 		textures = {

@@ -42,9 +42,9 @@ local function CreatePopupExample(label, backgroundStyle, lightBackground, showB
 	return frame
 end
 
-CreateWindowExample("Window - Solid Dark (Line)", "Window - Solid Dark (Line)", "solid-dark", "line", false, false, 10, 0)
+CreateWindowExample("Window - Solid Dark (Line)", "Window - Solid Dark (Line)", "solid-dark", "line", true, false, 10, 0)
 
-CreateWindowExample("Window - Solid Title (Strong Shadow)", "Window - Solid Title (Strong Shadow)", "solid-title", "strong-shadow", true, false, 330, 0)
+CreateWindowExample("Window - Solid Title (Strong Shadow)", "Window - Solid Title (Strong Shadow)", "solid-title", "strong-shadow", false, false, 330, 0)
 
 local transparentWindow = CreateWindowExample("Window - Solid Black (45%, Line)", "Window - Solid Black (45%, Line)", "solid-black", "line", false, false, 650, 0)
 transparentWindow.background:SetAlpha(0.45)

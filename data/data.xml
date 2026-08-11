@@ -2,6 +2,7 @@
 ..\FrameXML\UI.xsd">
 	<Script file="SettingsData.lua" />
 	<Script file="BackgroundData.lua" />
+	<Script file="UIStyleData.lua" />
 	<Script file="FrameData.lua" />
 	<Script file="ControlData.lua" />
 	<Script file="ScrollFrameData.lua" />

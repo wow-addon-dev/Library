@@ -302,9 +302,15 @@ function ArcaneWizardLibrary_DropdownMixin:UpdateVisualState()
 	end
 	self.Arrow:SetTexture(arrowTexture)
 
-	local textColor = DropdownData.textColors[state] or DropdownData.textColors.normal
-	if state == "pushed" then
+	local textColor
+	if state == "disabled" then
+		textColor = DropdownData.textColors.disabled
+	elseif self.value ~= nil then
+		textColor = DropdownData.textColors.selected
+	elseif state == "pushed" then
 		textColor = DropdownData.textColors.highlight
+	else
+		textColor = DropdownData.textColors[state] or DropdownData.textColors.normal
 	end
 	self.Text:SetTextColor(unpack(textColor))
 end
@@ -316,6 +322,7 @@ function ArcaneWizardLibrary_DropdownMixin:UpdateDisplayedText()
 	end
 
 	self:SetText(option and option.label or self.defaultText)
+	self:UpdateVisualState()
 end
 
 function ArcaneWizardLibrary_DropdownMixin:ResolveOptions()
