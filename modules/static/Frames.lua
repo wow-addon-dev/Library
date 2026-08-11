@@ -159,13 +159,12 @@ local function RegisterDragHandle(frame, handle)
 	end)
 end
 
-local function ConfigureDragging(frame, movable)
+local function ConfigureMovability(frame, movable)
 	if not movable then
 		return
 	end
 
 	frame:SetMovable(true)
-	RegisterDragHandle(frame, frame)
 end
 
 local function CreateContentFrame(frame, insets)
@@ -290,7 +289,7 @@ local function CreateBaseFrame(width, height, movable)
 	frame:SetFrameStrata("DIALOG")
 	frame:SetClampedToScreen(true)
 	frame:EnableMouse(true)
-	ConfigureDragging(frame, movable)
+	ConfigureMovability(frame, movable)
 
 	return frame
 end
@@ -592,6 +591,10 @@ function ArcaneWizardLibrary.Frames:CreatePopup(width, height, showCloseButton, 
 	ValidateParameters(width, height, showCloseButton, backgroundAlpha, movable, data, "CreatePopup")
 
 	local frame = CreateBaseFrame(width, height, movable)
+	if movable then
+		RegisterDragHandle(frame, frame)
+	end
+
 	if showBorder then
 		ApplyNineSlice(frame, FrameData.frameTextures.popup, data)
 	end

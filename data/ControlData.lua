@@ -9,22 +9,43 @@ LIB.ControlData = {
 		minimumWidth = 44,
 		defaultWidth = 100,
 		capWidth = 11,
-		states = {
-			normal = {
-				texture = texturePath .. "button-normal.tga",
-				text = { 1, 0.82, 0.15 }
+		defaultStyle = "classic",
+		styles = {
+			classic = {
+				normal = {
+					texture = texturePath .. "button-normal.tga",
+					text = { 1, 0.82, 0.15 }
+				},
+				highlight = {
+					texture = texturePath .. "button-highlight.tga",
+					text = { 1, 0.92, 0.35 }
+				},
+				pushed = {
+					texture = texturePath .. "button-pushed.tga",
+					text = { 0.95, 0.72, 0.12 }
+				},
+				disabled = {
+					texture = texturePath .. "button-disabled.tga",
+					text = { 0.45, 0.44, 0.42 }
+				}
 			},
-			highlight = {
-				texture = texturePath .. "button-highlight.tga",
-				text = { 1, 0.92, 0.35 }
-			},
-			pushed = {
-				texture = texturePath .. "button-pushed.tga",
-				text = { 0.95, 0.72, 0.12 }
-			},
-			disabled = {
-				texture = texturePath .. "button-disabled.tga",
-				text = { 0.45, 0.44, 0.42 }
+			red = {
+				normal = {
+					texture = texturePath .. "button-red-normal.tga",
+					text = { 1, 0.82, 0.15 }
+				},
+				highlight = {
+					texture = texturePath .. "button-red-highlight.tga",
+					text = { 1, 0.92, 0.35 }
+				},
+				pushed = {
+					texture = texturePath .. "button-red-pushed.tga",
+					text = { 0.95, 0.72, 0.12 }
+				},
+				disabled = {
+					texture = texturePath .. "button-red-disabled.tga",
+					text = { 0.45, 0.44, 0.42 }
+				}
 			}
 		}
 	},
@@ -59,7 +80,7 @@ LIB.ControlData = {
 		}
 	},
 	input = {
-		height = 25,
+		height = 24,
 		minimumWidth = 80,
 		capWidth = 8,
 		textLeftInset = 10,
@@ -79,7 +100,7 @@ LIB.ControlData = {
 		}
 	},
 	dropdown = {
-		height = 25,
+		height = 24,
 		minimumWidth = 80,
 		capWidth = 8,
 		arrowSize = 19,

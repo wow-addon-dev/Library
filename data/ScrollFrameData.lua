@@ -3,12 +3,11 @@ local _, LIB = ...
 local texturePath = "Interface\\AddOns\\ArcaneWizardLibrary\\assets\\scroll-frame\\"
 local backgroundTileSize = 256
 local solidBackgroundStyles = LIB.BackgroundData.solidStyles
-local colors = LIB.UIStyleData.colors
 
 LIB.ScrollFrameData = {
 	minimumWidth = 96,
 	minimumHeight = 72,
-	borderColor = colors.edge,
+	borderColor = { 137 / 255, 132 / 255, 122 / 255, 1 },
 	backgroundStyles = {
 		transparent = {
 			color = {

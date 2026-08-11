@@ -3,7 +3,7 @@ local AWL = ArcaneWizardLibrary
 local portraitPath = "Interface\\AddOns\\ArcaneWizardLibrary\\assets\\icon.blp"
 local exampleArea = CreateFrame("Frame", nil, UIParent)
 exampleArea:SetSize(1280, 680)
-exampleArea:SetPoint("CENTER", UIParent, "CENTER", 0, 40)
+exampleArea:SetPoint("CENTER", UIParent, "CENTER", 0, 80)
 
 local function AddExampleLabel(content, text, lightBackground)
 	local label = content:CreateFontString(nil, "OVERLAY", "GameFontNormal")

@@ -32,7 +32,7 @@ Developer documentation is available on the documentation website: [wow-addon-de
 * **Scroll Frames**
 	* <sup>✨ NEW</sup> Provides scroll areas with transparent, solid, or patterned backgrounds, optional borders, custom vertical scrollbars, and mouse-wheel support across supported game versions.
 * **Controls**
-	* <sup>✨ NEW</sup> Provides consistently styled action buttons, checkboxes, option groups, input fields, and dropdown menus across supported game versions.
+	* <sup>✨ NEW</sup> Provides consistently styled action buttons with classic or red styles, checkboxes, option groups, input fields, and dropdown menus across supported game versions.
 * **Utilities**
 	* Provides helper methods for common addon values, such as character keys and split character/realm values.
 	* Includes a deep table copy helper.

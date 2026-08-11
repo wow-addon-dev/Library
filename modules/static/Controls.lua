@@ -5,10 +5,14 @@ local ButtonData = ControlData.button
 local SelectionData = ControlData.selection
 local DEBUG_PREFIX = "Arcane Wizard: Library (Debug): "
 
+---@alias ArcaneWizardLibraryButtonStyle "classic"|"red"
+
 ---@class ArcaneWizardLibraryActionButton: Button
 ---@field Left Texture
 ---@field Center Texture
 ---@field Right Texture
+---@field buttonStyle ArcaneWizardLibraryButtonStyle
+---@field buttonStates table
 
 ---@class ArcaneWizardLibrarySelectionControl: CheckButton
 ---@field Text FontString Control label.
@@ -88,15 +92,21 @@ local function ValidateOptions(options, selectedValue)
 end
 
 local function GetButtonState(button)
+	local states = button.buttonStates
 	if not button:IsEnabled() then
-		return ButtonData.states.disabled
+		return states.disabled
 	elseif button.isPushed then
-		return ButtonData.states.pushed
+		return states.pushed
 	elseif button.isHighlighted then
-		return ButtonData.states.highlight
+		return states.highlight
 	end
 
-	return ButtonData.states.normal
+	return states.normal
+end
+
+local function ConfigureButtonStyle(button, buttonStyle)
+	button.buttonStyle = buttonStyle
+	button.buttonStates = ButtonData.styles[buttonStyle]
 end
 
 local function UpdateButtonAfterClick(button)
@@ -120,6 +130,7 @@ function ArcaneWizardLibrary_ActionButtonMixin:UpdateVisualState()
 end
 
 function ArcaneWizardLibrary_ActionButtonMixin:OnLoad()
+	ConfigureButtonStyle(self, ButtonData.defaultStyle)
 	self:SetHeight(ButtonData.height)
 	self:SetPushedTextOffset(0, -1)
 	self:RegisterForClicks("LeftButtonUp")
@@ -255,17 +266,23 @@ end
 --- @param width number Button width in pixels.
 --- @param label string Displayed button label.
 --- @param onClick? fun(button: ArcaneWizardLibraryActionButton, mouseButton: string, down: boolean) Called when the button is clicked.
+--- @param buttonStyle? ArcaneWizardLibraryButtonStyle Visual style. Defaults to classic.
 ---
 --- @return ArcaneWizardLibraryActionButton button The created button.
-function ArcaneWizardLibrary.Controls:CreateButton(parent, width, label, onClick)
+function ArcaneWizardLibrary.Controls:CreateButton(parent, width, label, onClick, buttonStyle)
+	buttonStyle = buttonStyle or ButtonData.defaultStyle
+
 	assert(parent ~= nil, DEBUG_PREFIX .. "CreateButton parent is required.")
 	assert(type(width) == "number" and width >= ButtonData.minimumWidth, DEBUG_PREFIX .. "CreateButton width must be at least " .. ButtonData.minimumWidth .. ".")
 	assert(type(label) == "string" and label ~= "", DEBUG_PREFIX .. "CreateButton label must be a non-empty string.")
 	assert(onClick == nil or type(onClick) == "function", DEBUG_PREFIX .. "CreateButton onClick must be a function or nil.")
+	assert(ButtonData.styles[buttonStyle] ~= nil, DEBUG_PREFIX .. "CreateButton buttonStyle is not defined.")
 
 	local button = CreateFrame("Button", nil, parent, "ArcaneWizardLibrary_ActionButtonTemplate")
 	button:SetWidth(width)
 	button:SetText(label)
+	ConfigureButtonStyle(button, buttonStyle)
+	button:UpdateVisualState()
 
 	if onClick then
 		button:SetScript("OnClick", onClick)

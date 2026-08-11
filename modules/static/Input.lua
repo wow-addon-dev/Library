@@ -10,6 +10,7 @@ local DEBUG_PREFIX = "Arcane Wizard: Library (Debug): "
 ---@field Right Texture
 ---@field Placeholder FontString
 ---@field placeholderText string
+---@field hasFocus boolean
 ---@field onTextChanged? fun(text: string, userInput: boolean, input: ArcaneWizardLibraryInput)
 ---@field onEnterPressed? fun(text: string, input: ArcaneWizardLibraryInput)
 
@@ -54,7 +55,7 @@ end
 local function GetVisualState(input)
 	if not input:IsEnabled() then
 		return "disabled"
-	elseif input:HasFocus() then
+	elseif input.hasFocus then
 		return "focused"
 	elseif input.isHighlighted then
 		return "highlight"
@@ -68,7 +69,7 @@ end
 -------------------
 
 function ArcaneWizardLibrary_InputMixin:UpdatePlaceholder()
-	self.Placeholder:SetShown(not self:HasFocus() and self:GetText() == "" and self.placeholderText ~= "")
+	self.Placeholder:SetShown(not self.hasFocus and self:GetText() == "" and self.placeholderText ~= "")
 end
 
 function ArcaneWizardLibrary_InputMixin:UpdateVisualState()
@@ -97,6 +98,7 @@ end
 
 function ArcaneWizardLibrary_InputMixin:OnLoad()
 	self.placeholderText = ""
+	self.hasFocus = false
 	self:SetHeight(InputData.height)
 	self:SetAutoFocus(false)
 	self:SetFontObject(GameFontHighlight)
@@ -140,10 +142,12 @@ function ArcaneWizardLibrary_InputMixin:OnLeave()
 end
 
 function ArcaneWizardLibrary_InputMixin:OnEditFocusGained()
+	self.hasFocus = true
 	self:UpdateVisualState()
 end
 
 function ArcaneWizardLibrary_InputMixin:OnEditFocusLost()
+	self.hasFocus = false
 	self:UpdateVisualState()
 end
 
@@ -173,6 +177,7 @@ end
 
 function ArcaneWizardLibrary_InputMixin:OnDisable()
 	self.isHighlighted = false
+	self.hasFocus = false
 	self:ClearFocus()
 	self:UpdateVisualState()
 end

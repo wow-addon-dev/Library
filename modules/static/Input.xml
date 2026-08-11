@@ -1,7 +1,7 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\FrameXML\UI.xsd">
 	<EditBox name="ArcaneWizardLibrary_InputTemplate" mixin="ArcaneWizardLibrary_InputMixin" virtual="true">
-		<Size x="180" y="25" />
+		<Size x="180" y="24" />
 		<Scripts>
 			<OnLoad>self:OnLoad()</OnLoad>
 			<OnSizeChanged>self:OnSizeChanged()</OnSizeChanged>
