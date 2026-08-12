@@ -1,3 +1,7 @@
+**v1.27 (2026-08-12)**
+- Added: Window tabs, scroll frames, input fields, dropdown menus, reusable solid background presets, and an optional red button style
+- Changed: Reusable UI elements now use dedicated APIs, a consistent visual style, and clearer control states
+
 **v1.26 (2026-08-04)**
 - Added: Reusable UI elements - Windows, popups, buttons, checkboxes, and option groups with consistent styling across supported game versions
 
