@@ -191,6 +191,11 @@ local function UpdateScrollRange(frame, verticalRange)
 
 	local scrollBar = frame.scrollBar
 	local range = math.max(0, verticalRange or frame.scrollFrame:GetVerticalScrollRange())
+
+	if range <= ScrollFrameData.scrollBar.rangeTolerance then
+		range = 0
+	end
+
 	local value = math.min(scrollBar:GetValue(), range)
 
 	scrollBar:SetMinMaxValues(0, range)
@@ -199,8 +204,11 @@ local function UpdateScrollRange(frame, verticalRange)
 end
 
 local function UpdateScrollBarTrack(scrollBar)
-	local tileSize = ScrollFrameData.scrollBar.trackTileSize
+	local data = ScrollFrameData.scrollBar
+	local tileSize = data.trackTileSize
+	local availableThumbHeight = math.max(1, scrollBar:GetHeight() - data.thumbTrackInset * 2)
 	scrollBar.track:SetTexCoord(0, 1, 0, scrollBar:GetHeight() / tileSize)
+	scrollBar.thumb:SetSize(data.thumbWidth, math.min(data.thumbHeight, availableThumbHeight))
 end
 
 local function UpdateContentSize(frame)

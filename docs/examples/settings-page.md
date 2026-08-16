@@ -12,6 +12,11 @@ MyAddonDB = MyAddonDB or {
 }
 
 local addon = ArcaneWizardLibrary:NewAddon(addonName)
+addon:SetChangelog([[
+|cffffd200Version 1.0.0|r
+
+- Initial release
+]])
 
 local category, layout = Settings.RegisterVerticalLayoutCategory("My Addon")
 Settings.RegisterAddOnCategory(category)
@@ -55,4 +60,5 @@ ArcaneWizardLibrary.Settings:AddDropdown(category, {
 })
 
 ArcaneWizardLibrary.Settings:AddAboutSection(layout, addonName)
+addon:AddChangelogButton(layout)
 ```

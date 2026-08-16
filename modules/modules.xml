@@ -15,6 +15,6 @@
 	<Include file="static\SettingsPanel.xml" />
 
 	<Script file="addon\AddonLauncher.lua" />
-	<Script file="addon\AddonUpdateNotice.lua" />
+	<Script file="addon\AddonChangelog.lua" />
 	<Script file="addon\AddonContext.lua" />
 </Ui>

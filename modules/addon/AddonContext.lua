@@ -6,17 +6,20 @@ local _, LIB = ...
 ---@field buildDate string|nil
 ---@field mediaPath string
 ---@field mainCategoryId number|nil
+---@field changelog string|nil
 ---@field GetMediaPath fun(self: ArcaneWizardLibraryAddon, fileName: string|nil): string Returns the addon media path or a media file path below it.
 ---@field SetMainCategoryId fun(self: ArcaneWizardLibraryAddon, categoryId: number) Stores the Blizzard settings category ID for this addon.
 ---@field OpenCategory fun(self: ArcaneWizardLibraryAddon): boolean Opens the stored Blizzard settings category when not blocked by combat lockdown.
+---@field SetChangelog fun(self: ArcaneWizardLibraryAddon, text: string) Stores the single-page changelog text for this addon.
+---@field OpenChangelog fun(self: ArcaneWizardLibraryAddon): ArcaneWizardLibraryWindowFrame Opens the addon's changelog window.
+---@field AddChangelogButton fun(self: ArcaneWizardLibraryAddon, layout: table): table Adds a localized changelog button to a Blizzard settings layout.
 ---@field RegisterMinimapButton fun(self: ArcaneWizardLibraryAddon, config: table): table Registers a LibDataBroker minimap button for this addon.
 ---@field CreateCompartmentHandlers fun(self: ArcaneWizardLibraryAddon, config: table): table Creates AddonCompartment handler functions for this addon.
----@field ShowUpdateNotice fun(self: ArcaneWizardLibraryAddon, show: boolean): boolean Shows an update notice in chat for the addon's current version when enabled.
 
 local AddonContextMixin = {}
 
+local AddonChangelog = LIB.Internal.AddonChangelog
 local AddonLauncher = LIB.Internal.AddonLauncher
-local AddonUpdateNotice = LIB.Internal.AddonUpdateNotice
 
 local addonContexts = {}
 
@@ -69,16 +72,24 @@ function AddonContextMixin:OpenCategory()
 	return false
 end
 
+function AddonContextMixin:SetChangelog(text)
+	AddonChangelog:Set(self, text)
+end
+
+function AddonContextMixin:OpenChangelog()
+	return AddonChangelog:Open(self)
+end
+
+function AddonContextMixin:AddChangelogButton(layout)
+	return AddonChangelog:AddSettingsButton(self, layout)
+end
+
 function AddonContextMixin:RegisterMinimapButton(config)
 	return AddonLauncher:RegisterMinimapButton(self, config)
 end
 
 function AddonContextMixin:CreateCompartmentHandlers(config)
 	return AddonLauncher:CreateCompartmentHandlers(self, config)
-end
-
-function AddonContextMixin:ShowUpdateNotice(show)
-	return AddonUpdateNotice:Show(self, show)
 end
 
 ------------------------

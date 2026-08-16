@@ -6,4 +6,5 @@
 	<Script file="FrameData.lua" />
 	<Script file="ControlData.lua" />
 	<Script file="ScrollFrameData.lua" />
+	<Script file="AddonChangelogData.lua" />
 </Ui>

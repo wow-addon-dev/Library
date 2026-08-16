@@ -11,9 +11,13 @@ local L = LIB.Localization
 
 L["dialog.link.text"] = "To copy the link press CTRL + C."
 
--- Chat
+-- Changelog
 
-L["chat.update-notice"] = "A new version has been installed: %s. It contains new features or important changes. Please read the changelog for more information."
+L["changelog.window.title"] = "%s - Changelog"
+L["changelog.window.close"] = "Close"
+L["settings.changelog.name"] = "Version Notes"
+L["settings.changelog.button"] = "Changelog"
+L["settings.changelog.tooltip"] = "Opens the changelog window."
 
 -- Profiles
 

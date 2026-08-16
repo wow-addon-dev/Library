@@ -75,6 +75,7 @@ Addon contexts are created with `ArcaneWizardLibrary:NewAddon(addonName)` and re
 | `buildDate` | `string \| nil` | Addon build date from `X-BuildDate`. |
 | `mediaPath` | `string` | Base path to the addon's `assets` folder. |
 | `mainCategoryId` | `number \| nil` | Stored Blizzard settings category ID. |
+| `changelog` | `string \| nil` | Single-page changelog text stored with `SetChangelog`. |
 
 ### `addon:GetMediaPath(fileName)`
 
@@ -100,17 +101,43 @@ Returns `true` when the category was opened and `false` when combat lockdown blo
 
 This function asserts when no category ID has been stored with `SetMainCategoryId`, because that indicates an addon integration error.
 
-### `addon:ShowUpdateNotice(show)`
+### `addon:SetChangelog(text)`
 
-Writes a localized update notice to the chat for the addon's current `.toc` version when `show` is `true`.
+Stores the addon's single-page changelog text. Line breaks and WoW color escape sequences in the string are preserved.
 
 ```lua
-if addon:ShowUpdateNotice(MyAddonDB.showUpdateNotice) then
-  MyAddonDB.showUpdateNotice = false
-end
+addon:SetChangelog([[
+|cffffd200Version 1.1.0|r
+
+- Added a new feature
+- Fixed an important issue
+]])
 ```
 
-The function returns `true` when the chat message was written and `false` when `show` is `false`. The consuming addon is responsible for deciding when the Boolean becomes `true` and for storing its state in account-wide SavedVariables.
+This function asserts when `text` is not a non-empty string.
+
+### `addon:OpenChangelog()`
+
+Opens the shared, movable changelog window and returns it. The window contains one framed, scrollable page and always starts at the top when opened. It can be closed with the title-bar X or the button below the content. Opening another addon's changelog reuses the same window and replaces its title and content.
+
+```lua
+addon:OpenChangelog()
+```
+
+This function asserts when no text has been stored with `SetChangelog`.
+
+### `addon:AddChangelogButton(layout)`
+
+Adds a localized changelog button to a Blizzard settings layout. Clicking it calls `OpenChangelog()` for this addon.
+
+```lua
+local category, layout = Settings.RegisterVerticalLayoutCategory("My Addon")
+
+addon:SetChangelog("|cffffd200Version 1.1.0|r\n\n- Added a new feature")
+addon:AddChangelogButton(layout)
+```
+
+The function returns the settings button initializer and asserts when no layout is provided.
 
 ### `addon:RegisterMinimapButton(config)`
 

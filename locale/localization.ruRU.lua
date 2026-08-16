@@ -8,9 +8,13 @@ local L = LIB.Localization
 
 L["dialog.link.text"] = "Чтобы скопировать ссылку, нажмите CTRL + C."
 
--- Chat
+-- Changelog
 
-L["chat.update-notice"] = "Установлена новая версия: %s. Она содержит новые функции или важные изменения. Дополнительную информацию см. в журнале изменений."
+L["changelog.window.title"] = "Журнал изменений - %s"
+L["changelog.window.close"] = "Закрыть"
+L["settings.changelog.name"] = "Примечания к версии"
+L["settings.changelog.button"] = "Журнал изменений"
+L["settings.changelog.tooltip"] = "Открывает окно журнала изменений."
 
 -- Profiles
 
