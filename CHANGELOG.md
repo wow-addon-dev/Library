@@ -8,3 +8,4 @@
 - Changed: Scrollbar elements are now larger and more visible with a slightly thinner track
 - Changed: Dark pattern backgrounds now use more natural random variation
 - Removed: Addon update-notice chat handling from the Library API
+- Fixed: Overlapping windows now retain the correct drawing order

@@ -54,27 +54,15 @@ local function ApplySettingConfig(setting, config)
 	end
 end
 
-local function NormalizeAboutConfig(config)
-	if type(config) == "string" then
-		config = {
-			addonName = config
-		}
-	else
-		config = config or {}
-	end
-
-	local addonName = config.addonName
-
-	if addonName then
-		config.addonVersion = config.addonVersion or GetAddonMetadata(addonName, "Version")
-		config.addonBuildDate = config.addonBuildDate or GetAddonMetadata(addonName, "X-BuildDate")
-		config.addonAuthor = config.addonAuthor or GetAddonMetadata(addonName, "Author")
-		config.curseforgeLink = config.curseforgeLink or GetAddonMetadata(addonName, "X-Curseforge")
-		config.wagoLink = config.wagoLink or GetAddonMetadata(addonName, "X-Wago")
-		config.githubLink = config.githubLink or GetAddonMetadata(addonName, "X-Github")
-	end
-
-	return config
+local function GetAboutConfig(addonName)
+	return {
+		addonVersion = GetAddonMetadata(addonName, "Version"),
+		addonBuildDate = GetAddonMetadata(addonName, "X-BuildDate"),
+		addonAuthor = GetAddonMetadata(addonName, "Author"),
+		curseforgeLink = GetAddonMetadata(addonName, "X-Curseforge"),
+		wagoLink = GetAddonMetadata(addonName, "X-Wago"),
+		githubLink = GetAddonMetadata(addonName, "X-Github")
+	}
 end
 
 ------------------------
@@ -294,9 +282,13 @@ end
 --- Adds a standard About section to the settings layout.
 ---
 --- @param layout table The layout object to append the initializers to.
---- @param addonNameOrConfig string|table Addon name or configuration table. Optional table keys: addonName, addonVersion, addonBuildDate, addonAuthor, curseforgeLink, wagoLink, githubLink.
-function ArcaneWizardLibrary.Settings:AddAboutSection(layout, addonNameOrConfig)
-	local config = NormalizeAboutConfig(addonNameOrConfig)
+--- @param addonName string Addon name used to read metadata.
+--- @param changelog? ArcaneWizardLibraryChangelogVersion[] Optional changelog versions displayed through an additional button.
+function ArcaneWizardLibrary.Settings:AddAboutSection(layout, addonName, changelog)
+	assert(layout ~= nil, LIB.CommonData.debugPrefix .. "AddAboutSection layout is required.")
+	assert(type(addonName) == "string" and addonName ~= "", LIB.CommonData.debugPrefix .. "AddAboutSection addonName must be a non-empty string.")
+
+	local config = GetAboutConfig(addonName)
 
 	layout:AddInitializer(CreateSettingsListSectionHeaderInitializer(L["settings.about"]))
 
@@ -353,6 +345,17 @@ function ArcaneWizardLibrary.Settings:AddAboutSection(layout, addonNameOrConfig)
 			onClick    = function()
 				ArcaneWizardLibrary.Dialogs:ShowLinkDialog(config.githubLink)
 			end
+		})
+	end
+
+	if changelog then
+		self:AddButton(layout, {
+			name = L["settings.changelog.name"],
+			buttonText = L["settings.changelog.button"],
+			onClick = function()
+				ArcaneWizardLibrary.Frames:OpenChangelog(addonName, changelog)
+			end,
+			tooltip = L["settings.changelog.tooltip"]
 		})
 	end
 end

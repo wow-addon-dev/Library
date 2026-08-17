@@ -18,11 +18,11 @@ hero:
 
 features:
   - title: Addon API
-    details: Create an addon context with ArcaneWizardLibrary:NewAddon and use context methods for metadata, media paths, settings category opening, changelogs, and launcher helpers.
+    details: Create an addon context with ArcaneWizardLibrary:NewAddon and use context methods for metadata, media paths, settings category opening, and launcher helpers.
     link: /api/arcane-wizard-library
     linkText: Open API
   - title: Settings Static API
-    details: Call ArcaneWizardLibrary.Settings directly to build Blizzard settings pages with buttons, info rows, controls, sections, and about rows.
+    details: Call ArcaneWizardLibrary.Settings directly to build Blizzard settings pages with buttons, info rows, controls, sections, about rows, and changelog windows.
     link: /api/settings
     linkText: Open API
   - title: Dialogs Static API
@@ -38,7 +38,7 @@ features:
     link: /api/scroll-frames
     linkText: Open API
   - title: Frames Static API
-    details: Create consistently styled scalable windows, attached tab groups, and compact popups with optional close buttons.
+    details: Create consistently styled scalable windows, attached tab groups, compact popups, and reusable changelog windows.
     link: /api/frames
     linkText: Open API
   - title: Utils Static API
@@ -57,8 +57,8 @@ The library is installed as a normal addon and consumed through the global `Arca
 
 Use the API reference and examples when you want to:
 
-- create an addon context for metadata, asset paths, settings category opening, single-page changelogs, and launcher helpers,
-- build Blizzard settings pages with less repeated UI code,
+- create an addon context for metadata, asset paths, settings category opening, and launcher helpers,
+- build Blizzard settings pages and optional single-page changelogs with less repeated UI code,
 - add standard profile and about sections,
 - show confirmation or copy-link dialogs,
 - create consistent close buttons, scalable action buttons, checkboxes, option groups, and dropdown menus,

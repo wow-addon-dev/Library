@@ -3,7 +3,6 @@ local _, LIB = ...
 local ControlData = LIB.ControlData
 local ButtonData = ControlData.button
 local SelectionData = ControlData.selection
-local DEBUG_PREFIX = "Arcane Wizard: Library (Debug): "
 
 ---@alias ArcaneWizardLibraryButtonStyle "classic"|"red"
 
@@ -61,25 +60,25 @@ local function ConfigureTextures(control, controlStyle)
 end
 
 local function AssertControlParameters(parent, width, label, onValueChanged, methodName)
-	assert(parent ~= nil, DEBUG_PREFIX .. methodName .. " parent is required.")
-	assert(type(width) == "number" and width >= SelectionData.minimumWidth, DEBUG_PREFIX .. methodName .. " width must be at least " .. SelectionData.minimumWidth .. ".")
-	assert(type(label) == "string" and label ~= "", DEBUG_PREFIX .. methodName .. " label must be a non-empty string.")
-	assert(onValueChanged == nil or type(onValueChanged) == "function", DEBUG_PREFIX .. methodName .. " onValueChanged must be a function or nil.")
+	assert(parent ~= nil, LIB.CommonData.debugPrefix .. methodName .. " parent is required.")
+	assert(type(width) == "number" and width >= SelectionData.minimumWidth, LIB.CommonData.debugPrefix .. methodName .. " width must be at least " .. SelectionData.minimumWidth .. ".")
+	assert(type(label) == "string" and label ~= "", LIB.CommonData.debugPrefix .. methodName .. " label must be a non-empty string.")
+	assert(onValueChanged == nil or type(onValueChanged) == "function", LIB.CommonData.debugPrefix .. methodName .. " onValueChanged must be a function or nil.")
 end
 
 local function ValidateOptions(options, selectedValue)
-	assert(type(options) == "table" and #options > 0, DEBUG_PREFIX .. "CreateOptionGroup options must be a non-empty table.")
+	assert(type(options) == "table" and #options > 0, LIB.CommonData.debugPrefix .. "CreateOptionGroup options must be a non-empty table.")
 
 	local values = {}
 	local selectedValueExists = false
 
 	for index, option in ipairs(options) do
-		assert(type(option) == "table", DEBUG_PREFIX .. "CreateOptionGroup option " .. index .. " must be a table.")
-		assert(type(option.label) == "string" and option.label ~= "", DEBUG_PREFIX .. "CreateOptionGroup option " .. index .. " label must be a non-empty string.")
+		assert(type(option) == "table", LIB.CommonData.debugPrefix .. "CreateOptionGroup option " .. index .. " must be a table.")
+		assert(type(option.label) == "string" and option.label ~= "", LIB.CommonData.debugPrefix .. "CreateOptionGroup option " .. index .. " label must be a non-empty string.")
 
 		local valueType = type(option.value)
-		assert(valueType == "string" or valueType == "number" or valueType == "boolean", DEBUG_PREFIX .. "CreateOptionGroup option " .. index .. " value must be a string, number, or boolean.")
-		assert(not values[option.value], DEBUG_PREFIX .. "CreateOptionGroup option values must be unique.")
+		assert(valueType == "string" or valueType == "number" or valueType == "boolean", LIB.CommonData.debugPrefix .. "CreateOptionGroup option " .. index .. " value must be a string, number, or boolean.")
+		assert(not values[option.value], LIB.CommonData.debugPrefix .. "CreateOptionGroup option values must be unique.")
 
 		values[option.value] = true
 
@@ -88,7 +87,7 @@ local function ValidateOptions(options, selectedValue)
 		end
 	end
 
-	assert(selectedValueExists, DEBUG_PREFIX .. "CreateOptionGroup selectedValue must match an option value.")
+	assert(selectedValueExists, LIB.CommonData.debugPrefix .. "CreateOptionGroup selectedValue must match an option value.")
 end
 
 local function GetButtonState(button)
@@ -272,11 +271,11 @@ end
 function ArcaneWizardLibrary.Controls:CreateButton(parent, width, label, onClick, buttonStyle)
 	buttonStyle = buttonStyle or ButtonData.defaultStyle
 
-	assert(parent ~= nil, DEBUG_PREFIX .. "CreateButton parent is required.")
-	assert(type(width) == "number" and width >= ButtonData.minimumWidth, DEBUG_PREFIX .. "CreateButton width must be at least " .. ButtonData.minimumWidth .. ".")
-	assert(type(label) == "string" and label ~= "", DEBUG_PREFIX .. "CreateButton label must be a non-empty string.")
-	assert(onClick == nil or type(onClick) == "function", DEBUG_PREFIX .. "CreateButton onClick must be a function or nil.")
-	assert(ButtonData.styles[buttonStyle] ~= nil, DEBUG_PREFIX .. "CreateButton buttonStyle is not defined.")
+	assert(parent ~= nil, LIB.CommonData.debugPrefix .. "CreateButton parent is required.")
+	assert(type(width) == "number" and width >= ButtonData.minimumWidth, LIB.CommonData.debugPrefix .. "CreateButton width must be at least " .. ButtonData.minimumWidth .. ".")
+	assert(type(label) == "string" and label ~= "", LIB.CommonData.debugPrefix .. "CreateButton label must be a non-empty string.")
+	assert(onClick == nil or type(onClick) == "function", LIB.CommonData.debugPrefix .. "CreateButton onClick must be a function or nil.")
+	assert(ButtonData.styles[buttonStyle] ~= nil, LIB.CommonData.debugPrefix .. "CreateButton buttonStyle is not defined.")
 
 	local button = CreateFrame("Button", nil, parent, "ArcaneWizardLibrary_ActionButtonTemplate")
 	button:SetWidth(width)
@@ -302,7 +301,7 @@ end
 --- @return ArcaneWizardLibrarySelectionControl checkbox The created checkbox.
 function ArcaneWizardLibrary.Controls:CreateCheckbox(parent, width, label, checked, onValueChanged)
 	AssertControlParameters(parent, width, label, onValueChanged, "CreateCheckbox")
-	assert(type(checked) == "boolean", DEBUG_PREFIX .. "CreateCheckbox checked must be a boolean.")
+	assert(type(checked) == "boolean", LIB.CommonData.debugPrefix .. "CreateCheckbox checked must be a boolean.")
 
 	local checkbox = CreateFrame("CheckButton", nil, parent, "ArcaneWizardLibrary_CheckboxTemplate")
 	checkbox:SetWidth(width)
@@ -328,9 +327,9 @@ end
 ---
 --- @return ArcaneWizardLibraryOptionGroup group The created option group.
 function ArcaneWizardLibrary.Controls:CreateOptionGroup(parent, width, options, selectedValue, onValueChanged)
-	assert(parent ~= nil, DEBUG_PREFIX .. "CreateOptionGroup parent is required.")
-	assert(type(width) == "number" and width >= SelectionData.minimumWidth, DEBUG_PREFIX .. "CreateOptionGroup width must be at least " .. SelectionData.minimumWidth .. ".")
-	assert(onValueChanged == nil or type(onValueChanged) == "function", DEBUG_PREFIX .. "CreateOptionGroup onValueChanged must be a function or nil.")
+	assert(parent ~= nil, LIB.CommonData.debugPrefix .. "CreateOptionGroup parent is required.")
+	assert(type(width) == "number" and width >= SelectionData.minimumWidth, LIB.CommonData.debugPrefix .. "CreateOptionGroup width must be at least " .. SelectionData.minimumWidth .. ".")
+	assert(onValueChanged == nil or type(onValueChanged) == "function", LIB.CommonData.debugPrefix .. "CreateOptionGroup onValueChanged must be a function or nil.")
 	ValidateOptions(options, selectedValue)
 
 	local optionCount = #options
@@ -347,7 +346,7 @@ function ArcaneWizardLibrary.Controls:CreateOptionGroup(parent, width, options, 
 
 	function group:SetValue(value)
 		local selectedButton = self.buttonsByValue[value]
-		assert(selectedButton ~= nil, DEBUG_PREFIX .. "OptionGroup SetValue value must match an option value.")
+		assert(selectedButton ~= nil, LIB.CommonData.debugPrefix .. "OptionGroup SetValue value must match an option value.")
 
 		self.value = value
 		for _, button in ipairs(self.buttons) do
@@ -356,7 +355,7 @@ function ArcaneWizardLibrary.Controls:CreateOptionGroup(parent, width, options, 
 	end
 
 	function group:SetEnabled(enabled)
-		assert(type(enabled) == "boolean", DEBUG_PREFIX .. "OptionGroup SetEnabled enabled must be a boolean.")
+		assert(type(enabled) == "boolean", LIB.CommonData.debugPrefix .. "OptionGroup SetEnabled enabled must be a boolean.")
 
 		self.enabled = enabled
 		for _, button in ipairs(self.buttons) do

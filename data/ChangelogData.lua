@@ -1,6 +1,6 @@
 local _, LIB = ...
 
-LIB.AddonChangelogData = {
+LIB.ChangelogData = {
 	window = {
 		width = 520,
 		height = 400,

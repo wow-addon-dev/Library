@@ -4,7 +4,6 @@ local InputData = LIB.ControlData.input
 local InputTextures = InputData.textures
 local ClearButtonData = InputData.clearButton
 local ClearButtonTextures = ClearButtonData.textures
-local DEBUG_PREFIX = "Arcane Wizard: Library (Debug): "
 
 ---@class ArcaneWizardLibraryInput: EditBox
 ---@field Left Texture
@@ -159,7 +158,7 @@ function ArcaneWizardLibrary_InputMixin:UpdateVisualState()
 end
 
 function ArcaneWizardLibrary_InputMixin:SetPlaceholder(text)
-	assert(type(text) == "string", DEBUG_PREFIX .. "Input SetPlaceholder text must be a string.")
+	assert(type(text) == "string", LIB.CommonData.debugPrefix .. "Input SetPlaceholder text must be a string.")
 
 	self.placeholderText = text
 	self.Placeholder:SetText(text)
@@ -277,13 +276,13 @@ end
 ---
 --- @return ArcaneWizardLibraryInput input The created input field.
 function ArcaneWizardLibrary.Controls:CreateInput(parent, width, text, placeholder, maxLetters, onTextChanged, onEnterPressed)
-	assert(parent ~= nil, DEBUG_PREFIX .. "CreateInput parent is required.")
-	assert(type(width) == "number" and width >= InputData.minimumWidth, DEBUG_PREFIX .. "CreateInput width must be at least " .. InputData.minimumWidth .. ".")
-	assert(type(text) == "string", DEBUG_PREFIX .. "CreateInput text must be a string.")
-	assert(type(placeholder) == "string", DEBUG_PREFIX .. "CreateInput placeholder must be a string.")
-	assert(maxLetters == nil or type(maxLetters) == "number" and maxLetters >= 0 and maxLetters == math.floor(maxLetters), DEBUG_PREFIX .. "CreateInput maxLetters must be a non-negative integer or nil.")
-	assert(onTextChanged == nil or type(onTextChanged) == "function", DEBUG_PREFIX .. "CreateInput onTextChanged must be a function or nil.")
-	assert(onEnterPressed == nil or type(onEnterPressed) == "function", DEBUG_PREFIX .. "CreateInput onEnterPressed must be a function or nil.")
+	assert(parent ~= nil, LIB.CommonData.debugPrefix .. "CreateInput parent is required.")
+	assert(type(width) == "number" and width >= InputData.minimumWidth, LIB.CommonData.debugPrefix .. "CreateInput width must be at least " .. InputData.minimumWidth .. ".")
+	assert(type(text) == "string", LIB.CommonData.debugPrefix .. "CreateInput text must be a string.")
+	assert(type(placeholder) == "string", LIB.CommonData.debugPrefix .. "CreateInput placeholder must be a string.")
+	assert(maxLetters == nil or type(maxLetters) == "number" and maxLetters >= 0 and maxLetters == math.floor(maxLetters), LIB.CommonData.debugPrefix .. "CreateInput maxLetters must be a non-negative integer or nil.")
+	assert(onTextChanged == nil or type(onTextChanged) == "function", LIB.CommonData.debugPrefix .. "CreateInput onTextChanged must be a function or nil.")
+	assert(onEnterPressed == nil or type(onEnterPressed) == "function", LIB.CommonData.debugPrefix .. "CreateInput onEnterPressed must be a function or nil.")
 
 	local input = CreateFrame("EditBox", nil, parent, "ArcaneWizardLibrary_InputTemplate")
 	input:SetWidth(width)

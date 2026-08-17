@@ -4,7 +4,6 @@ local ControlData = LIB.ControlData
 local SelectionData = ControlData.selection
 local DropdownData = ControlData.dropdown
 local DropdownTextures = DropdownData.textures
-local DEBUG_PREFIX = "Arcane Wizard: Library (Debug): "
 
 ---@class ArcaneWizardLibraryDropdownOption
 ---@field label? string Displayed option or group label.
@@ -35,35 +34,35 @@ local function IsDropdownValue(value)
 end
 
 local function ValidateDropdownOptions(options, values, path)
-	assert(type(options) == "table", DEBUG_PREFIX .. path .. " must return or contain a table.")
+	assert(type(options) == "table", LIB.CommonData.debugPrefix .. path .. " must return or contain a table.")
 
 	for index, option in ipairs(options) do
 		local optionPath = path .. " option " .. index
-		assert(type(option) == "table", DEBUG_PREFIX .. optionPath .. " must be a table.")
+		assert(type(option) == "table", LIB.CommonData.debugPrefix .. optionPath .. " must be a table.")
 
 		if option.divider then
-			assert(option.disabled == nil or type(option.disabled) == "boolean", DEBUG_PREFIX .. optionPath .. " disabled must be a boolean or nil.")
+			assert(option.disabled == nil or type(option.disabled) == "boolean", LIB.CommonData.debugPrefix .. optionPath .. " disabled must be a boolean or nil.")
 		else
-			assert(type(option.label) == "string" and option.label ~= "", DEBUG_PREFIX .. optionPath .. " label must be a non-empty string.")
-			assert(option.disabled == nil or type(option.disabled) == "boolean", DEBUG_PREFIX .. optionPath .. " disabled must be a boolean or nil.")
-			assert(option.icon == nil or type(option.icon) == "string" or type(option.icon) == "number", DEBUG_PREFIX .. optionPath .. " icon must be a texture path, file ID, or nil.")
-			assert(option.atlas == nil or type(option.atlas) == "string", DEBUG_PREFIX .. optionPath .. " atlas must be a string or nil.")
-			assert(not (option.icon and option.atlas), DEBUG_PREFIX .. optionPath .. " cannot define both icon and atlas.")
+			assert(type(option.label) == "string" and option.label ~= "", LIB.CommonData.debugPrefix .. optionPath .. " label must be a non-empty string.")
+			assert(option.disabled == nil or type(option.disabled) == "boolean", LIB.CommonData.debugPrefix .. optionPath .. " disabled must be a boolean or nil.")
+			assert(option.icon == nil or type(option.icon) == "string" or type(option.icon) == "number", LIB.CommonData.debugPrefix .. optionPath .. " icon must be a texture path, file ID, or nil.")
+			assert(option.atlas == nil or type(option.atlas) == "string", LIB.CommonData.debugPrefix .. optionPath .. " atlas must be a string or nil.")
+			assert(not (option.icon and option.atlas), LIB.CommonData.debugPrefix .. optionPath .. " cannot define both icon and atlas.")
 
 			if option.textColor then
-				assert(type(option.textColor) == "table" and #option.textColor >= 3, DEBUG_PREFIX .. optionPath .. " textColor must contain at least red, green, and blue values.")
+				assert(type(option.textColor) == "table" and #option.textColor >= 3, LIB.CommonData.debugPrefix .. optionPath .. " textColor must contain at least red, green, and blue values.")
 				for colorIndex = 1, math.min(#option.textColor, 4) do
 					local colorValue = option.textColor[colorIndex]
-					assert(type(colorValue) == "number" and colorValue >= 0 and colorValue <= 1, DEBUG_PREFIX .. optionPath .. " textColor values must be numbers between 0 and 1.")
+					assert(type(colorValue) == "number" and colorValue >= 0 and colorValue <= 1, LIB.CommonData.debugPrefix .. optionPath .. " textColor values must be numbers between 0 and 1.")
 				end
 			end
 
 			if option.children then
-				assert(option.value == nil, DEBUG_PREFIX .. optionPath .. " cannot define both value and children.")
+				assert(option.value == nil, LIB.CommonData.debugPrefix .. optionPath .. " cannot define both value and children.")
 				ValidateDropdownOptions(option.children, values, optionPath .. " children")
 			else
-				assert(IsDropdownValue(option.value), DEBUG_PREFIX .. optionPath .. " value must be a string, number, or boolean.")
-				assert(not values[option.value], DEBUG_PREFIX .. "CreateDropdown option values must be unique.")
+				assert(IsDropdownValue(option.value), LIB.CommonData.debugPrefix .. optionPath .. " value must be a string, number, or boolean.")
+				assert(not values[option.value], LIB.CommonData.debugPrefix .. "CreateDropdown option values must be unique.")
 				values[option.value] = true
 			end
 		end
@@ -535,9 +534,9 @@ function ArcaneWizardLibrary_DropdownMixin:SetValue(value)
 		return
 	end
 
-	assert(IsDropdownValue(value), DEBUG_PREFIX .. "Dropdown SetValue value must be a string, number, boolean, or nil.")
+	assert(IsDropdownValue(value), LIB.CommonData.debugPrefix .. "Dropdown SetValue value must be a string, number, boolean, or nil.")
 	self.currentOptions = self:ResolveOptions()
-	assert(FindDropdownOption(self.currentOptions, value) ~= nil, DEBUG_PREFIX .. "Dropdown SetValue value must match an option value.")
+	assert(FindDropdownOption(self.currentOptions, value) ~= nil, LIB.CommonData.debugPrefix .. "Dropdown SetValue value must match an option value.")
 
 	self.value = value
 	self:UpdateDisplayedText()
@@ -547,19 +546,19 @@ function ArcaneWizardLibrary_DropdownMixin:SetValue(value)
 end
 
 function ArcaneWizardLibrary_DropdownMixin:SetOptions(options)
-	assert(type(options) == "table" or type(options) == "function", DEBUG_PREFIX .. "Dropdown SetOptions options must be a table or function.")
+	assert(type(options) == "table" or type(options) == "function", LIB.CommonData.debugPrefix .. "Dropdown SetOptions options must be a table or function.")
 	self.optionsSource = options
 	self:GenerateMenu()
 end
 
 function ArcaneWizardLibrary_DropdownMixin:SetDefaultText(text)
-	assert(type(text) == "string" and text ~= "", DEBUG_PREFIX .. "Dropdown SetDefaultText text must be a non-empty string.")
+	assert(type(text) == "string" and text ~= "", LIB.CommonData.debugPrefix .. "Dropdown SetDefaultText text must be a non-empty string.")
 	self.defaultText = text
 	self:UpdateDisplayedText()
 end
 
 function ArcaneWizardLibrary_DropdownMixin:SetEmptyText(text)
-	assert(type(text) == "string" and text ~= "", DEBUG_PREFIX .. "Dropdown SetEmptyText text must be a non-empty string.")
+	assert(type(text) == "string" and text ~= "", LIB.CommonData.debugPrefix .. "Dropdown SetEmptyText text must be a non-empty string.")
 	self.emptyText = text
 	if self.menuOpen then
 		self:GenerateMenu()
@@ -689,11 +688,11 @@ end
 ---
 --- @return ArcaneWizardLibraryDropdown dropdown The created dropdown.
 function ArcaneWizardLibrary.Controls:CreateDropdown(parent, width, options, selectedValue, onValueChanged)
-	assert(parent ~= nil, DEBUG_PREFIX .. "CreateDropdown parent is required.")
-	assert(type(width) == "number" and width >= DropdownData.minimumWidth, DEBUG_PREFIX .. "CreateDropdown width must be at least " .. DropdownData.minimumWidth .. ".")
-	assert(type(options) == "table" or type(options) == "function", DEBUG_PREFIX .. "CreateDropdown options must be a table or function.")
-	assert(selectedValue == nil or IsDropdownValue(selectedValue), DEBUG_PREFIX .. "CreateDropdown selectedValue must be a string, number, boolean, or nil.")
-	assert(onValueChanged == nil or type(onValueChanged) == "function", DEBUG_PREFIX .. "CreateDropdown onValueChanged must be a function or nil.")
+	assert(parent ~= nil, LIB.CommonData.debugPrefix .. "CreateDropdown parent is required.")
+	assert(type(width) == "number" and width >= DropdownData.minimumWidth, LIB.CommonData.debugPrefix .. "CreateDropdown width must be at least " .. DropdownData.minimumWidth .. ".")
+	assert(type(options) == "table" or type(options) == "function", LIB.CommonData.debugPrefix .. "CreateDropdown options must be a table or function.")
+	assert(selectedValue == nil or IsDropdownValue(selectedValue), LIB.CommonData.debugPrefix .. "CreateDropdown selectedValue must be a string, number, boolean, or nil.")
+	assert(onValueChanged == nil or type(onValueChanged) == "function", LIB.CommonData.debugPrefix .. "CreateDropdown onValueChanged must be a function or nil.")
 
 	local dropdown = CreateFrame("Button", nil, parent, "ArcaneWizardLibrary_DropdownTemplate")
 	dropdown:SetWidth(width)

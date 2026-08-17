@@ -75,7 +75,6 @@ Addon contexts are created with `ArcaneWizardLibrary:NewAddon(addonName)` and re
 | `buildDate` | `string \| nil` | Addon build date from `X-BuildDate`. |
 | `mediaPath` | `string` | Base path to the addon's `assets` folder. |
 | `mainCategoryId` | `number \| nil` | Stored Blizzard settings category ID. |
-| `changelog` | `ArcaneWizardLibraryChangelogVersion[] \| nil` | Structured changelog versions stored with `SetChangelog`. |
 
 ### `addon:GetMediaPath(fileName)`
 
@@ -100,59 +99,6 @@ Opens the stored settings category when combat lockdown does not block it.
 Returns `true` when the category was opened and `false` when combat lockdown blocks opening the options menu.
 
 This function asserts when no category ID has been stored with `SetMainCategoryId`, because that indicates an addon integration error.
-
-### `addon:SetChangelog(versions)`
-
-Stores the addon's ordered changelog versions. The Library formats version headings, dates, bullet points, indentation, and spacing.
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `version` | `string` | Yes | Non-empty version label. |
-| `date` | `string` | No | Non-empty release or build date. |
-| `entries` | `string[]` | Yes | Non-empty ordered list of non-empty changelog entries. |
-
-```lua
-addon:SetChangelog({
-  {
-    version = "Version 1.1.0",
-    date = "2026-08-17",
-    entries = {
-      "Added: A new feature",
-      "Fixed: An important issue"
-    }
-  }
-})
-```
-
-This function asserts when the version list is empty or a version, date, or entry does not follow the required structure.
-
-### `addon:OpenChangelog()`
-
-Opens the shared, movable changelog window and returns it. The window contains one framed, scrollable page and always starts at the top when opened. It can be closed with the title-bar X or the button below the content. Opening another addon's changelog reuses the same window and replaces its title and content.
-
-```lua
-addon:OpenChangelog()
-```
-
-This function asserts when no valid version data has been stored with `SetChangelog`.
-
-### `addon:AddChangelogButton(layout)`
-
-Adds a localized changelog button to a Blizzard settings layout. Clicking it calls `OpenChangelog()` for this addon.
-
-```lua
-local category, layout = Settings.RegisterVerticalLayoutCategory("My Addon")
-
-addon:SetChangelog({
-  {
-    version = "Version 1.1.0",
-    entries = { "Added: A new feature" }
-  }
-})
-addon:AddChangelogButton(layout)
-```
-
-The function returns the settings button initializer and asserts when no layout is provided.
 
 ### `addon:RegisterMinimapButton(config)`
 

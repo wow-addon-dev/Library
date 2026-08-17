@@ -1,7 +1,7 @@
 local _, LIB = ...
 
 LIB.Localization = setmetatable({},{__index=function(self,key)
-		geterrorhandler()("Arcane Wizard: Library (Debug): Missing entry for '" .. tostring(key) .. "'")
+		geterrorhandler()(LIB.CommonData.debugPrefix .. "Missing entry for '" .. tostring(key) .. "'")
 		return key
 	end})
 

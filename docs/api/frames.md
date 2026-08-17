@@ -4,6 +4,8 @@
 
 Window and popup methods return standard WoW frames. The frames are centered and hidden after creation, allowing the consuming addon to add controls before calling `Show()`.
 
+Windows and popups are raised with their complete child hierarchy when shown or selected. Overlapping Library frames therefore retain a consistent foreground and background order.
+
 Close buttons use Library's own artwork and therefore look identical across supported game versions. Large windows use the `18 x 18` window variant, while popups use the `14 x 14` popup variant.
 
 ## `CreateWindow(title, width, height, showCloseButton, backgroundAlpha, movable, backgroundStyle, showPortrait, titleTransitionStyle, closeOnEscape)`
@@ -126,6 +128,27 @@ popup:Show()
 | `closeOnEscape` | `boolean \| nil` | Closes the popup with Escape when `true`. Defaults to `false`. |
 
 The returned popup exposes `background`, `content`, and the optional `closeButton` fields.
+
+## `OpenChangelog(addonName, versions)`
+
+Opens a movable changelog window for an addon and returns it. The first call for an addon name creates its window; later calls reuse the same window and render the supplied versions again. Different addon names use independent windows.
+
+```lua
+ArcaneWizardLibrary.Frames:OpenChangelog("MyAddon", {
+  {
+    version = "Version 1.1.0",
+    date = "2026-08-17",
+    entries = {
+      "Added: A new feature",
+      "Fixed: An important issue"
+    }
+  }
+})
+```
+
+`addonName` must be a non-empty string. `versions` must be a non-empty ordered table containing a non-empty `version`, an optional non-empty `date`, and a non-empty ordered `entries` table for every version.
+
+The same data can be passed as the optional third parameter of `Settings:AddAboutSection()` to add a changelog button to an addon's settings page.
 
 ## Customizing the background
 

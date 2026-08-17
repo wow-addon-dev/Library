@@ -97,26 +97,35 @@ Adds a standard profiles section.
 
 Required config keys: `useAccountProfile`, `onSwitchProfile`, `onDeleteCharacterProfiles`.
 
-## `AddAboutSection(layout, addonNameOrConfig)`
+## `AddAboutSection(layout, addonName, changelog)`
 
-Adds a standard about section.
+Adds a standard about section. `layout` and `addonName` are required. Addon version, build date, author, and available project links are read from the addon's metadata.
 
-Pass an addon name to read metadata automatically:
+The optional `changelog` parameter adds a localized changelog button. The button calls `Frames:OpenChangelog(addonName, changelog)`. Changelog windows are created separately for each addon on first use and then reused for that addon.
 
 ```lua
 ArcaneWizardLibrary.Settings:AddAboutSection(layout, "MyAddon")
 ```
 
-Or pass explicit values:
+Structured changelog versions use the following fields:
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `version` | `string` | Yes | Non-empty version label. |
+| `date` | `string` | No | Non-empty release or build date. |
+| `entries` | `string[]` | Yes | Non-empty ordered list of non-empty changelog entries. |
 
 ```lua
-ArcaneWizardLibrary.Settings:AddAboutSection(layout, {
-  addonName = "MyAddon",
-  addonVersion = "1.0.0",
-  addonBuildDate = "2026-06-15",
-  addonAuthor = "Arcane Wizard",
-  curseforgeLink = "https://www.curseforge.com/wow/addons/my-addon",
-  wagoLink = "https://addons.wago.io/addons/my-addon",
-  githubLink = "https://github.com/example/MyAddon"
+ArcaneWizardLibrary.Settings:AddAboutSection(layout, "MyAddon", {
+  {
+    version = "Version 1.1.0",
+    date = "2026-08-17",
+    entries = {
+      "Added: A new feature",
+      "Fixed: An important issue"
+    }
+  }
 })
 ```
+
+CurseForge, Wago, and GitHub buttons are created only when their corresponding metadata fields are present and non-empty.

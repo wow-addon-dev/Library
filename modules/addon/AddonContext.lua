@@ -6,19 +6,14 @@ local _, LIB = ...
 ---@field buildDate string|nil
 ---@field mediaPath string
 ---@field mainCategoryId number|nil
----@field changelog ArcaneWizardLibraryChangelogVersion[]|nil
 ---@field GetMediaPath fun(self: ArcaneWizardLibraryAddon, fileName: string|nil): string Returns the addon media path or a media file path below it.
 ---@field SetMainCategoryId fun(self: ArcaneWizardLibraryAddon, categoryId: number) Stores the Blizzard settings category ID for this addon.
 ---@field OpenCategory fun(self: ArcaneWizardLibraryAddon): boolean Opens the stored Blizzard settings category when not blocked by combat lockdown.
----@field SetChangelog fun(self: ArcaneWizardLibraryAddon, versions: ArcaneWizardLibraryChangelogVersion[]) Stores structured changelog versions for this addon.
----@field OpenChangelog fun(self: ArcaneWizardLibraryAddon): ArcaneWizardLibraryWindowFrame Opens the addon's changelog window.
----@field AddChangelogButton fun(self: ArcaneWizardLibraryAddon, layout: table): table Adds a localized changelog button to a Blizzard settings layout.
 ---@field RegisterMinimapButton fun(self: ArcaneWizardLibraryAddon, config: table): table Registers a LibDataBroker minimap button for this addon.
 ---@field CreateCompartmentHandlers fun(self: ArcaneWizardLibraryAddon, config: table): table Creates AddonCompartment handler functions for this addon.
 
 local AddonContextMixin = {}
 
-local AddonChangelog = LIB.Internal.AddonChangelog
 local AddonLauncher = LIB.Internal.AddonLauncher
 
 local addonContexts = {}
@@ -62,7 +57,7 @@ end
 function AddonContextMixin:OpenCategory()
 	local categoryId = self.mainCategoryId
 
-	assert(categoryId, "Arcane Wizard: Library (Debug): No Options Category ID defined for " .. tostring(self.name) .. ". The options menu cannot be opened.")
+	assert(categoryId, LIB.CommonData.debugPrefix .. "No Options Category ID defined for " .. tostring(self.name) .. ". The options menu cannot be opened.")
 
 	if not InCombatLockdown() then
 		Settings.OpenToCategory(categoryId)
@@ -70,18 +65,6 @@ function AddonContextMixin:OpenCategory()
 	end
 
 	return false
-end
-
-function AddonContextMixin:SetChangelog(versions)
-	AddonChangelog:Set(self, versions)
-end
-
-function AddonContextMixin:OpenChangelog()
-	return AddonChangelog:Open(self)
-end
-
-function AddonContextMixin:AddChangelogButton(layout)
-	return AddonChangelog:AddSettingsButton(self, layout)
 end
 
 function AddonContextMixin:RegisterMinimapButton(config)
@@ -102,7 +85,7 @@ end
 ---
 --- @return ArcaneWizardLibraryAddon context The addon context.
 function ArcaneWizardLibrary:NewAddon(addonName)
-	assert(type(addonName) == "string" and addonName ~= "", "Arcane Wizard: Library (Debug): No addon name defined.")
+	assert(type(addonName) == "string" and addonName ~= "", LIB.CommonData.debugPrefix .. "No addon name defined.")
 
 	return CreateAddonContext(addonName)
 end
@@ -115,7 +98,7 @@ end
 function ArcaneWizardLibrary:GetAddon(addonName)
 	local context = addonContexts[addonName]
 
-	assert(context, "Arcane Wizard: Library (Debug): addon context is not initialized for " .. tostring(addonName))
+	assert(context, LIB.CommonData.debugPrefix .. "addon context is not initialized for " .. tostring(addonName))
 
 	return context
 end

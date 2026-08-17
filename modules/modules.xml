@@ -10,11 +10,11 @@
 	<Include file="static\Dropdown.xml" />
 	<Script file="static\ScrollFrames.lua" />
 	<Script file="static\Frames.lua" />
+	<Script file="static\Changelog.lua" />
 
 	<Script file="static\Settings.lua" />
 	<Include file="static\SettingsPanel.xml" />
 
 	<Script file="addon\AddonLauncher.lua" />
-	<Script file="addon\AddonChangelog.lua" />
 	<Script file="addon\AddonContext.lua" />
 </Ui>

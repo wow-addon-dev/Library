@@ -47,12 +47,12 @@ local specialFrameCounter = 0
 -----------------------
 
 local function ValidateParameters(width, height, showCloseButton, backgroundAlpha, movable, closeOnEscape, defaults, methodName)
-	assert(type(width) == "number" and width >= defaults.minimumWidth, "Arcane Wizard: Library (Debug): " .. methodName .. " width must be at least " .. defaults.minimumWidth .. ".")
-	assert(type(height) == "number" and height >= defaults.minimumHeight, "Arcane Wizard: Library (Debug): " .. methodName .. " height must be at least " .. defaults.minimumHeight .. ".")
-	assert(type(showCloseButton) == "boolean", "Arcane Wizard: Library (Debug): " .. methodName .. " showCloseButton must be a boolean.")
-	assert(type(backgroundAlpha) == "number" and backgroundAlpha >= 0 and backgroundAlpha <= 1, "Arcane Wizard: Library (Debug): " .. methodName .. " backgroundAlpha must be a number between 0 and 1.")
-	assert(type(movable) == "boolean", "Arcane Wizard: Library (Debug): " .. methodName .. " movable must be a boolean.")
-	assert(closeOnEscape == nil or type(closeOnEscape) == "boolean", "Arcane Wizard: Library (Debug): " .. methodName .. " closeOnEscape must be a boolean or nil.")
+	assert(type(width) == "number" and width >= defaults.minimumWidth, LIB.CommonData.debugPrefix .. methodName .. " width must be at least " .. defaults.minimumWidth .. ".")
+	assert(type(height) == "number" and height >= defaults.minimumHeight, LIB.CommonData.debugPrefix .. methodName .. " height must be at least " .. defaults.minimumHeight .. ".")
+	assert(type(showCloseButton) == "boolean", LIB.CommonData.debugPrefix .. methodName .. " showCloseButton must be a boolean.")
+	assert(type(backgroundAlpha) == "number" and backgroundAlpha >= 0 and backgroundAlpha <= 1, LIB.CommonData.debugPrefix .. methodName .. " backgroundAlpha must be a number between 0 and 1.")
+	assert(type(movable) == "boolean", LIB.CommonData.debugPrefix .. methodName .. " movable must be a boolean.")
+	assert(closeOnEscape == nil or type(closeOnEscape) == "boolean", LIB.CommonData.debugPrefix .. methodName .. " closeOnEscape must be a boolean or nil.")
 end
 
 local function CreateTexture(frame, texturePath, coordinates, brightness)
@@ -298,10 +298,14 @@ local function CreateBaseFrame(width, height, movable, closeOnEscape)
 	frame:SetSize(width, height)
 	frame:SetPoint("CENTER")
 	frame:SetFrameStrata("DIALOG")
+	frame:SetToplevel(true)
 	frame:SetClampedToScreen(true)
 	frame:EnableMouse(true)
 	frame.closeOnEscape = closeOnEscape == true
 	ConfigureMovability(frame, movable)
+	frame:HookScript("OnShow", function(self)
+		self:Raise()
+	end)
 
 	if closeOnEscape then
 		table.insert(UISpecialFrames, frameName)
@@ -430,9 +434,9 @@ local function CreateTabButton(tabGroup, id, text)
 end
 
 local function AddTab(tabGroup, id, text)
-	assert(type(id) == "string" and id ~= "", "Arcane Wizard: Library (Debug): AddTab id must be a non-empty string.")
-	assert(type(text) == "string" and text ~= "", "Arcane Wizard: Library (Debug): AddTab text must be a non-empty string.")
-	assert(not tabGroup.tabsById[id], "Arcane Wizard: Library (Debug): AddTab id is already registered.")
+	assert(type(id) == "string" and id ~= "", LIB.CommonData.debugPrefix .. "AddTab id must be a non-empty string.")
+	assert(type(text) == "string" and text ~= "", LIB.CommonData.debugPrefix .. "AddTab text must be a non-empty string.")
+	assert(not tabGroup.tabsById[id], LIB.CommonData.debugPrefix .. "AddTab id is already registered.")
 	local button, width = CreateTabButton(tabGroup, id, text)
 	local page = CreateFrame("Frame", nil, tabGroup.window.content)
 	page:SetAllPoints()
@@ -459,8 +463,8 @@ end
 
 local function SelectTab(tabGroup, id)
 	local entry = tabGroup.tabsById[id]
-	assert(entry, "Arcane Wizard: Library (Debug): SelectTab id is not registered.")
-	assert(entry.button:IsEnabled(), "Arcane Wizard: Library (Debug): SelectTab cannot select a disabled tab.")
+	assert(entry, LIB.CommonData.debugPrefix .. "SelectTab id is not registered.")
+	assert(entry.button:IsEnabled(), LIB.CommonData.debugPrefix .. "SelectTab cannot select a disabled tab.")
 
 	if tabGroup.selectedTabId == id then
 		return entry.page
@@ -498,8 +502,8 @@ end
 
 local function SetTabEnabled(tabGroup, id, enabled)
 	local entry = tabGroup.tabsById[id]
-	assert(entry, "Arcane Wizard: Library (Debug): SetTabEnabled id is not registered.")
-	assert(type(enabled) == "boolean", "Arcane Wizard: Library (Debug): SetTabEnabled enabled must be a boolean.")
+	assert(entry, LIB.CommonData.debugPrefix .. "SetTabEnabled id is not registered.")
+	assert(type(enabled) == "boolean", LIB.CommonData.debugPrefix .. "SetTabEnabled enabled must be a boolean.")
 
 	if enabled then
 		entry.button:Enable()
@@ -531,7 +535,7 @@ local function SetTabEnabled(tabGroup, id, enabled)
 end
 
 local function SetOnTabChanged(tabGroup, callback)
-	assert(callback == nil or type(callback) == "function", "Arcane Wizard: Library (Debug): SetOnTabChanged callback must be a function or nil.")
+	assert(callback == nil or type(callback) == "function", LIB.CommonData.debugPrefix .. "SetOnTabChanged callback must be a function or nil.")
 	tabGroup.onTabChanged = callback
 end
 
@@ -561,10 +565,10 @@ function ArcaneWizardLibrary.Frames:CreateWindow(title, width, height, showClose
 	local background = FrameData.backgroundStyles[backgroundStyle]
 	local titleTransition = FrameData.titleTransitionStyles[titleTransitionStyle]
 
-	assert(type(title) == "string", "Arcane Wizard: Library (Debug): CreateWindow title must be a string.")
-	assert(type(showPortrait) == "boolean", "Arcane Wizard: Library (Debug): CreateWindow showPortrait must be a boolean.")
-	assert(background, "Arcane Wizard: Library (Debug): CreateWindow backgroundStyle is not defined.")
-	assert(titleTransition, "Arcane Wizard: Library (Debug): CreateWindow titleTransitionStyle is not defined.")
+	assert(type(title) == "string", LIB.CommonData.debugPrefix .. "CreateWindow title must be a string.")
+	assert(type(showPortrait) == "boolean", LIB.CommonData.debugPrefix .. "CreateWindow showPortrait must be a boolean.")
+	assert(background, LIB.CommonData.debugPrefix .. "CreateWindow backgroundStyle is not defined.")
+	assert(titleTransition, LIB.CommonData.debugPrefix .. "CreateWindow titleTransitionStyle is not defined.")
 	ValidateParameters(width, height, showCloseButton, backgroundAlpha, movable, closeOnEscape, data, "CreateWindow")
 
 	local frame = CreateBaseFrame(width, height, movable, closeOnEscape)
@@ -604,8 +608,8 @@ function ArcaneWizardLibrary.Frames:CreatePopup(width, height, showCloseButton, 
 	local data = FrameData.popup
 	local background = FrameData.backgroundStyles[backgroundStyle]
 
-	assert(type(showBorder) == "boolean", "Arcane Wizard: Library (Debug): CreatePopup showBorder must be a boolean.")
-	assert(background, "Arcane Wizard: Library (Debug): CreatePopup backgroundStyle is not defined.")
+	assert(type(showBorder) == "boolean", LIB.CommonData.debugPrefix .. "CreatePopup showBorder must be a boolean.")
+	assert(background, LIB.CommonData.debugPrefix .. "CreatePopup backgroundStyle is not defined.")
 	ValidateParameters(width, height, showCloseButton, backgroundAlpha, movable, closeOnEscape, data, "CreatePopup")
 
 	local frame = CreateBaseFrame(width, height, movable, closeOnEscape)
@@ -647,8 +651,8 @@ end
 function ArcaneWizardLibrary.Frames:CreateTabGroup(window)
 	local placement = FrameData.tabs.placement
 
-	assert(windowFrames[window], "Arcane Wizard: Library (Debug): CreateTabGroup window must be a Library window.")
-	assert(not window.tabGroup, "Arcane Wizard: Library (Debug): CreateTabGroup window already has a tab group.")
+	assert(windowFrames[window], LIB.CommonData.debugPrefix .. "CreateTabGroup window must be a Library window.")
+	assert(not window.tabGroup, LIB.CommonData.debugPrefix .. "CreateTabGroup window already has a tab group.")
 
 	local tabGroup = CreateFrame("Frame", nil, window)
 	tabGroup:SetPoint(

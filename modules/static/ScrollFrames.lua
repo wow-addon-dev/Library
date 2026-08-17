@@ -1,7 +1,6 @@
 local _, LIB = ...
 
 local ScrollFrameData = LIB.ScrollFrameData
-local DEBUG_PREFIX = "Arcane Wizard: Library (Debug): "
 
 ---@class ArcaneWizardLibraryScrollFrame: Frame
 ---@field background Texture
@@ -339,12 +338,12 @@ end
 function ArcaneWizardLibrary.ScrollFrames:CreateScrollFrame(parent, width, height, showBorder, backgroundAlpha, backgroundStyle)
 	local background = ScrollFrameData.backgroundStyles[backgroundStyle]
 
-	assert(parent ~= nil, DEBUG_PREFIX .. "CreateScrollFrame parent is required.")
-	assert(type(width) == "number" and width >= ScrollFrameData.minimumWidth, DEBUG_PREFIX .. "CreateScrollFrame width must be at least " .. ScrollFrameData.minimumWidth .. ".")
-	assert(type(height) == "number" and height >= ScrollFrameData.minimumHeight, DEBUG_PREFIX .. "CreateScrollFrame height must be at least " .. ScrollFrameData.minimumHeight .. ".")
-	assert(type(showBorder) == "boolean", DEBUG_PREFIX .. "CreateScrollFrame showBorder must be a boolean.")
-	assert(type(backgroundAlpha) == "number" and backgroundAlpha >= 0 and backgroundAlpha <= 1, DEBUG_PREFIX .. "CreateScrollFrame backgroundAlpha must be a number between 0 and 1.")
-	assert(background, DEBUG_PREFIX .. "CreateScrollFrame backgroundStyle is not defined.")
+	assert(parent ~= nil, LIB.CommonData.debugPrefix .. "CreateScrollFrame parent is required.")
+	assert(type(width) == "number" and width >= ScrollFrameData.minimumWidth, LIB.CommonData.debugPrefix .. "CreateScrollFrame width must be at least " .. ScrollFrameData.minimumWidth .. ".")
+	assert(type(height) == "number" and height >= ScrollFrameData.minimumHeight, LIB.CommonData.debugPrefix .. "CreateScrollFrame height must be at least " .. ScrollFrameData.minimumHeight .. ".")
+	assert(type(showBorder) == "boolean", LIB.CommonData.debugPrefix .. "CreateScrollFrame showBorder must be a boolean.")
+	assert(type(backgroundAlpha) == "number" and backgroundAlpha >= 0 and backgroundAlpha <= 1, LIB.CommonData.debugPrefix .. "CreateScrollFrame backgroundAlpha must be a number between 0 and 1.")
+	assert(background, LIB.CommonData.debugPrefix .. "CreateScrollFrame backgroundStyle is not defined.")
 
 	local frame = CreateFrame("Frame", nil, parent)
 	frame:SetSize(width, height)
@@ -356,19 +355,19 @@ function ArcaneWizardLibrary.ScrollFrames:CreateScrollFrame(parent, width, heigh
 	CreateScrollBar(frame)
 
 	function frame:SetContentHeight(contentHeight)
-		assert(type(contentHeight) == "number" and contentHeight >= 0, DEBUG_PREFIX .. "ScrollFrame SetContentHeight contentHeight must be a non-negative number.")
+		assert(type(contentHeight) == "number" and contentHeight >= 0, LIB.CommonData.debugPrefix .. "ScrollFrame SetContentHeight contentHeight must be a non-negative number.")
 
 		self.requestedContentHeight = contentHeight
 		UpdateContentSize(self)
 	end
 
 	function frame:SetScrollStep(scrollStep)
-		assert(type(scrollStep) == "number" and scrollStep > 0, DEBUG_PREFIX .. "ScrollFrame SetScrollStep scrollStep must be greater than zero.")
+		assert(type(scrollStep) == "number" and scrollStep > 0, LIB.CommonData.debugPrefix .. "ScrollFrame SetScrollStep scrollStep must be greater than zero.")
 		self.scrollStep = scrollStep
 	end
 
 	function frame:SetVerticalScroll(value)
-		assert(type(value) == "number", DEBUG_PREFIX .. "ScrollFrame SetVerticalScroll value must be a number.")
+		assert(type(value) == "number", LIB.CommonData.debugPrefix .. "ScrollFrame SetVerticalScroll value must be a number.")
 
 		local minimum, maximum = self.scrollBar:GetMinMaxValues()
 		self.scrollBar:SetValue(math.max(minimum, math.min(value, maximum)))
