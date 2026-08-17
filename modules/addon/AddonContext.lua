@@ -6,11 +6,11 @@ local _, LIB = ...
 ---@field buildDate string|nil
 ---@field mediaPath string
 ---@field mainCategoryId number|nil
----@field changelog string|nil
+---@field changelog ArcaneWizardLibraryChangelogVersion[]|nil
 ---@field GetMediaPath fun(self: ArcaneWizardLibraryAddon, fileName: string|nil): string Returns the addon media path or a media file path below it.
 ---@field SetMainCategoryId fun(self: ArcaneWizardLibraryAddon, categoryId: number) Stores the Blizzard settings category ID for this addon.
 ---@field OpenCategory fun(self: ArcaneWizardLibraryAddon): boolean Opens the stored Blizzard settings category when not blocked by combat lockdown.
----@field SetChangelog fun(self: ArcaneWizardLibraryAddon, text: string) Stores the single-page changelog text for this addon.
+---@field SetChangelog fun(self: ArcaneWizardLibraryAddon, versions: ArcaneWizardLibraryChangelogVersion[]) Stores structured changelog versions for this addon.
 ---@field OpenChangelog fun(self: ArcaneWizardLibraryAddon): ArcaneWizardLibraryWindowFrame Opens the addon's changelog window.
 ---@field AddChangelogButton fun(self: ArcaneWizardLibraryAddon, layout: table): table Adds a localized changelog button to a Blizzard settings layout.
 ---@field RegisterMinimapButton fun(self: ArcaneWizardLibraryAddon, config: table): table Registers a LibDataBroker minimap button for this addon.
@@ -72,8 +72,8 @@ function AddonContextMixin:OpenCategory()
 	return false
 end
 
-function AddonContextMixin:SetChangelog(text)
-	AddonChangelog:Set(self, text)
+function AddonContextMixin:SetChangelog(versions)
+	AddonChangelog:Set(self, versions)
 end
 
 function AddonContextMixin:OpenChangelog()

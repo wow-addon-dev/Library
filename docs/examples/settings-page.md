@@ -12,11 +12,12 @@ MyAddonDB = MyAddonDB or {
 }
 
 local addon = ArcaneWizardLibrary:NewAddon(addonName)
-addon:SetChangelog([[
-|cffffd200Version 1.0.0|r
-
-- Initial release
-]])
+addon:SetChangelog({
+  {
+    version = "Version 1.0.0",
+    entries = { "Initial release" }
+  }
+})
 
 local category, layout = Settings.RegisterVerticalLayoutCategory("My Addon")
 Settings.RegisterAddOnCategory(category)

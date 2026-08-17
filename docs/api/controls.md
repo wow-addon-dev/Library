@@ -1,6 +1,6 @@
 # Controls Static API
 
-`ArcaneWizardLibrary.Controls` creates consistently styled buttons, selection controls, and dropdown menus with Library-owned artwork. The controls therefore look identical across supported Retail and Classic clients.
+`ArcaneWizardLibrary.Controls` creates consistently styled buttons, selection controls, input fields, and dropdown menus with Library-owned artwork. The controls therefore look identical across supported Retail and Classic clients.
 
 ## Action Button
 
@@ -108,6 +108,36 @@ The returned group provides:
 | `SetEnabled(enabled)` | Enables or disables every option in the group. |
 
 Both controls provide normal, highlighted, pushed, selected, and disabled visuals without using client-specific Blizzard artwork.
+
+## Input Field
+
+### `CreateInput(parent, width, text, placeholder, maxLetters, onTextChanged, onEnterPressed)`
+
+Creates a single-line input field with a fixed height of `24` pixels. A populated, enabled field displays a clear button on the right. Clicking it clears the text, keeps the input focused, and calls `onTextChanged` as a user-initiated change.
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `parent` | `Frame` | Parent frame for the input field. |
+| `width` | `number` | Input width. Must be at least `80` pixels. |
+| `text` | `string` | Initial text. |
+| `placeholder` | `string` | Text displayed while the unfocused input is empty. |
+| `maxLetters` | `number \| nil` | Maximum character count. `nil` or zero keeps the game default. |
+| `onTextChanged` | `function \| nil` | Receives `text`, `userInput`, and `input` after the text changes. |
+| `onEnterPressed` | `function \| nil` | Receives `text` and `input` before Enter clears focus. |
+
+```lua
+local input = ArcaneWizardLibrary.Controls:CreateInput(
+  window.content,
+  200,
+  "",
+  "Character name",
+  80,
+  function(text)
+    settings.characterName = text
+  end
+)
+input:SetPoint("TOPLEFT", 24, -120)
+```
 
 ## Dropdown Menu
 

@@ -2,6 +2,8 @@ local _, LIB = ...
 
 local InputData = LIB.ControlData.input
 local InputTextures = InputData.textures
+local ClearButtonData = InputData.clearButton
+local ClearButtonTextures = ClearButtonData.textures
 local DEBUG_PREFIX = "Arcane Wizard: Library (Debug): "
 
 ---@class ArcaneWizardLibraryInput: EditBox
@@ -9,8 +11,10 @@ local DEBUG_PREFIX = "Arcane Wizard: Library (Debug): "
 ---@field Center Texture
 ---@field Right Texture
 ---@field Placeholder FontString
+---@field ClearButton Button
 ---@field placeholderText string
 ---@field hasFocus boolean
+---@field isClearButtonChange boolean
 ---@field onTextChanged? fun(text: string, userInput: boolean, input: ArcaneWizardLibraryInput)
 ---@field onEnterPressed? fun(text: string, input: ArcaneWizardLibraryInput)
 
@@ -64,12 +68,81 @@ local function GetVisualState(input)
 	return "normal"
 end
 
+local function UpdateClearButtonVisual(button)
+	local state = "normal"
+	if button.isPushed then
+		state = "pushed"
+	elseif button.isHighlighted then
+		state = "highlight"
+	end
+
+	button.Icon:SetTexture(ClearButtonTextures[state])
+end
+
+local function CreateClearButton(input)
+	local button = CreateFrame("Button", nil, input)
+	button:SetSize(ClearButtonData.size, ClearButtonData.size)
+	button:SetPoint("RIGHT", -ClearButtonData.rightInset, 0)
+	button:SetFrameLevel(input:GetFrameLevel() + 1)
+	button:RegisterForClicks("LeftButtonUp")
+
+	local icon = button:CreateTexture(nil, "ARTWORK")
+	icon:SetAllPoints()
+	icon:SetTexelSnappingBias(0)
+	icon:SetSnapToPixelGrid(false)
+	button.Icon = icon
+
+	button:SetScript("OnEnter", function(self)
+		self.isHighlighted = true
+		UpdateClearButtonVisual(self)
+	end)
+	button:SetScript("OnLeave", function(self)
+		self.isHighlighted = false
+		self.isPushed = false
+		UpdateClearButtonVisual(self)
+	end)
+	button:SetScript("OnMouseDown", function(self, mouseButton)
+		if mouseButton == "LeftButton" then
+			self.isPushed = true
+			UpdateClearButtonVisual(self)
+		end
+	end)
+	button:SetScript("OnMouseUp", function(self, mouseButton)
+		if mouseButton == "LeftButton" then
+			self.isPushed = false
+			UpdateClearButtonVisual(self)
+		end
+	end)
+	button:SetScript("OnClick", function()
+		input.isClearButtonChange = true
+		input:SetText("")
+		input.isClearButtonChange = false
+		input:SetFocus()
+	end)
+
+	UpdateClearButtonVisual(button)
+	button:Hide()
+	input.ClearButton = button
+end
+
 -------------------
 --- Input Mixin ---
 -------------------
 
 function ArcaneWizardLibrary_InputMixin:UpdatePlaceholder()
 	self.Placeholder:SetShown(not self.hasFocus and self:GetText() == "" and self.placeholderText ~= "")
+end
+
+function ArcaneWizardLibrary_InputMixin:UpdateClearButton()
+	local isShown = self:IsEnabled() and self:GetText() ~= ""
+
+	if not isShown then
+		self.ClearButton.isHighlighted = false
+		self.ClearButton.isPushed = false
+		UpdateClearButtonVisual(self.ClearButton)
+	end
+
+	self.ClearButton:SetShown(isShown)
 end
 
 function ArcaneWizardLibrary_InputMixin:UpdateVisualState()
@@ -82,6 +155,7 @@ function ArcaneWizardLibrary_InputMixin:UpdateVisualState()
 	self.Right:SetTexture(texturePath)
 	self:SetTextColor(unpack(textColor))
 	self:UpdatePlaceholder()
+	self:UpdateClearButton()
 end
 
 function ArcaneWizardLibrary_InputMixin:SetPlaceholder(text)
@@ -99,6 +173,7 @@ end
 function ArcaneWizardLibrary_InputMixin:OnLoad()
 	self.placeholderText = ""
 	self.hasFocus = false
+	self.isClearButtonChange = false
 	self:SetHeight(InputData.height)
 	self:SetAutoFocus(false)
 	self:SetFontObject(GameFontHighlight)
@@ -114,6 +189,7 @@ function ArcaneWizardLibrary_InputMixin:OnLoad()
 	placeholder:SetWordWrap(false)
 	placeholder:SetTextColor(unpack(InputData.textColors.placeholder))
 	self.Placeholder = placeholder
+	CreateClearButton(self)
 
 	self:UpdateVisualState()
 end
@@ -152,10 +228,13 @@ function ArcaneWizardLibrary_InputMixin:OnEditFocusLost()
 end
 
 function ArcaneWizardLibrary_InputMixin:OnTextChanged(userInput)
+	local isUserInput = not not (userInput or self.isClearButtonChange)
+	self.isClearButtonChange = false
 	self:UpdatePlaceholder()
+	self:UpdateClearButton()
 
 	if self.onTextChanged then
-		self.onTextChanged(self:GetText(), not not userInput, self)
+		self.onTextChanged(self:GetText(), isUserInput, self)
 	end
 end
 

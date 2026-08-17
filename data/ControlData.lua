@@ -84,7 +84,16 @@ LIB.ControlData = {
 		minimumWidth = 80,
 		capWidth = 8,
 		textLeftInset = 10,
-		textRightInset = 10,
+		textRightInset = 24,
+		clearButton = {
+			size = 16,
+			rightInset = 4,
+			textures = {
+				normal = texturePath .. "input-clear-normal.tga",
+				highlight = texturePath .. "input-clear-highlight.tga",
+				pushed = texturePath .. "input-clear-pushed.tga"
+			}
+		},
 		textColors = {
 			normal = { 0.92, 0.9, 0.84 },
 			highlight = { 1, 0.96, 0.84 },

@@ -4,7 +4,7 @@
 
 `ArcaneWizardLibrary.Settings`, `ArcaneWizardLibrary.Dialogs`, `ArcaneWizardLibrary.Controls`, `ArcaneWizardLibrary.Frames`, `ArcaneWizardLibrary.ScrollFrames`, and `ArcaneWizardLibrary.Utils` are static namespaces and are documented on their own API pages.
 
-Reusable buttons, checkboxes, option groups, and dropdown menus are documented under [Controls Static API](./controls).
+Reusable buttons, checkboxes, option groups, input fields, and dropdown menus are documented under [Controls Static API](./controls).
 
 ## Metadata
 
@@ -75,7 +75,7 @@ Addon contexts are created with `ArcaneWizardLibrary:NewAddon(addonName)` and re
 | `buildDate` | `string \| nil` | Addon build date from `X-BuildDate`. |
 | `mediaPath` | `string` | Base path to the addon's `assets` folder. |
 | `mainCategoryId` | `number \| nil` | Stored Blizzard settings category ID. |
-| `changelog` | `string \| nil` | Single-page changelog text stored with `SetChangelog`. |
+| `changelog` | `ArcaneWizardLibraryChangelogVersion[] \| nil` | Structured changelog versions stored with `SetChangelog`. |
 
 ### `addon:GetMediaPath(fileName)`
 
@@ -101,20 +101,30 @@ Returns `true` when the category was opened and `false` when combat lockdown blo
 
 This function asserts when no category ID has been stored with `SetMainCategoryId`, because that indicates an addon integration error.
 
-### `addon:SetChangelog(text)`
+### `addon:SetChangelog(versions)`
 
-Stores the addon's single-page changelog text. Line breaks and WoW color escape sequences in the string are preserved.
+Stores the addon's ordered changelog versions. The Library formats version headings, dates, bullet points, indentation, and spacing.
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `version` | `string` | Yes | Non-empty version label. |
+| `date` | `string` | No | Non-empty release or build date. |
+| `entries` | `string[]` | Yes | Non-empty ordered list of non-empty changelog entries. |
 
 ```lua
-addon:SetChangelog([[
-|cffffd200Version 1.1.0|r
-
-- Added a new feature
-- Fixed an important issue
-]])
+addon:SetChangelog({
+  {
+    version = "Version 1.1.0",
+    date = "2026-08-17",
+    entries = {
+      "Added: A new feature",
+      "Fixed: An important issue"
+    }
+  }
+})
 ```
 
-This function asserts when `text` is not a non-empty string.
+This function asserts when the version list is empty or a version, date, or entry does not follow the required structure.
 
 ### `addon:OpenChangelog()`
 
@@ -124,7 +134,7 @@ Opens the shared, movable changelog window and returns it. The window contains o
 addon:OpenChangelog()
 ```
 
-This function asserts when no text has been stored with `SetChangelog`.
+This function asserts when no valid version data has been stored with `SetChangelog`.
 
 ### `addon:AddChangelogButton(layout)`
 
@@ -133,7 +143,12 @@ Adds a localized changelog button to a Blizzard settings layout. Clicking it cal
 ```lua
 local category, layout = Settings.RegisterVerticalLayoutCategory("My Addon")
 
-addon:SetChangelog("|cffffd200Version 1.1.0|r\n\n- Added a new feature")
+addon:SetChangelog({
+  {
+    version = "Version 1.1.0",
+    entries = { "Added: A new feature" }
+  }
+})
 addon:AddChangelogButton(layout)
 ```
 

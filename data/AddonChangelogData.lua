@@ -15,6 +15,8 @@ LIB.AddonChangelogData = {
 	},
 	contentPadding = 8,
 	lineSpacing = 2,
+	bulletWidth = 8,
+	bulletSpacing = 4,
 	outerInset = 4,
 	footerHeight = 32,
 	closeButtonWidth = 100

@@ -6,12 +6,12 @@ Window and popup methods return standard WoW frames. The frames are centered and
 
 Close buttons use Library's own artwork and therefore look identical across supported game versions. Large windows use the `18 x 18` window variant, while popups use the `14 x 14` popup variant.
 
-## `CreateWindow(title, width, height, showCloseButton, backgroundAlpha, movable, backgroundStyle, showPortrait, titleTransitionStyle)`
+## `CreateWindow(title, width, height, showCloseButton, backgroundAlpha, movable, backgroundStyle, showPortrait, titleTransitionStyle, closeOnEscape)`
 
 Creates a large window with a thin Retail-style frame and an integrated title bar.
 
 ```lua
-local window = ArcaneWizardLibrary.Frames:CreateWindow("My Addon", 700, 480, true, 0.9, true, "solid-dark", true, "line")
+local window = ArcaneWizardLibrary.Frames:CreateWindow("My Addon", 700, 480, true, 0.9, true, "solid-dark", true, "line", true)
 
 window.portrait:SetTexture("Interface\\AddOns\\MyAddon\\assets\\icon.blp")
 window.portraitBackground:SetColorTexture(0.035, 0.035, 0.035, 1)
@@ -38,6 +38,7 @@ The title remains centered when the window is resized. Change its text after cre
 | `backgroundStyle` | `string` | Background style provided by the library. See the available styles below. |
 | `showPortrait` | `boolean` | Creates a thin gold portrait frame in the upper-left corner when `true`. |
 | `titleTransitionStyle` | `string` | Title transition style: `shadow`, `strong-shadow`, or `line`. |
+| `closeOnEscape` | `boolean \| nil` | Closes the window with Escape when `true`. Defaults to `false`. |
 
 ### Title transition styles
 
@@ -61,6 +62,7 @@ The title remains centered when the window is resized. Change its text after cre
 | `portraitBackground` | `Texture \| nil` | Opaque background behind transparent portrait images. |
 | `portrait` | `Texture \| nil` | Optional masked portrait image. Set its image with `SetTexture()`. |
 | `closeButton` | `Button \| nil` | Optional close button. |
+| `closeOnEscape` | `boolean` | Whether pressing Escape closes the window. |
 | `tabGroup` | `Frame \| nil` | Optional tab group attached with `CreateTabGroup()`. |
 
 ## `CreateTabGroup(window)`
@@ -100,12 +102,12 @@ Tabs start `12` pixels from the left window edge. They are `24` pixels high, use
 | `SetTabEnabled(id, enabled)` | Enables or disables a tab. Disabling the selected tab selects the first available tab. |
 | `SetOnTabChanged(callback)` | Sets or clears a callback receiving the selected ID and page. |
 
-## `CreatePopup(width, height, showCloseButton, showBorder, backgroundAlpha, movable, backgroundStyle)`
+## `CreatePopup(width, height, showCloseButton, showBorder, backgroundAlpha, movable, backgroundStyle, closeOnEscape)`
 
 Creates a compact popup with a thinner frame from the same design family.
 
 ```lua
-local popup = ArcaneWizardLibrary.Frames:CreatePopup(360, 160, true, true, 0.9, true, "solid-dark")
+local popup = ArcaneWizardLibrary.Frames:CreatePopup(360, 160, true, true, 0.9, true, "solid-dark", true)
 
 popup:Show()
 ```
@@ -121,6 +123,8 @@ popup:Show()
 | `backgroundAlpha` | `number` | Initial background opacity from `0` to `1`. |
 | `movable` | `boolean` | Allows the popup to be dragged when `true`. |
 | `backgroundStyle` | `string` | Background style provided by the library. See the available styles below. |
+| `closeOnEscape` | `boolean \| nil` | Closes the popup with Escape when `true`. Defaults to `false`. |
+
 The returned popup exposes `background`, `content`, and the optional `closeButton` fields.
 
 ## Customizing the background
@@ -156,5 +160,7 @@ window:SetSize(800, 600)
 ```
 
 `Hide()` closes the window without destroying it, so it can be shown again later. The optional X button also calls `Hide()`.
+
+When `closeOnEscape` is `true`, the frame is registered with Blizzard's standard `UISpecialFrames` handling. Pressing Escape then hides it like other WoW windows.
 
 Dragging changes the frame position for the current session. Persisting that position remains the responsibility of the consuming addon.
