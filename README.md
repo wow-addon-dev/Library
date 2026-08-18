@@ -21,10 +21,6 @@ Developer documentation is available on the documentation website: [wow-addon-de
 * **Addon Context**
 	* Registers addon contexts.
 	* Provides addon-dependent helpers for settings category opening, minimap buttons, and AddonCompartment handlers.
-	* <sup>✨ NEW</sup> Provides reusable single-page changelog windows with a localized options-menu button.
-* **Dialogs**
-	* Link Dialog: Shows a popup with an auto-highlighted text field for easy copying.
-	* Confirmation Dialog: Displays a standard Yes/No prompt to confirm actions and execute callbacks.
 * **Frames**
 	* <sup>✨ NEW</sup> Windows: Provides consistently styled, movable windows with configurable backgrounds, borders, portraits, and close buttons.
 	* <sup>✨ NEW</sup> Window Tabs: Provides bottom text tabs with automatically managed content pages.
@@ -33,7 +29,12 @@ Developer documentation is available on the documentation website: [wow-addon-de
 	* <sup>✨ NEW</sup> Provides scroll areas with transparent, solid, or patterned backgrounds, optional borders, custom vertical scrollbars, and mouse-wheel support across supported game versions.
 * **Controls**
 	* <sup>✨ NEW</sup> Provides consistently styled action buttons with classic or red styles, checkboxes, option groups, input fields, and dropdown menus across supported game versions.
-* **Utilities**
+* **Prebuilt Windows**
+	* <sup>✨ NEW</sup> Changelog Window: Provides a reusable single-page changelog with a localized button for the addon options menu.
+* **Dialogs**
+	* Link Dialog: Shows a popup with an auto-highlighted text field for easy copying.
+	* Confirmation Dialog: Displays a standard Yes/No prompt to confirm actions and execute callbacks.
+**Utilities**
 	* Provides helper methods for common addon values, such as character keys and split character/realm values.
 	* Includes a deep table copy helper.
 * **Settings API Wrappers**
@@ -63,4 +64,4 @@ If you find a bug or have a suggestion, please use the GitHub Issues or the Curs
 
 ## Translation Support
 
-If you would like to localize this addon into other languages, your contribution would be very welcome. You can submit your translations directly via GitHub or use the [CurseForge Localization Tool](https://legacy.curseforge.com/wow/addons/arcane-wizard-library/localization).
+If you would like to localize this addon into other languages, your contribution would be very welcome. Please submit your translations directly via GitHub.
