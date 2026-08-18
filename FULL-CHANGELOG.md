@@ -1,3 +1,12 @@
+**v1.29 (2026-08-18)**
+- Added: Reusable single-page changelog windows with an options-menu button
+- Added: Clear buttons for populated input fields
+- Added: Optional Escape-key closing for windows and popups
+- Changed: Scrollbar elements are now larger and more visible with a slightly thinner track
+- Changed: Dark pattern backgrounds now use more natural random variation
+- Removed: Addon update-notice chat handling from the Library API
+- Fixed: Overlapping windows now retain the correct drawing order
+
 **v1.28 (2026-08-14)**
 - Removed: TOC version for patch 12.0.7 [retail]
 
