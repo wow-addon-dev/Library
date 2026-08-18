@@ -34,7 +34,7 @@ Developer documentation is available on the documentation website: [wow-addon-de
 * **Dialogs**
 	* Link Dialog: Shows a popup with an auto-highlighted text field for easy copying.
 	* Confirmation Dialog: Displays a standard Yes/No prompt to confirm actions and execute callbacks.
-**Utilities**
+* **Utilities**
 	* Provides helper methods for common addon values, such as character keys and split character/realm values.
 	* Includes a deep table copy helper.
 * **Settings API Wrappers**
