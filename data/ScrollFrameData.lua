@@ -19,7 +19,7 @@ LIB.ScrollFrameData = {
 		},
 		["solid-black"] = solidBackgroundStyles["solid-black"],
 		["solid-dark"] = solidBackgroundStyles["solid-dark"],
-		["solid-title"] = solidBackgroundStyles["solid-title"],
+		["solid-library"] = solidBackgroundStyles["solid-library"],
 		pattern = {
 			path = texturePath .. "background-pattern.tga",
 			tileSize = backgroundTileSize

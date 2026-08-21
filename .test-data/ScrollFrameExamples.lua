@@ -1,6 +1,16 @@
 local AWL = ArcaneWizardLibrary
 
-local frame = AWL.Frames:CreateWindow("Scroll Frame Examples", 620, 420, true, 1, true, "panel", false, "shadow")
+local frame = AWL.Frames:CreateWindow({
+	title = "Scroll Frame Examples",
+	width = 620,
+	height = 420,
+	backgroundStyle = "panel",
+	backgroundAlpha = 1,
+	titleTransitionStyle = "shadow",
+	showPortrait = false,
+	showCloseButton = true,
+	movable = true
+})
 frame:ClearAllPoints()
 frame:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 672, -252)
 
@@ -14,7 +24,14 @@ local examples = {
 local rowHeight = 22
 local rowCount = 10
 for _, example in ipairs(examples) do
-	local scrollArea = AWL.ScrollFrames:CreateScrollFrame(frame.content, 284, 166, example.showBorder, 1, example.style)
+	local scrollArea = AWL.ScrollFrames:CreateScrollFrame({
+		parent = frame.content,
+		width = 284,
+		height = 166,
+		backgroundStyle = example.style,
+		backgroundAlpha = 1,
+		showBorder = example.showBorder
+	})
 	scrollArea:SetPoint("TOPLEFT", example.left, -example.top)
 
 	for index = 1, rowCount do

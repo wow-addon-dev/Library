@@ -2,28 +2,30 @@
 
 `ArcaneWizardLibrary.ScrollFrames` creates a scroll area with dedicated transparent, solid, or patterned backgrounds, an optional border, a fully styled vertical scrollbar, and mouse-wheel support across supported Retail and Classic clients.
 
-## `CreateScrollFrame(parent, width, height, showBorder, backgroundAlpha, backgroundStyle)`
+## `CreateScrollFrame(config)`
 
 Creates the outer frame, background, optional border, native scroll frame, content frame, and vertical scrollbar. The scrollbar uses Library-owned artwork for its arrow buttons, track, and thumb.
 
-| Parameter | Type | Description |
+All configuration fields are required.
+
+| Field | Type | Description |
 | --- | --- | --- |
 | `parent` | `Frame` | Parent frame for the scroll area. |
 | `width` | `number` | Initial width. Must be at least `96` pixels. |
 | `height` | `number` | Initial height. Must be at least `72` pixels. |
-| `showBorder` | `boolean` | Creates the outer border when `true`. |
+| `backgroundStyle` | `string` | `transparent`, `solid-black`, `solid-dark`, `solid-library`, or `pattern`. |
 | `backgroundAlpha` | `number` | Background opacity from `0` to `1`. The `transparent` style always remains fully transparent. |
-| `backgroundStyle` | `string` | `transparent`, `solid-black`, `solid-dark`, `solid-title`, or `pattern`. |
+| `showBorder` | `boolean` | Creates the outer border when `true`. |
 
 ```lua
-local scrollArea = ArcaneWizardLibrary.ScrollFrames:CreateScrollFrame(
-  window.content,
-  320,
-  280,
-  true,
-  1,
-  "pattern"
-)
+local scrollArea = ArcaneWizardLibrary.ScrollFrames:CreateScrollFrame({
+  parent = window.content,
+  width = 320,
+  height = 280,
+  backgroundStyle = "pattern",
+  backgroundAlpha = 1,
+  showBorder = true
+})
 scrollArea:SetPoint("TOPLEFT", 16, -16)
 
 local label = scrollArea.content:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
@@ -42,7 +44,7 @@ Add child elements to `scrollArea.content`. After laying out the content, call `
 | `transparent` | No interior fill. The optional border and scrollbar remain visible. |
 | `solid-black` | Solid black background using `backgroundAlpha`. |
 | `solid-dark` | Standard dark Library background. |
-| `solid-title` | Solid background matching the Library title-bar color. |
+| `solid-library` | Solid background matching the Library frame surface color. |
 | `pattern` | Seamlessly tiled pattern with subtle stains and wear. |
 
 ## Fields

@@ -6,14 +6,28 @@ Window and popup methods return standard WoW frames. The frames are centered and
 
 Windows and popups are raised with their complete child hierarchy when shown or selected. Overlapping Library frames therefore retain a consistent foreground and background order.
 
+Windows and popups use the `MEDIUM` frame strata so Blizzard interface panels such as the world map appear above them.
+
 Close buttons use Library's own artwork and therefore look identical across supported game versions. Large windows use the `18 x 18` window variant, while popups use the `14 x 14` popup variant.
 
-## `CreateWindow(title, width, height, showCloseButton, backgroundAlpha, movable, backgroundStyle, showPortrait, titleTransitionStyle, closeOnEscape)`
+## `CreateWindow(config)`
 
-Creates a large window with a thin Retail-style frame and an integrated title bar.
+Creates a large window with a selectable thin Retail-style frame and an integrated title bar.
 
 ```lua
-local window = ArcaneWizardLibrary.Frames:CreateWindow("My Addon", 700, 480, true, 0.9, true, "solid-dark", true, "line", true)
+local window = ArcaneWizardLibrary.Frames:CreateWindow({
+    title = "My Addon",
+    width = 700,
+    height = 480,
+    backgroundStyle = "solid-dark",
+    backgroundAlpha = 0.9,
+    titleTransitionStyle = "line",
+    borderStyle = "silver",
+    showPortrait = true,
+    showCloseButton = true,
+    movable = true,
+    closeOnEscape = true
+})
 
 window.portrait:SetTexture("Interface\\AddOns\\MyAddon\\assets\\icon.blp")
 window.portraitBackground:SetColorTexture(0.035, 0.035, 0.035, 1)
@@ -27,19 +41,24 @@ window:Show()
 
 The title remains centered when the window is resized. Change its text after creation with `window.titleText:SetText(text)`.
 
-### Parameters
+The minimum size is selected automatically from the `showPortrait` value.
 
-| Parameter | Type | Description |
+### Configuration
+
+All fields are required unless their type includes `nil`.
+
+| Field | Type | Description |
 | --- | --- | --- |
 | `title` | `string` | Text displayed in the integrated title bar. |
-| `width` | `number` | Initial width. Must be at least `256`. |
-| `height` | `number` | Initial height. Must be at least `192`. |
-| `showCloseButton` | `boolean` | Creates an X button in the upper-right corner when `true`. |
-| `backgroundAlpha` | `number` | Initial background opacity from `0` to `1`. |
-| `movable` | `boolean` | Allows the window and its title bar to be dragged when `true`. |
+| `width` | `number` | Initial width. Must be at least `128` without a portrait or `192` with a portrait. |
+| `height` | `number` | Initial height. Must be at least `96` without a portrait or `128` with a portrait. |
 | `backgroundStyle` | `string` | Background style provided by the library. See the available styles below. |
-| `showPortrait` | `boolean` | Creates a thin gold portrait frame in the upper-left corner when `true`. |
+| `backgroundAlpha` | `number` | Initial background opacity from `0` to `1`. |
 | `titleTransitionStyle` | `string` | Title transition style: `shadow`, `strong-shadow`, or `line`. |
+| `borderStyle` | `"library" \| "silver" \| "gold" \| nil` | Selects the window border style. Defaults to `"library"`. Silver and gold use the same rounded design. |
+| `showPortrait` | `boolean` | Creates a thin gold portrait frame in the upper-left corner when `true`. |
+| `showCloseButton` | `boolean` | Creates an X button in the upper-right corner when `true`. |
+| `movable` | `boolean` | Allows the window and its title bar to be dragged when `true`. |
 | `closeOnEscape` | `boolean \| nil` | Closes the window with Escape when `true`. Defaults to `false`. |
 
 ### Title transition styles
@@ -104,27 +123,40 @@ Tabs start `12` pixels from the left window edge. They are `24` pixels high, use
 | `SetTabEnabled(id, enabled)` | Enables or disables a tab. Disabling the selected tab selects the first available tab. |
 | `SetOnTabChanged(callback)` | Sets or clears a callback receiving the selected ID and page. |
 
-## `CreatePopup(width, height, showCloseButton, showBorder, backgroundAlpha, movable, backgroundStyle, closeOnEscape)`
+## `CreatePopup(config)`
 
 Creates a compact popup with a thinner frame from the same design family.
 
 ```lua
-local popup = ArcaneWizardLibrary.Frames:CreatePopup(360, 160, true, true, 0.9, true, "solid-dark", true)
+local popup = ArcaneWizardLibrary.Frames:CreatePopup({
+    width = 360,
+    height = 160,
+    backgroundStyle = "solid-dark",
+    backgroundAlpha = 0.9,
+    showBorder = true,
+    borderStyle = "gold",
+    showCloseButton = true,
+    movable = true,
+    closeOnEscape = true
+})
 
 popup:Show()
 ```
 
-### Parameters
+### Configuration
 
-| Parameter | Type | Description |
+All fields are required unless their type includes `nil`.
+
+| Field | Type | Description |
 | --- | --- | --- |
-| `width` | `number` | Initial width. Must be at least `128`. |
-| `height` | `number` | Initial height. Must be at least `96`. |
-| `showCloseButton` | `boolean` | Creates an X button in the upper-right corner when `true`. |
-| `showBorder` | `boolean` | Creates the popup border when `true`. Without a border, the background fills the complete frame. |
-| `backgroundAlpha` | `number` | Initial background opacity from `0` to `1`. |
-| `movable` | `boolean` | Allows the popup to be dragged when `true`. |
+| `width` | `number` | Initial width. Must be at least `64`. |
+| `height` | `number` | Initial height. Must be at least `48`. |
 | `backgroundStyle` | `string` | Background style provided by the library. See the available styles below. |
+| `backgroundAlpha` | `number` | Initial background opacity from `0` to `1`. |
+| `showBorder` | `boolean` | Creates the popup border when `true`. Without a border, the background fills the complete frame. |
+| `borderStyle` | `"library" \| "silver" \| "gold" \| nil` | Selects the popup border style. Defaults to `"library"`. Silver and gold use the same rounded design. |
+| `showCloseButton` | `boolean` | Creates an X button in the upper-right corner when `true`. |
+| `movable` | `boolean` | Allows the popup to be dragged when `true`. |
 | `closeOnEscape` | `boolean \| nil` | Closes the popup with Escape when `true`. Defaults to `false`. |
 
 The returned popup exposes `background`, `content`, and the optional `closeButton` fields.
@@ -160,7 +192,7 @@ Available background styles:
 | --- | --- |
 | `"solid-black"` | Solid black background. |
 | `"solid-dark"` | Standard dark Library background. |
-| `"solid-title"` | Solid background matching the Library title-bar color. |
+| `"solid-library"` | Solid background matching the Library frame surface color. |
 | `"panel"` | Warm panel texture with soft medium-scale variations. |
 
 ```lua

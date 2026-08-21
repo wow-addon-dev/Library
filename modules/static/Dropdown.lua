@@ -15,6 +15,13 @@ local DropdownTextures = DropdownData.textures
 ---@field divider? boolean Whether the entry is a divider.
 ---@field disabled? boolean Whether the entry is disabled.
 
+---@class ArcaneWizardLibraryDropdownConfig
+---@field parent Frame Parent frame for the dropdown.
+---@field width number Dropdown width in pixels.
+---@field options ArcaneWizardLibraryDropdownOption[]|fun(): ArcaneWizardLibraryDropdownOption[] Static options or a dynamic options provider.
+---@field selectedValue? string|number|boolean Initially selected option value.
+---@field onValueChanged? fun(value: string|number|boolean, option: ArcaneWizardLibraryDropdownOption, dropdown: ArcaneWizardLibraryDropdown) Called after a user changes the selection.
+
 ---@class ArcaneWizardLibraryDropdown: Button
 ---@field value? string|number|boolean Currently selected value.
 ---@field optionsSource ArcaneWizardLibraryDropdownOption[]|fun(): ArcaneWizardLibraryDropdownOption[] Static options or a dynamic options provider.
@@ -680,25 +687,22 @@ end
 
 --- Creates a consistently styled dropdown with optional icons and nested option groups.
 ---
---- @param parent Frame Parent frame for the dropdown.
---- @param width number Dropdown width in pixels.
---- @param options ArcaneWizardLibraryDropdownOption[]|fun(): ArcaneWizardLibraryDropdownOption[] Static options or a dynamic options provider.
---- @param selectedValue? string|number|boolean Initially selected option value.
---- @param onValueChanged? fun(value: string|number|boolean, option: ArcaneWizardLibraryDropdownOption, dropdown: ArcaneWizardLibraryDropdown) Called after a user changes the selection.
+--- @param config ArcaneWizardLibraryDropdownConfig Dropdown configuration.
 ---
 --- @return ArcaneWizardLibraryDropdown dropdown The created dropdown.
-function ArcaneWizardLibrary.Controls:CreateDropdown(parent, width, options, selectedValue, onValueChanged)
-	assert(parent ~= nil, LIB.CommonData.debugPrefix .. "CreateDropdown parent is required.")
-	assert(type(width) == "number" and width >= DropdownData.minimumWidth, LIB.CommonData.debugPrefix .. "CreateDropdown width must be at least " .. DropdownData.minimumWidth .. ".")
-	assert(type(options) == "table" or type(options) == "function", LIB.CommonData.debugPrefix .. "CreateDropdown options must be a table or function.")
-	assert(selectedValue == nil or IsDropdownValue(selectedValue), LIB.CommonData.debugPrefix .. "CreateDropdown selectedValue must be a string, number, boolean, or nil.")
-	assert(onValueChanged == nil or type(onValueChanged) == "function", LIB.CommonData.debugPrefix .. "CreateDropdown onValueChanged must be a function or nil.")
+function ArcaneWizardLibrary.Controls:CreateDropdown(config)
+	assert(type(config) == "table", LIB.CommonData.debugPrefix .. "CreateDropdown config must be a table.")
+	assert(config.parent ~= nil, LIB.CommonData.debugPrefix .. "CreateDropdown parent is required.")
+	assert(type(config.width) == "number" and config.width >= DropdownData.minimumWidth, LIB.CommonData.debugPrefix .. "CreateDropdown width must be at least " .. DropdownData.minimumWidth .. ".")
+	assert(type(config.options) == "table" or type(config.options) == "function", LIB.CommonData.debugPrefix .. "CreateDropdown options must be a table or function.")
+	assert(config.selectedValue == nil or IsDropdownValue(config.selectedValue), LIB.CommonData.debugPrefix .. "CreateDropdown selectedValue must be a string, number, boolean, or nil.")
+	assert(config.onValueChanged == nil or type(config.onValueChanged) == "function", LIB.CommonData.debugPrefix .. "CreateDropdown onValueChanged must be a function or nil.")
 
-	local dropdown = CreateFrame("Button", nil, parent, "ArcaneWizardLibrary_DropdownTemplate")
-	dropdown:SetWidth(width)
-	dropdown.onValueChanged = onValueChanged
-	dropdown:SetOptions(options)
-	dropdown:SetValue(selectedValue)
+	local dropdown = CreateFrame("Button", nil, config.parent, "ArcaneWizardLibrary_DropdownTemplate")
+	dropdown:SetWidth(config.width)
+	dropdown.onValueChanged = config.onValueChanged
+	dropdown:SetOptions(config.options)
+	dropdown:SetValue(config.selectedValue)
 
 	return dropdown
 end

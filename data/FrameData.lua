@@ -15,11 +15,23 @@ local nineSliceCoordinates = {
 	{ 0.25, 0.75, 0.75, 1 },
 	{ 0.75, 1, 0.75, 1 }
 }
+local silverBorderStyle = {
+	path = texturePath .. "popup-border-silver.tga",
+	coordinates = nineSliceCoordinates,
+	sliceSize = 16
+}
+local goldBorderStyle = {
+	path = texturePath .. "popup-border-gold.tga",
+	coordinates = nineSliceCoordinates,
+	sliceSize = 16
+}
 
 LIB.FrameData = {
 	window = {
-		minimumWidth = 256,
-		minimumHeight = 192,
+		minimumWidth = 128,
+		minimumHeight = 96,
+		portraitMinimumWidth = 192,
+		portraitMinimumHeight = 128,
 		sliceSize = 22,
 		frameBrightness = 1,
 		frameOutsets = {
@@ -103,8 +115,8 @@ LIB.FrameData = {
 		}
 	},
 	popup = {
-		minimumWidth = 128,
-		minimumHeight = 96,
+		minimumWidth = 64,
+		minimumHeight = 48,
 		sliceSize = 22,
 		frameBrightness = 1,
 		frameOutsets = {
@@ -194,20 +206,26 @@ LIB.FrameData = {
 	backgroundStyles = {
 		["solid-black"] = solidBackgroundStyles["solid-black"],
 		["solid-dark"] = solidBackgroundStyles["solid-dark"],
-		["solid-title"] = solidBackgroundStyles["solid-title"],
+		["solid-library"] = solidBackgroundStyles["solid-library"],
 		panel = {
 			path = texturePath .. "background-panel.tga",
 			tileSize = backgroundTileSize
 		}
 	},
-	frameTextures = {
-		window = {
+	popupBorderStyles = {
+		library = {
+			path = texturePath .. "popup-border-library.tga",
+			coordinates = nineSliceCoordinates
+		},
+		silver = silverBorderStyle,
+		gold = goldBorderStyle
+	},
+	windowBorderStyles = {
+		library = {
 			path = texturePath .. "window-border.tga",
 			coordinates = nineSliceCoordinates
 		},
-		popup = {
-			path = texturePath .. "popup-border.tga",
-			coordinates = nineSliceCoordinates
-		}
+		silver = silverBorderStyle,
+		gold = goldBorderStyle
 	}
 }

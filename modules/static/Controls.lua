@@ -6,6 +6,27 @@ local SelectionData = ControlData.selection
 
 ---@alias ArcaneWizardLibraryButtonStyle "classic"|"red"
 
+---@class ArcaneWizardLibraryButtonConfig
+---@field parent Frame Parent frame for the button.
+---@field width number Button width in pixels.
+---@field label string Displayed button label.
+---@field onClick? fun(button: ArcaneWizardLibraryActionButton, mouseButton: string, down: boolean) Called when the button is clicked.
+---@field buttonStyle? ArcaneWizardLibraryButtonStyle Visual style. Defaults to classic.
+
+---@class ArcaneWizardLibraryCheckboxConfig
+---@field parent Frame Parent frame for the checkbox.
+---@field width number Checkbox width in pixels.
+---@field label string Displayed checkbox label.
+---@field checked boolean Initial checked state.
+---@field onValueChanged? fun(checked: boolean, checkbox: ArcaneWizardLibrarySelectionControl) Called after a user changes the value.
+
+---@class ArcaneWizardLibraryOptionGroupConfig
+---@field parent Frame Parent frame for the option group.
+---@field width number Width of every option in pixels.
+---@field options ArcaneWizardLibraryOptionConfig[] Options in display order.
+---@field selectedValue string|number|boolean Initially selected option value.
+---@field onValueChanged? fun(value: string|number|boolean, option: ArcaneWizardLibrarySelectionControl, group: ArcaneWizardLibraryOptionGroup) Called after a user changes the value.
+
 ---@class ArcaneWizardLibraryActionButton: Button
 ---@field Left Texture
 ---@field Center Texture
@@ -59,11 +80,12 @@ local function ConfigureTextures(control, controlStyle)
 	ConfigureTexture(control, "SetDisabledCheckedTexture", "GetDisabledCheckedTexture", textures.disabledChecked)
 end
 
-local function AssertControlParameters(parent, width, label, onValueChanged, methodName)
-	assert(parent ~= nil, LIB.CommonData.debugPrefix .. methodName .. " parent is required.")
-	assert(type(width) == "number" and width >= SelectionData.minimumWidth, LIB.CommonData.debugPrefix .. methodName .. " width must be at least " .. SelectionData.minimumWidth .. ".")
-	assert(type(label) == "string" and label ~= "", LIB.CommonData.debugPrefix .. methodName .. " label must be a non-empty string.")
-	assert(onValueChanged == nil or type(onValueChanged) == "function", LIB.CommonData.debugPrefix .. methodName .. " onValueChanged must be a function or nil.")
+local function AssertSelectionControlConfig(config, methodName)
+	assert(type(config) == "table", LIB.CommonData.debugPrefix .. methodName .. " config must be a table.")
+	assert(config.parent ~= nil, LIB.CommonData.debugPrefix .. methodName .. " parent is required.")
+	assert(type(config.width) == "number" and config.width >= SelectionData.minimumWidth, LIB.CommonData.debugPrefix .. methodName .. " width must be at least " .. SelectionData.minimumWidth .. ".")
+	assert(type(config.label) == "string" and config.label ~= "", LIB.CommonData.debugPrefix .. methodName .. " label must be a non-empty string.")
+	assert(config.onValueChanged == nil or type(config.onValueChanged) == "function", LIB.CommonData.debugPrefix .. methodName .. " onValueChanged must be a function or nil.")
 end
 
 local function ValidateOptions(options, selectedValue)
@@ -261,30 +283,27 @@ end
 
 --- Creates a consistently styled action button.
 ---
---- @param parent Frame Parent frame for the button.
---- @param width number Button width in pixels.
---- @param label string Displayed button label.
---- @param onClick? fun(button: ArcaneWizardLibraryActionButton, mouseButton: string, down: boolean) Called when the button is clicked.
---- @param buttonStyle? ArcaneWizardLibraryButtonStyle Visual style. Defaults to classic.
+--- @param config ArcaneWizardLibraryButtonConfig Button configuration.
 ---
 --- @return ArcaneWizardLibraryActionButton button The created button.
-function ArcaneWizardLibrary.Controls:CreateButton(parent, width, label, onClick, buttonStyle)
-	buttonStyle = buttonStyle or ButtonData.defaultStyle
+function ArcaneWizardLibrary.Controls:CreateButton(config)
+	assert(type(config) == "table", LIB.CommonData.debugPrefix .. "CreateButton config must be a table.")
 
-	assert(parent ~= nil, LIB.CommonData.debugPrefix .. "CreateButton parent is required.")
-	assert(type(width) == "number" and width >= ButtonData.minimumWidth, LIB.CommonData.debugPrefix .. "CreateButton width must be at least " .. ButtonData.minimumWidth .. ".")
-	assert(type(label) == "string" and label ~= "", LIB.CommonData.debugPrefix .. "CreateButton label must be a non-empty string.")
-	assert(onClick == nil or type(onClick) == "function", LIB.CommonData.debugPrefix .. "CreateButton onClick must be a function or nil.")
+	local buttonStyle = config.buttonStyle or ButtonData.defaultStyle
+	assert(config.parent ~= nil, LIB.CommonData.debugPrefix .. "CreateButton parent is required.")
+	assert(type(config.width) == "number" and config.width >= ButtonData.minimumWidth, LIB.CommonData.debugPrefix .. "CreateButton width must be at least " .. ButtonData.minimumWidth .. ".")
+	assert(type(config.label) == "string" and config.label ~= "", LIB.CommonData.debugPrefix .. "CreateButton label must be a non-empty string.")
+	assert(config.onClick == nil or type(config.onClick) == "function", LIB.CommonData.debugPrefix .. "CreateButton onClick must be a function or nil.")
 	assert(ButtonData.styles[buttonStyle] ~= nil, LIB.CommonData.debugPrefix .. "CreateButton buttonStyle is not defined.")
 
-	local button = CreateFrame("Button", nil, parent, "ArcaneWizardLibrary_ActionButtonTemplate")
-	button:SetWidth(width)
-	button:SetText(label)
+	local button = CreateFrame("Button", nil, config.parent, "ArcaneWizardLibrary_ActionButtonTemplate")
+	button:SetWidth(config.width)
+	button:SetText(config.label)
 	ConfigureButtonStyle(button, buttonStyle)
 	button:UpdateVisualState()
 
-	if onClick then
-		button:SetScript("OnClick", onClick)
+	if config.onClick then
+		button:SetScript("OnClick", config.onClick)
 	end
 
 	return button
@@ -292,25 +311,21 @@ end
 
 --- Creates a consistently styled checkbox.
 ---
---- @param parent Frame Parent frame for the checkbox.
---- @param width number Checkbox width in pixels.
---- @param label string Displayed checkbox label.
---- @param checked boolean Initial checked state.
---- @param onValueChanged? fun(checked: boolean, checkbox: ArcaneWizardLibrarySelectionControl) Called after a user changes the value.
+--- @param config ArcaneWizardLibraryCheckboxConfig Checkbox configuration.
 ---
 --- @return ArcaneWizardLibrarySelectionControl checkbox The created checkbox.
-function ArcaneWizardLibrary.Controls:CreateCheckbox(parent, width, label, checked, onValueChanged)
-	AssertControlParameters(parent, width, label, onValueChanged, "CreateCheckbox")
-	assert(type(checked) == "boolean", LIB.CommonData.debugPrefix .. "CreateCheckbox checked must be a boolean.")
+function ArcaneWizardLibrary.Controls:CreateCheckbox(config)
+	AssertSelectionControlConfig(config, "CreateCheckbox")
+	assert(type(config.checked) == "boolean", LIB.CommonData.debugPrefix .. "CreateCheckbox checked must be a boolean.")
 
-	local checkbox = CreateFrame("CheckButton", nil, parent, "ArcaneWizardLibrary_CheckboxTemplate")
-	checkbox:SetWidth(width)
-	checkbox:SetText(label)
-	checkbox:SetChecked(checked)
+	local checkbox = CreateFrame("CheckButton", nil, config.parent, "ArcaneWizardLibrary_CheckboxTemplate")
+	checkbox:SetWidth(config.width)
+	checkbox:SetText(config.label)
+	checkbox:SetChecked(config.checked)
 
-	if onValueChanged then
+	if config.onValueChanged then
 		checkbox:SetScript("OnClick", function(button)
-			onValueChanged(not not button:GetChecked(), button)
+			config.onValueChanged(not not button:GetChecked(), button)
 		end)
 	end
 
@@ -319,23 +334,20 @@ end
 
 --- Creates a group of mutually exclusive options.
 ---
---- @param parent Frame Parent frame for the option group.
---- @param width number Width of every option in pixels.
---- @param options ArcaneWizardLibraryOptionConfig[] Options in display order.
---- @param selectedValue string|number|boolean Initially selected option value.
---- @param onValueChanged? fun(value: string|number|boolean, option: ArcaneWizardLibrarySelectionControl, group: ArcaneWizardLibraryOptionGroup) Called after a user changes the value.
+--- @param config ArcaneWizardLibraryOptionGroupConfig Option group configuration.
 ---
 --- @return ArcaneWizardLibraryOptionGroup group The created option group.
-function ArcaneWizardLibrary.Controls:CreateOptionGroup(parent, width, options, selectedValue, onValueChanged)
-	assert(parent ~= nil, LIB.CommonData.debugPrefix .. "CreateOptionGroup parent is required.")
-	assert(type(width) == "number" and width >= SelectionData.minimumWidth, LIB.CommonData.debugPrefix .. "CreateOptionGroup width must be at least " .. SelectionData.minimumWidth .. ".")
-	assert(onValueChanged == nil or type(onValueChanged) == "function", LIB.CommonData.debugPrefix .. "CreateOptionGroup onValueChanged must be a function or nil.")
-	ValidateOptions(options, selectedValue)
+function ArcaneWizardLibrary.Controls:CreateOptionGroup(config)
+	assert(type(config) == "table", LIB.CommonData.debugPrefix .. "CreateOptionGroup config must be a table.")
+	assert(config.parent ~= nil, LIB.CommonData.debugPrefix .. "CreateOptionGroup parent is required.")
+	assert(type(config.width) == "number" and config.width >= SelectionData.minimumWidth, LIB.CommonData.debugPrefix .. "CreateOptionGroup width must be at least " .. SelectionData.minimumWidth .. ".")
+	assert(config.onValueChanged == nil or type(config.onValueChanged) == "function", LIB.CommonData.debugPrefix .. "CreateOptionGroup onValueChanged must be a function or nil.")
+	ValidateOptions(config.options, config.selectedValue)
 
-	local optionCount = #options
+	local optionCount = #config.options
 	local groupHeight = optionCount * SelectionData.height + (optionCount - 1) * SelectionData.optionSpacing
-	local group = CreateFrame("Frame", nil, parent)
-	group:SetSize(width, groupHeight)
+	local group = CreateFrame("Frame", nil, config.parent)
+	group:SetSize(config.width, groupHeight)
 	group.buttons = {}
 	group.buttonsByValue = {}
 	group.enabled = true
@@ -367,9 +379,9 @@ function ArcaneWizardLibrary.Controls:CreateOptionGroup(parent, width, options, 
 		end
 	end
 
-	for index, option in ipairs(options) do
+	for index, option in ipairs(config.options) do
 		local button = CreateFrame("CheckButton", nil, group, "ArcaneWizardLibrary_OptionButtonTemplate")
-		button:SetWidth(width)
+		button:SetWidth(config.width)
 		button:SetPoint("TOPLEFT", 0, -(index - 1) * (SelectionData.height + SelectionData.optionSpacing))
 		button:SetText(option.label)
 		button.value = option.value
@@ -380,8 +392,8 @@ function ArcaneWizardLibrary.Controls:CreateOptionGroup(parent, width, options, 
 			end
 
 			group:SetValue(clickedButton.value)
-			if onValueChanged then
-				onValueChanged(clickedButton.value, clickedButton, group)
+			if config.onValueChanged then
+				config.onValueChanged(clickedButton.value, clickedButton, group)
 			end
 		end)
 
@@ -389,7 +401,7 @@ function ArcaneWizardLibrary.Controls:CreateOptionGroup(parent, width, options, 
 		group.buttonsByValue[option.value] = button
 	end
 
-	group:SetValue(selectedValue)
+	group:SetValue(config.selectedValue)
 
 	return group
 end

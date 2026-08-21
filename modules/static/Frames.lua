@@ -24,6 +24,30 @@ local specialFrameCounter = 0
 ---@field closeButton? Button Optional close button.
 ---@field closeOnEscape boolean Whether pressing Escape hides the popup.
 
+---@class ArcaneWizardLibraryWindowConfig
+---@field title string Text displayed in the title bar.
+---@field width number Initial frame width.
+---@field height number Initial frame height.
+---@field backgroundStyle string Background style defined by Arcane Wizard: Library.
+---@field backgroundAlpha number Initial background opacity from 0 to 1.
+---@field titleTransitionStyle string Title transition style defined by Arcane Wizard: Library.
+---@field borderStyle? "library"|"silver"|"gold" Window border style.
+---@field showPortrait boolean Whether to create a portrait frame.
+---@field showCloseButton boolean Whether to create a close button.
+---@field movable boolean Whether the window can be dragged.
+---@field closeOnEscape? boolean Whether Escape hides the window.
+
+---@class ArcaneWizardLibraryPopupConfig
+---@field width number Initial frame width.
+---@field height number Initial frame height.
+---@field backgroundStyle string Background style defined by Arcane Wizard: Library.
+---@field backgroundAlpha number Initial background opacity from 0 to 1.
+---@field showBorder boolean Whether to create a popup border.
+---@field borderStyle? "library"|"silver"|"gold" Popup border style.
+---@field showCloseButton boolean Whether to create a close button.
+---@field movable boolean Whether the popup can be dragged.
+---@field closeOnEscape? boolean Whether Escape hides the popup.
+
 ---@class ArcaneWizardLibraryTabPage: Frame
 ---@field tabId string Unique tab identifier.
 ---@field tabButton ArcaneWizardLibraryTabButton Button that selects this page.
@@ -46,13 +70,13 @@ local specialFrameCounter = 0
 --- Local Functions ---
 -----------------------
 
-local function ValidateParameters(width, height, showCloseButton, backgroundAlpha, movable, closeOnEscape, defaults, methodName)
-	assert(type(width) == "number" and width >= defaults.minimumWidth, LIB.CommonData.debugPrefix .. methodName .. " width must be at least " .. defaults.minimumWidth .. ".")
-	assert(type(height) == "number" and height >= defaults.minimumHeight, LIB.CommonData.debugPrefix .. methodName .. " height must be at least " .. defaults.minimumHeight .. ".")
-	assert(type(showCloseButton) == "boolean", LIB.CommonData.debugPrefix .. methodName .. " showCloseButton must be a boolean.")
-	assert(type(backgroundAlpha) == "number" and backgroundAlpha >= 0 and backgroundAlpha <= 1, LIB.CommonData.debugPrefix .. methodName .. " backgroundAlpha must be a number between 0 and 1.")
-	assert(type(movable) == "boolean", LIB.CommonData.debugPrefix .. methodName .. " movable must be a boolean.")
-	assert(closeOnEscape == nil or type(closeOnEscape) == "boolean", LIB.CommonData.debugPrefix .. methodName .. " closeOnEscape must be a boolean or nil.")
+local function ValidateConfig(config, minimumWidth, minimumHeight, methodName)
+	assert(type(config.width) == "number" and config.width >= minimumWidth, LIB.CommonData.debugPrefix .. methodName .. " width must be at least " .. minimumWidth .. ".")
+	assert(type(config.height) == "number" and config.height >= minimumHeight, LIB.CommonData.debugPrefix .. methodName .. " height must be at least " .. minimumHeight .. ".")
+	assert(type(config.showCloseButton) == "boolean", LIB.CommonData.debugPrefix .. methodName .. " showCloseButton must be a boolean.")
+	assert(type(config.backgroundAlpha) == "number" and config.backgroundAlpha >= 0 and config.backgroundAlpha <= 1, LIB.CommonData.debugPrefix .. methodName .. " backgroundAlpha must be a number between 0 and 1.")
+	assert(type(config.movable) == "boolean", LIB.CommonData.debugPrefix .. methodName .. " movable must be a boolean.")
+	assert(config.closeOnEscape == nil or type(config.closeOnEscape) == "boolean", LIB.CommonData.debugPrefix .. methodName .. " closeOnEscape must be a boolean or nil.")
 end
 
 local function CreateTexture(frame, texturePath, coordinates, brightness)
@@ -297,7 +321,7 @@ local function CreateBaseFrame(width, height, movable, closeOnEscape)
 	local frame = CreateFrame("Frame", frameName, UIParent)
 	frame:SetSize(width, height)
 	frame:SetPoint("CENTER")
-	frame:SetFrameStrata("DIALOG")
+	frame:SetFrameStrata("MEDIUM")
 	frame:SetToplevel(true)
 	frame:SetClampedToScreen(true)
 	frame:EnableMouse(true)
@@ -548,38 +572,36 @@ end
 --- The returned frame is hidden and centered by default. Add child controls to frame.content.
 --- Use frame.titleText:SetText() to change the title after creation.
 ---
---- @param title string Text displayed in the title bar.
---- @param width number Initial frame width. Minimum 256.
---- @param height number Initial frame height. Minimum 192.
---- @param showCloseButton boolean Creates a close button in the upper-right corner when true.
---- @param backgroundAlpha number Initial background opacity from 0 to 1.
---- @param movable boolean Enables dragging when true.
---- @param backgroundStyle string Background style defined by Arcane Wizard: Library.
---- @param showPortrait boolean Creates a portrait frame in the upper-left corner when true.
---- @param titleTransitionStyle string Title transition style defined by Arcane Wizard: Library.
---- @param closeOnEscape? boolean Hides the window when Escape is pressed. Defaults to false.
+--- @param config ArcaneWizardLibraryWindowConfig Window configuration.
 ---
 --- @return ArcaneWizardLibraryWindowFrame frame The created window frame.
-function ArcaneWizardLibrary.Frames:CreateWindow(title, width, height, showCloseButton, backgroundAlpha, movable, backgroundStyle, showPortrait, titleTransitionStyle, closeOnEscape)
-	local data = FrameData.window
-	local background = FrameData.backgroundStyles[backgroundStyle]
-	local titleTransition = FrameData.titleTransitionStyles[titleTransitionStyle]
+function ArcaneWizardLibrary.Frames:CreateWindow(config)
+	assert(type(config) == "table", LIB.CommonData.debugPrefix .. "CreateWindow config must be a table.")
 
-	assert(type(title) == "string", LIB.CommonData.debugPrefix .. "CreateWindow title must be a string.")
-	assert(type(showPortrait) == "boolean", LIB.CommonData.debugPrefix .. "CreateWindow showPortrait must be a boolean.")
+	local data = FrameData.window
+	assert(type(config.title) == "string", LIB.CommonData.debugPrefix .. "CreateWindow title must be a string.")
+	assert(type(config.showPortrait) == "boolean", LIB.CommonData.debugPrefix .. "CreateWindow showPortrait must be a boolean.")
+
+	local minimumWidth = config.showPortrait and data.portraitMinimumWidth or data.minimumWidth
+	local minimumHeight = config.showPortrait and data.portraitMinimumHeight or data.minimumHeight
+	ValidateConfig(config, minimumWidth, minimumHeight, "CreateWindow")
+
+	local background = FrameData.backgroundStyles[config.backgroundStyle]
+	local titleTransition = FrameData.titleTransitionStyles[config.titleTransitionStyle]
+	local border = FrameData.windowBorderStyles[config.borderStyle or "library"]
 	assert(background, LIB.CommonData.debugPrefix .. "CreateWindow backgroundStyle is not defined.")
 	assert(titleTransition, LIB.CommonData.debugPrefix .. "CreateWindow titleTransitionStyle is not defined.")
-	ValidateParameters(width, height, showCloseButton, backgroundAlpha, movable, closeOnEscape, data, "CreateWindow")
+	assert(border, LIB.CommonData.debugPrefix .. "CreateWindow borderStyle is not defined.")
 
-	local frame = CreateBaseFrame(width, height, movable, closeOnEscape)
-	ApplyNineSlice(frame, FrameData.frameTextures.window, data)
-	CreateInteriorBackground(frame, background, data.backgroundInsets, backgroundAlpha)
+	local frame = CreateBaseFrame(config.width, config.height, config.movable, config.closeOnEscape)
+	ApplyNineSlice(frame, border, data)
+	CreateInteriorBackground(frame, background, data.backgroundInsets, config.backgroundAlpha)
 	CreateContentFrame(frame, data.contentInsets)
-	CreateTitleBar(frame, title, data.title, titleTransition)
-	CreatePortrait(frame, showPortrait)
+	CreateTitleBar(frame, config.title, data.title, titleTransition)
+	CreatePortrait(frame, config.showPortrait)
 	CreateCloseButton(
 		frame,
-		showCloseButton,
+		config.showCloseButton,
 		data.closeButton.template,
 		data.closeButton.horizontalOffset,
 		data.closeButton.verticalOffset
@@ -594,43 +616,40 @@ end
 ---
 --- The returned frame is hidden and centered by default. Add child controls to frame.content.
 ---
---- @param width number Initial frame width. Minimum 128.
---- @param height number Initial frame height. Minimum 96.
---- @param showCloseButton boolean Creates a close button in the upper-right corner when true.
---- @param showBorder boolean Creates the popup border when true.
---- @param backgroundAlpha number Initial background opacity from 0 to 1.
---- @param movable boolean Enables dragging when true.
---- @param backgroundStyle string Background style defined by Arcane Wizard: Library.
---- @param closeOnEscape? boolean Hides the popup when Escape is pressed. Defaults to false.
+--- @param config ArcaneWizardLibraryPopupConfig Popup configuration.
 ---
 --- @return ArcaneWizardLibraryPopupFrame frame The created popup frame.
-function ArcaneWizardLibrary.Frames:CreatePopup(width, height, showCloseButton, showBorder, backgroundAlpha, movable, backgroundStyle, closeOnEscape)
+function ArcaneWizardLibrary.Frames:CreatePopup(config)
+	assert(type(config) == "table", LIB.CommonData.debugPrefix .. "CreatePopup config must be a table.")
+
 	local data = FrameData.popup
-	local background = FrameData.backgroundStyles[backgroundStyle]
+	ValidateConfig(config, data.minimumWidth, data.minimumHeight, "CreatePopup")
+	assert(type(config.showBorder) == "boolean", LIB.CommonData.debugPrefix .. "CreatePopup showBorder must be a boolean.")
 
-	assert(type(showBorder) == "boolean", LIB.CommonData.debugPrefix .. "CreatePopup showBorder must be a boolean.")
+	local background = FrameData.backgroundStyles[config.backgroundStyle]
+	local border = FrameData.popupBorderStyles[config.borderStyle or "library"]
 	assert(background, LIB.CommonData.debugPrefix .. "CreatePopup backgroundStyle is not defined.")
-	ValidateParameters(width, height, showCloseButton, backgroundAlpha, movable, closeOnEscape, data, "CreatePopup")
+	assert(border, LIB.CommonData.debugPrefix .. "CreatePopup borderStyle is not defined.")
 
-	local frame = CreateBaseFrame(width, height, movable, closeOnEscape)
-	if movable then
+	local frame = CreateBaseFrame(config.width, config.height, config.movable, config.closeOnEscape)
+	if config.movable then
 		RegisterDragHandle(frame, frame)
 	end
 
-	if showBorder then
-		ApplyNineSlice(frame, FrameData.frameTextures.popup, data)
+	if config.showBorder then
+		ApplyNineSlice(frame, border, data)
 	end
 	CreateInteriorBackground(
 		frame,
 		background,
-		showBorder and data.backgroundInsets or nil,
-		backgroundAlpha
+		config.showBorder and (border.backgroundInsets or data.backgroundInsets) or nil,
+		config.backgroundAlpha
 	)
 	CreateContentFrame(frame, data.contentInsets)
-	local closeButtonPosition = showBorder and data.closeButton.border or data.closeButton.borderless
+	local closeButtonPosition = config.showBorder and data.closeButton.border or data.closeButton.borderless
 	CreateCloseButton(
 		frame,
-		showCloseButton,
+		config.showCloseButton,
 		data.closeButton.template,
 		closeButtonPosition.horizontalOffset,
 		closeButtonPosition.verticalOffset

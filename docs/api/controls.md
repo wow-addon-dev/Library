@@ -4,26 +4,29 @@
 
 ## Action Button
 
-### `CreateButton(parent, width, label, onClick)`
+### `CreateButton(config)`
 
 Creates an action button based on `ArcaneWizardLibrary_ActionButtonTemplate`. The height is fixed at `22` pixels, while the width can be set to any value of at least `44` pixels.
 
-| Parameter | Type | Description |
+All configuration fields are required unless their type includes `nil`.
+
+| Field | Type | Description |
 | --- | --- | --- |
 | `parent` | `Frame` | Parent frame for the button. |
 | `width` | `number` | Button width. Must be at least `44` pixels. |
 | `label` | `string` | Non-empty displayed label. |
 | `onClick` | `function \| nil` | Receives `button`, `mouseButton`, and `down` when clicked. |
+| `buttonStyle` | `"classic" \| "red" \| nil` | Visual style. Defaults to `classic`. |
 
 ```lua
-local button = ArcaneWizardLibrary.Controls:CreateButton(
-  window.content,
-  120,
-  "Apply",
-  function()
+local button = ArcaneWizardLibrary.Controls:CreateButton({
+  parent = window.content,
+  width = 120,
+  label = "Apply",
+  onClick = function()
     ApplyChanges()
   end
-)
+})
 button:SetPoint("BOTTOMRIGHT")
 ```
 
@@ -42,11 +45,11 @@ Both templates provide normal, highlighted, pushed, and disabled visuals without
 
 ## Checkbox
 
-### `CreateCheckbox(parent, width, label, checked, onValueChanged)`
+### `CreateCheckbox(config)`
 
 Creates a checkbox based on `ArcaneWizardLibrary_CheckboxTemplate`.
 
-| Parameter | Type | Description |
+| Field | Type | Description |
 | --- | --- | --- |
 | `parent` | `Frame` | Parent frame for the checkbox. |
 | `width` | `number` | Checkbox width. Must be at least `44` pixels. |
@@ -55,15 +58,15 @@ Creates a checkbox based on `ArcaneWizardLibrary_CheckboxTemplate`.
 | `onValueChanged` | `function \| nil` | Receives `checked` and `checkbox` after a user changes the value. |
 
 ```lua
-local checkbox = ArcaneWizardLibrary.Controls:CreateCheckbox(
-  window.content,
-  180,
-  "Enable feature",
-  true,
-  function(checked)
+local checkbox = ArcaneWizardLibrary.Controls:CreateCheckbox({
+  parent = window.content,
+  width = 180,
+  label = "Enable feature",
+  checked = true,
+  onValueChanged = function(checked)
     settings.featureEnabled = checked
   end
-)
+})
 checkbox:SetPoint("TOPLEFT", 24, -24)
 ```
 
@@ -71,11 +74,11 @@ The returned checkbox supports the standard `SetChecked`, `GetChecked`, `Enable`
 
 ## Option Group
 
-### `CreateOptionGroup(parent, width, options, selectedValue, onValueChanged)`
+### `CreateOptionGroup(config)`
 
 Creates a vertical group of mutually exclusive options based on `ArcaneWizardLibrary_OptionButtonTemplate`. Clicking the selected option does not clear it, so exactly one option remains selected.
 
-| Parameter | Type | Description |
+| Field | Type | Description |
 | --- | --- | --- |
 | `parent` | `Frame` | Parent frame for the option group. |
 | `width` | `number` | Width of every option. Must be at least `44` pixels. |
@@ -84,18 +87,18 @@ Creates a vertical group of mutually exclusive options based on `ArcaneWizardLib
 | `onValueChanged` | `function \| nil` | Receives `value`, `option`, and `group` after a user changes the selection. |
 
 ```lua
-local group = ArcaneWizardLibrary.Controls:CreateOptionGroup(
-  window.content,
-  180,
-  {
+local group = ArcaneWizardLibrary.Controls:CreateOptionGroup({
+  parent = window.content,
+  width = 180,
+  options = {
     { label = "Account", value = "account" },
     { label = "Character", value = "character" }
   },
-  "account",
-  function(value)
+  selectedValue = "account",
+  onValueChanged = function(value)
     settings.scope = value
   end
-)
+})
 group:SetPoint("TOPLEFT", 24, -64)
 ```
 
@@ -111,11 +114,11 @@ Both controls provide normal, highlighted, pushed, selected, and disabled visual
 
 ## Input Field
 
-### `CreateInput(parent, width, text, placeholder, maxLetters, onTextChanged, onEnterPressed)`
+### `CreateInput(config)`
 
 Creates a single-line input field with a fixed height of `24` pixels. A populated, enabled field displays a clear button on the right. Clicking it clears the text, keeps the input focused, and calls `onTextChanged` as a user-initiated change.
 
-| Parameter | Type | Description |
+| Field | Type | Description |
 | --- | --- | --- |
 | `parent` | `Frame` | Parent frame for the input field. |
 | `width` | `number` | Input width. Must be at least `80` pixels. |
@@ -126,26 +129,26 @@ Creates a single-line input field with a fixed height of `24` pixels. A populate
 | `onEnterPressed` | `function \| nil` | Receives `text` and `input` before Enter clears focus. |
 
 ```lua
-local input = ArcaneWizardLibrary.Controls:CreateInput(
-  window.content,
-  200,
-  "",
-  "Character name",
-  80,
-  function(text)
+local input = ArcaneWizardLibrary.Controls:CreateInput({
+  parent = window.content,
+  width = 200,
+  text = "",
+  placeholder = "Character name",
+  maxLetters = 80,
+  onTextChanged = function(text)
     settings.characterName = text
   end
-)
+})
 input:SetPoint("TOPLEFT", 24, -120)
 ```
 
 ## Dropdown Menu
 
-### `CreateDropdown(parent, width, options, selectedValue, onValueChanged)`
+### `CreateDropdown(config)`
 
 Creates a dropdown menu based on `ArcaneWizardLibrary_DropdownTemplate`. It supports selectable values, dividers, optional icons, nested option groups, and long mouse-wheel-scrollable menus.
 
-| Parameter | Type | Description |
+| Field | Type | Description |
 | --- | --- | --- |
 | `parent` | `Frame` | Parent frame for the dropdown. |
 | `width` | `number` | Dropdown width and minimum menu width. Must be at least `80` pixels. Menus expand up to `320` pixels for longer labels. |
@@ -170,17 +173,17 @@ Option entries use one of these forms:
 Values must be unique throughout the complete menu. `icon` accepts texture paths or file IDs, while `atlas` accepts an atlas name. Entries may also define `textColor = { red, green, blue }` for labels such as class-colored character names.
 
 ```lua
-local dropdown = ArcaneWizardLibrary.Controls:CreateDropdown(
-  window.content,
-  200,
-  function()
+local dropdown = ArcaneWizardLibrary.Controls:CreateDropdown({
+  parent = window.content,
+  width = 200,
+  options = function()
     return BuildCurrentOptions()
   end,
-  "gold",
-  function(value)
+  selectedValue = "gold",
+  onValueChanged = function(value)
     selectedCurrency = value
   end
-)
+})
 dropdown:SetPoint("TOPLEFT", 24, -120)
 ```
 

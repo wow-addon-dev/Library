@@ -12,6 +12,14 @@ local ScrollFrameData = LIB.ScrollFrameData
 ---@field scrollStep number
 ---@field requestedContentHeight number
 
+---@class ArcaneWizardLibraryScrollFrameConfig
+---@field parent Frame Parent frame for the scroll area.
+---@field width number Scroll area width in pixels.
+---@field height number Scroll area height in pixels.
+---@field backgroundStyle "transparent"|"solid-black"|"solid-dark"|"solid-library"|"pattern" Background style defined by Arcane Wizard: Library.
+---@field backgroundAlpha number Background opacity from 0 to 1.
+---@field showBorder boolean Whether to create the outer border.
+
 -----------------------
 --- Local Functions ---
 -----------------------
@@ -327,30 +335,26 @@ end
 
 --- Creates a scroll area with a vertical slider and a content frame.
 ---
---- @param parent Frame Parent frame for the scroll area.
---- @param width number Scroll area width in pixels. Minimum 96.
---- @param height number Scroll area height in pixels. Minimum 72.
---- @param showBorder boolean Creates the outer border when true.
---- @param backgroundAlpha number Background opacity from 0 to 1.
---- @param backgroundStyle "transparent"|"solid-black"|"solid-dark"|"solid-title"|"pattern" Background style defined by Arcane Wizard: Library.
+--- @param config ArcaneWizardLibraryScrollFrameConfig Scroll frame configuration.
 ---
 --- @return ArcaneWizardLibraryScrollFrame frame The created scroll area.
-function ArcaneWizardLibrary.ScrollFrames:CreateScrollFrame(parent, width, height, showBorder, backgroundAlpha, backgroundStyle)
-	local background = ScrollFrameData.backgroundStyles[backgroundStyle]
+function ArcaneWizardLibrary.ScrollFrames:CreateScrollFrame(config)
+	assert(type(config) == "table", LIB.CommonData.debugPrefix .. "CreateScrollFrame config must be a table.")
 
-	assert(parent ~= nil, LIB.CommonData.debugPrefix .. "CreateScrollFrame parent is required.")
-	assert(type(width) == "number" and width >= ScrollFrameData.minimumWidth, LIB.CommonData.debugPrefix .. "CreateScrollFrame width must be at least " .. ScrollFrameData.minimumWidth .. ".")
-	assert(type(height) == "number" and height >= ScrollFrameData.minimumHeight, LIB.CommonData.debugPrefix .. "CreateScrollFrame height must be at least " .. ScrollFrameData.minimumHeight .. ".")
-	assert(type(showBorder) == "boolean", LIB.CommonData.debugPrefix .. "CreateScrollFrame showBorder must be a boolean.")
-	assert(type(backgroundAlpha) == "number" and backgroundAlpha >= 0 and backgroundAlpha <= 1, LIB.CommonData.debugPrefix .. "CreateScrollFrame backgroundAlpha must be a number between 0 and 1.")
+	local background = ScrollFrameData.backgroundStyles[config.backgroundStyle]
+	assert(config.parent ~= nil, LIB.CommonData.debugPrefix .. "CreateScrollFrame parent is required.")
+	assert(type(config.width) == "number" and config.width >= ScrollFrameData.minimumWidth, LIB.CommonData.debugPrefix .. "CreateScrollFrame width must be at least " .. ScrollFrameData.minimumWidth .. ".")
+	assert(type(config.height) == "number" and config.height >= ScrollFrameData.minimumHeight, LIB.CommonData.debugPrefix .. "CreateScrollFrame height must be at least " .. ScrollFrameData.minimumHeight .. ".")
+	assert(type(config.showBorder) == "boolean", LIB.CommonData.debugPrefix .. "CreateScrollFrame showBorder must be a boolean.")
+	assert(type(config.backgroundAlpha) == "number" and config.backgroundAlpha >= 0 and config.backgroundAlpha <= 1, LIB.CommonData.debugPrefix .. "CreateScrollFrame backgroundAlpha must be a number between 0 and 1.")
 	assert(background, LIB.CommonData.debugPrefix .. "CreateScrollFrame backgroundStyle is not defined.")
 
-	local frame = CreateFrame("Frame", nil, parent)
-	frame:SetSize(width, height)
+	local frame = CreateFrame("Frame", nil, config.parent)
+	frame:SetSize(config.width, config.height)
 	frame.scrollStep = ScrollFrameData.scrollBar.wheelStep
 	frame.requestedContentHeight = 1
-	CreateBackground(frame, background, showBorder, backgroundAlpha)
-	CreateBorder(frame, showBorder)
+	CreateBackground(frame, background, config.showBorder, config.backgroundAlpha)
+	CreateBorder(frame, config.showBorder)
 	CreateScrollableContent(frame)
 	CreateScrollBar(frame)
 

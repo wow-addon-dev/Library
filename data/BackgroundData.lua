@@ -16,7 +16,7 @@ LIB.BackgroundData = {
 				blue = 0.074
 			}
 		},
-		["solid-title"] = {
+		["solid-library"] = {
 			color = {
 				red = 0.204,
 				green = 0.188,
