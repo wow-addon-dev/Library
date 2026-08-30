@@ -1,3 +1,6 @@
+**v1.31 (2026-08-30)**
+- Minor code adjustments
+
 **v1.30 (2026-08-21)**
 - Added: Reusable single-page changelog windows with an options-menu button
 - Added: Clear buttons for populated input fields
